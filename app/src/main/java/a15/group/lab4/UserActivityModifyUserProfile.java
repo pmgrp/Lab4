@@ -42,6 +42,7 @@ public class UserActivityModifyUserProfile extends AppCompatActivity {
             profile.setPassword("*****");
         }
 
+        /*
         ImageView imageView = (ImageView) findViewById(R.id.customer_profile_photo);
         //imageView.setImageURI(Uri.parse(profile.getPhoto()));
 
@@ -53,7 +54,7 @@ public class UserActivityModifyUserProfile extends AppCompatActivity {
         textView.setText(profile.getEmail());
         textView = (TextView) findViewById(R.id.customer_profile_phone);
         textView.setText(profile.getPhone());
-
+        */
 
     }
 

@@ -56,7 +56,7 @@ public class UserActivityMain extends AppCompatActivity implements
             current_fragment = savedInstanceState.getInt("current_fragment");
             spinner_position = savedInstanceState.getInt("spinner_position");
         }
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.user_activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_spinner);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
