@@ -1,7 +1,7 @@
 package a15.group.lab4;
 
 /**
- * Created by eugeniosorbellini on 13/04/16.
+ * Created by eugenio sorbellini on 13/04/16.
  */
 public class DailyOffer {
     private String ID;
