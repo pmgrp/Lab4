@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="drawer_options">
+        <item>Offers</item>
+        <item>Restaurants</item>
+        <item>Reservations</item>
+        <item>Profile</item>
+    </string-array>
+
+    <string name="drawer_open">Drawer Opened</string>
+    <string name="drawer_close">Drawer closed</string>
+</resources>

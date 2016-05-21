@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Lab4</string>
+    <string name="action_settings">Settings</string>
+    <string name="name_offer">Name</string>
+    <string name="description_offer">Description</string>
+    <string name="total_description">This is where all the description of the offer will be written.</string>
+    <string name="price_offer">Price</string>
+    <string name="restaurant_details">Restaurant Details</string>
+    <string name="hint_offer_name">Name of the offer</string>
+    <string name="hint_price">Price</string>
+    <string name="title_show_offer_details">Offer Details</string>
+    <string name="title_show_reservation_details">Reservation Details</string>
+    <string name="reservation_details_date">Date</string>
+    <string name="hint_reservation_details_date">10/05/2016 at 17:50</string>
+    <string name="offer_description_button">Offer Description</string>
+    <string name="introduction_customer">The reservation is at the name:</string>
+    <string name="customer_surname">Surname of the customer</string>
+    <string name="customer_name">Name of the customer</string>
+    <string name="customer_email">Email of the customer</string>
+    <string name="customer_phone_number">Phone number of the customer</string>
+    <string name="buy_button">Buy</string>
+    <string name="disconnect_button">Disconnect</string>
+    <string name="hint_customer_surname">Write your surname</string>
+    <string name="hint_customer_name">Write your name</string>
+    <string name="hint_customer_email">Write your email address</string>
+    <string name="hint_customer_phone_number">Write your phone number</string>
+    <string name="hint_customer_password">Write your password</string>
+    <string name="button_modify_password">Modify</string>
+    <string name="button_save">Save</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="stars_customer_password">********</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

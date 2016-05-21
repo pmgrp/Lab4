@@ -1,0 +1,76 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="a15.group.lab4">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".UserActivityMain"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Base">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".UserActivityShowOfferDetails"
+            android:label="@string/title_show_offer_details"
+            android:parentActivityName=".UserActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserActivityMain" />
+        </activity>
+        <activity
+            android:name=".UserActivityShowReservationDetails"
+            android:label="@string/title_show_reservation_details"
+            android:parentActivityName=".UserActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserActivityMain" />
+        </activity>
+        <activity
+            android:name=".UserActivityRestaurantProfile"
+            android:label="Restaurant Profile"
+            android:parentActivityName=".UserActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserActivityMain" />
+        </activity>
+        <activity
+            android:name=".UserActivityShowUserProfile"
+            android:label="Profile"
+            android:parentActivityName=".UserActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserActivityMain" />
+        </activity>
+        <activity
+            android:name=".UserActivityModifyUserProfile"
+            android:label="Modify Your Profile"
+            android:parentActivityName=".UserActivityShowUserProfile"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserActivityShowUserProfile" />
+
+        </activity>
+    </application>
+
+</manifest>
