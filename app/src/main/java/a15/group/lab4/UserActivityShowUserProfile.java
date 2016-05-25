@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.MainThread;
@@ -16,11 +17,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,43 +34,65 @@ import com.google.gson.Gson;
 
 public class UserActivityShowUserProfile extends AppCompatActivity {
 
-    View mRootView;
-    Button signOutButton;
-    Button deleteAccountButton;
-    Context context = this;
-    User user;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth mAuth;
+    private Button signOutButton;
+    private EditText userName;
+    private EditText userSurname;
+    private EditText userPhone;
+    private DatabaseReference mRef;
+    private ValueEventListener userFieldsListener;
+    private String userId;
+    private User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
 
-        //first check if user is logged in
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        //if user is not logged
-        if(auth.getCurrentUser() == null) {
-            Intent in = new Intent(this, ActivityMain.class);
-            startActivity(in);
-            finish();
-            return;
-        }
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    userId = user.getUid();
+                    //get database reference
+                    mRef = FirebaseDatabase.getInstance().getReference();
+                    mRef.child("users").child(userId).addValueEventListener(userFieldsListener);
+                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
 
-        //check if user is a Customer
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
-        String userId = auth.getCurrentUser().getUid();
-        mRef.child("users").child(userId).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        user = dataSnapshot.getValue(User.class);
-                        Log.d("TAG", user.getType());
+                } else {
+                    // User is signed out
+                    Intent in = new Intent(UserActivityShowUserProfile.this, ActivityMain.class);
+                    startActivity(in);
+                    Log.d("TAG", "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
 
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("TAG", "getUser:onCancelled", databaseError.toException());
-                    }
+        userFieldsListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                user = dataSnapshot.getValue(User.class);
+                userName.setText(user.getName());
+                userSurname.setText(user.getSurname());
+                userPhone.setText(user.getPhone());
+                // ...
+            }
 
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.d("ERR", "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+
 
 
         //set template
@@ -78,71 +104,63 @@ public class UserActivityShowUserProfile extends AppCompatActivity {
 
         //sign out button
         signOutButton = (Button)findViewById(R.id.sign_out);
-        //delete account button
-        deleteAccountButton = (Button)findViewById(R.id.delete_account);
-        //content view
-        mRootView = (View)findViewById(android.R.id.content);
+        //user name
+        userName = (EditText)findViewById(R.id.user_name);
+        userSurname = (EditText)findViewById(R.id.user_surname);
+        userPhone = (EditText)findViewById(R.id.user_phone);
+
+    }
+
+    public void editProfileClicked(View view){
+        String name = userName.getText().toString();
+        String surname = userSurname.getText().toString();
+        String phone = userPhone.getText().toString();
+        if(name.isEmpty() || surname.isEmpty()){
+            Toast.makeText(UserActivityShowUserProfile.this, "Fill at least Name and Surname Fields",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(user == null || userId == null || mRef == null){
+            return;
+        }
+        user.setName(name);
+        user.setSurname(surname);
+        user.setPhone(phone);
+        mRef.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(UserActivityShowUserProfile.this, "User info have been changed",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(UserActivityShowUserProfile.this, "An error occurred please try again",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
     public void signOutClicked(View view){
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Intent in = new Intent(context, ActivityMain.class);
-                            startActivity(in);
-                            finish();
-                        } else {
-                            showSnackbar(R.string.sign_out_failed);
-                        }
-                    }
-                });
+        mAuth.signOut();
     }
 
-    public void deleteAccountClicked(View view) {
-
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to delete this account?")
-                .setPositiveButton("Yes, nuke it!", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        deleteAccount();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .create();
-
-        dialog.show();
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
-    private void deleteAccount() {
-        FirebaseAuth.getInstance()
-                .getCurrentUser()
-                .delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Intent in = new Intent(context, ActivityMain.class);
-                            startActivity(in);
-                            finish();
-                        } else {
-                            showSnackbar(R.string.delete_account_failed);
-                        }
-                    }
-                });
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
 
-
-    @MainThread
-    private void showSnackbar(@StringRes int errorMessageRes) {
-        Snackbar.make(mRootView, errorMessageRes, Snackbar.LENGTH_LONG)
-                .show();
-    }
 }
 
 

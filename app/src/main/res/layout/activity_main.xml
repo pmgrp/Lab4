@@ -22,6 +22,20 @@
             android:drawableTop="@drawable/firebase_auth_120dp"
             android:text="@string/login_title" />
 
+        <EditText
+            android:id="@+id/user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/FirebaseUI.EditText"
+            android:inputType="textEmailAddress"
+            android:hint="Your Email"/>
+        <EditText
+            android:id="@+id/user_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/FirebaseUI.EditText.PasswordField"
+            android:inputType="textPassword"
+            android:hint="Your Password"/>
         <Button
             android:id="@+id/sign_in"
             style="@style/Widget.AppCompat.Button.Colored"
