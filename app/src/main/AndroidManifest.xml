@@ -29,11 +29,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActivityAddUserInfo"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Base">
+        </activity>
         <activity
             android:name=".UserActivityMain"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Base">
-
         </activity>
         <activity
             android:name=".UserActivityShowOfferDetails"
@@ -85,10 +88,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UserActivityShowUserProfile" />
         </activity>
-        <activity android:name=".ActivityAddUserInfo"
+        <activity
+            android:name=".OwnerActivityMain"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Base">
-
+        </activity>
+        <activity
+            android:name=".OwnerActivityRestaurantProfile"
+            android:label="Restaurant Profile"
+            android:parentActivityName=".OwnerActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OwnerActivityMain" />
+        </activity>
+        <activity
+            android:name=".OwnerActivityEditRestaurantProfile"
+            android:label="Restaurant Profile"
+            android:parentActivityName=".OwnerActivityRestaurantProfile"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OwnerActivityRestaurantProfile" />
         </activity>
     </application>
 

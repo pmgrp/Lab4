@@ -146,7 +146,8 @@ public class ActivityAddUserInfo extends BaseActivity {
                 startActivity(in);
                 break;
             case OWNER:
-            //TODO manage Owner case
+                in = new Intent(this, OwnerActivityMain.class);
+                startActivity(in);
                 break;
         }
     }
