@@ -31,7 +31,7 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_reservation_details);
+        setContentView(R.layout.user_activity_show_reservation_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reservation_details);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

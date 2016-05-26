@@ -1,14 +1,11 @@
 package a15.group.lab4;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -23,18 +20,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ActivityAddUserInfo extends AppCompatActivity {
+public class ActivityAddUserInfo extends BaseActivity {
 
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseUser fUser;
     private DatabaseReference mRef;
     private String userId;
     private RadioButton customer;
     private RadioButton owner;
     private EditText name;
     private EditText surname;
+    private ProgressDialog dialog;
     private final static String CUSTOMER = "Customer";
     private final static String OWNER = "Owner";
     private final static String NOUSER = "NoUser";
@@ -48,10 +45,12 @@ public class ActivityAddUserInfo extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                fUser = firebaseAuth.getCurrentUser();
+                FirebaseUser fUser = firebaseAuth.getCurrentUser();
                 if (fUser != null) {
                     // User is signed in
                     Log.d("TAG", "onAuthStateChanged:signed_in:" + fUser.getUid());
+                    //show a wait dialog while fetching data
+                    showProgressDialog();
                     //here check if user infos are in database
                     mRef = FirebaseDatabase.getInstance().getReference();
                     userId = fUser.getUid();
@@ -62,9 +61,17 @@ public class ActivityAddUserInfo extends AppCompatActivity {
                                     //if user infos are not present display form to fill data
                                     if (!dataSnapshot.exists()) {
                                         Log.d("TAG", "populate view");
-                                        populateActivity();
+                                        //display form data if user has no data
+                                        //remove wait dialog
+                                        hideProgressDialog();
+                                        setContentView(R.layout.activity_add_user_info);
+                                        customer = (RadioButton)findViewById(R.id.radio_customer);
+                                        owner = (RadioButton)findViewById(R.id.radio_owner);
+                                        name = (EditText)findViewById(R.id.user_name);
+                                        surname = (EditText)findViewById(R.id.user_surname);
                                     }
-                                    else {
+                                    else if(dataSnapshot.exists()){
+                                        hideProgressDialog();
                                         User user = dataSnapshot.getValue(User.class);
                                         goToMainActivity(user.getType());
                                     }
@@ -127,17 +134,6 @@ public class ActivityAddUserInfo extends AppCompatActivity {
     }
 
 
-    @UiThread
-    private void populateActivity(){
-        setContentView(R.layout.activity_add_user_info);
-        customer = (RadioButton)findViewById(R.id.radio_customer);
-        owner = (RadioButton)findViewById(R.id.radio_owner);
-        name = (EditText)findViewById(R.id.user_name);
-        surname = (EditText)findViewById(R.id.user_surname);
-
-    }
-
-
     private void goToMainActivity(String userType) {
         Intent in;
         switch (userType){
@@ -156,6 +152,7 @@ public class ActivityAddUserInfo extends AppCompatActivity {
     }
 
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -169,6 +166,5 @@ public class ActivityAddUserInfo extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
 
 }

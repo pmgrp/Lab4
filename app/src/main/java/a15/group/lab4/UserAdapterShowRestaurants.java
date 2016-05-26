@@ -55,7 +55,7 @@ public class UserAdapterShowRestaurants extends RecyclerView.Adapter<UserAdapter
 
     @Override
     public RestaurantViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.restaurant_card, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_restaurant_card, viewGroup, false);
         RestaurantViewHolder rvh = new RestaurantViewHolder(v);
         return rvh;
     }

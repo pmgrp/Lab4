@@ -49,7 +49,7 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
 
     @Override
     public ReservationViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.reservation_card, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_reservation_card, viewGroup, false);
         ReservationViewHolder rvh = new ReservationViewHolder(v);
         return rvh;
     }

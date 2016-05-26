@@ -36,19 +36,13 @@ import com.google.firebase.database.ValueEventListener;
 public class ActivityMain extends AppCompatActivity {
 
     //request code for login
-    private static final int RC_SIGN_IN = 100;
     Button mSignIn;
     EditText mEmail;
     EditText mPassword;
     RadioButton mCustomer;
     RadioButton mOwner;
-    View mRootView;
-    String userId;
-    Context context = this;
-    ProgressDialog dialog;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference mRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,35 +61,24 @@ public class ActivityMain extends AppCompatActivity {
                 } else {
                     // User is signed out
                     Log.d("TAG", "onAuthStateChanged:signed_out");
+                    //set layout file
+                    setContentView(R.layout.activity_main);
+                    //the email
+                    mEmail = (EditText) findViewById(R.id.user_email);
+                    //the password
+                    mPassword = (EditText) findViewById(R.id.user_password);
+                    //Customer radio
+                    mCustomer = (RadioButton) findViewById(R.id.radio_customer);
+                    //Owner radio
+                    mOwner = (RadioButton) findViewById(R.id.radio_owner);
+                    //the sign in button
+                    mSignIn = (Button) findViewById(R.id.sign_in);
                 }
+
+
                 // ...
             }
         };
-
-
-        /*
-        //Here check if user is logged
-        mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null) {
-            //user is logged in go to profile page
-            goToMainActivity();
-            finish();
-        }
-        */
-        //set layout file
-        setContentView(R.layout.activity_main);
-        //the email
-        mEmail = (EditText) findViewById(R.id.user_email);
-        //the password
-        mPassword = (EditText) findViewById(R.id.user_password);
-        //Customer radio
-        mCustomer = (RadioButton) findViewById(R.id.radio_customer);
-        //Owner radio
-        mOwner = (RadioButton) findViewById(R.id.radio_owner);
-        //the sign in button
-        mSignIn = (Button) findViewById(R.id.sign_in);
-        //the root view
-        mRootView = (View) findViewById(android.R.id.content);
 
     }
 
@@ -114,8 +97,7 @@ public class ActivityMain extends AppCompatActivity {
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
-                                //Toast.makeText(ActivityMain.this, "Authentication failed.",
-                                  //      Toast.LENGTH_SHORT).show();
+                                //user may already exist try login
                                 tryLogIn(email,password);
 
                             }
@@ -149,75 +131,9 @@ public class ActivityMain extends AppCompatActivity {
     }
 
 
-    /*
-    //manage result of login
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            handleSignInResponse(resultCode, data);
-            return;
-        }
-
-        showSnackbar(R.string.unknown_response);
-    }
-
-
-    private void handleSignInResponse(int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            //show a dialog while doing async operations
-            dialog = ProgressDialog.show(context, "Loading", "Please wait...", true);
-            //here add user data in user database if not present
-            mAuth = FirebaseAuth.getInstance();
-            mRef = FirebaseDatabase.getInstance().getReference();
-            if (mAuth.getCurrentUser() != null) {
-                userId = mAuth.getCurrentUser().getUid();
-                //check if user is already in database
-                mRef.child("users").child(userId).addListenerForSingleValueEvent(
-                        new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                //if user not present put data
-                                if (!dataSnapshot.exists()) {
-                                    User user = new User();
-                                    user.setType("Customer");
-                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                    ref.child("users").child(userId).setValue(user);
-                                    Log.d("TAG", "User data has been added in database");
-                                }
-                                goToMainActivity();
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Log.d("TAG", "getUser:onCancelled", databaseError.toException());
-                            }
-
-
-                        });
-            }
-            return;
-        }
-
-        if (resultCode == RESULT_CANCELED) {
-            showSnackbar(R.string.sign_in_cancelled);
-            return;
-        }
-
-        showSnackbar(R.string.unknown_sign_in_response);
-    }
-    */
-
     private void addUserInfo() {
-        //dialog.dismiss();
         Intent in = new Intent(this, ActivityAddUserInfo.class);
         startActivity(in);
-    }
-
-
-    @MainThread
-    private void showSnackbar(@StringRes int errorMessageRes) {
-        Snackbar.make(mRootView, errorMessageRes, Snackbar.LENGTH_LONG).show();
     }
 
     @Override

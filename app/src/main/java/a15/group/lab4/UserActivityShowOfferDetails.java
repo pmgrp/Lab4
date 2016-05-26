@@ -51,7 +51,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_offer_details);
+        setContentView(R.layout.user_activity_show_offer_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_offer_details);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

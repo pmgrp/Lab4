@@ -118,8 +118,8 @@ public class UserActivityMain extends AppCompatActivity implements
          *
          * */
         spinner = (Spinner) findViewById(R.id.spinner);
-        final ArrayAdapter spinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.spinner_options, R.layout.spinner_item);
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        final ArrayAdapter spinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.spinner_options, R.layout.user_spinner_item);
+        spinnerAdapter.setDropDownViewResource(R.layout.user_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         if (spinner != null) {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

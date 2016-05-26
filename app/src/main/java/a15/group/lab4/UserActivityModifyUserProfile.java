@@ -8,8 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -20,7 +18,7 @@ public class UserActivityModifyUserProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_customer_profile);
+        setContentView(R.layout.user_activity_modify_customer_profile);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_offer_details);
         setSupportActionBar(toolbar);

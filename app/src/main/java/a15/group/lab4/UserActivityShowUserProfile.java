@@ -1,26 +1,14 @@
 package a15.group.lab4;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,13 +18,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
-public class UserActivityShowUserProfile extends AppCompatActivity {
+public class UserActivityShowUserProfile extends BaseActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
-    private Button signOutButton;
     private EditText userName;
     private EditText userSurname;
     private EditText userPhone;
@@ -73,6 +59,8 @@ public class UserActivityShowUserProfile extends AppCompatActivity {
             }
         };
 
+        showProgressDialog();
+
         userFieldsListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -81,6 +69,7 @@ public class UserActivityShowUserProfile extends AppCompatActivity {
                 userName.setText(user.getName());
                 userSurname.setText(user.getSurname());
                 userPhone.setText(user.getPhone());
+                hideProgressDialog();
                 // ...
             }
 
@@ -96,14 +85,11 @@ public class UserActivityShowUserProfile extends AppCompatActivity {
 
 
         //set template
-        setContentView(R.layout.activity_show_user_profile);
+        setContentView(R.layout.user_activity_show_user_profile);
         //set toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_offer_details);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //sign out button
-        signOutButton = (Button)findViewById(R.id.sign_out);
         //user name
         userName = (EditText)findViewById(R.id.user_name);
         userSurname = (EditText)findViewById(R.id.user_surname);
@@ -126,6 +112,7 @@ public class UserActivityShowUserProfile extends AppCompatActivity {
         user.setName(name);
         user.setSurname(surname);
         user.setPhone(phone);
+        showProgressDialog();
         mRef.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -137,6 +124,7 @@ public class UserActivityShowUserProfile extends AppCompatActivity {
                     Toast.makeText(UserActivityShowUserProfile.this, "An error occurred please try again",
                             Toast.LENGTH_SHORT).show();
                 }
+                hideProgressDialog();
             }
         });
 

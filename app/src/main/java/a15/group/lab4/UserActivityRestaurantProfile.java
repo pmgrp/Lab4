@@ -22,7 +22,7 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_profile);
+        setContentView(R.layout.user_activity_restaurant_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_restaurant_profile);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

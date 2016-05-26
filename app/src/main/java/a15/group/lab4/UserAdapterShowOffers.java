@@ -55,7 +55,7 @@ public class UserAdapterShowOffers extends RecyclerView.Adapter<UserAdapterShowO
 
     @Override
     public OfferViewHolder onCreateViewHolder(ViewGroup viewGroup, int i){
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.offer_card, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_offer_card, viewGroup, false);
         OfferViewHolder ovh = new OfferViewHolder(v);
         return ovh;
     }
