@@ -25,32 +25,67 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-        <TextView
+        <!--<TextView
             style="@style/Base.TextAppearance.AppCompat.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:drawableTop="@drawable/firebase_auth_120dp"
-            android:text="@string/signed_in_header" />
+            android:text="@string/signed_in_header" />-->
+
+                <ImageView
+                    android:id="@+id/user_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/firebase_auth_120dp"
+                    android:onClick="modifyPhoto"
+                    />
 
                 <EditText
                     android:id="@+id/user_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Name"
+                    android:inputType="textPersonName"
                     style="@style/FirebaseUI.EditText" />
                 <EditText
                     android:id="@+id/user_surname"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Surname"
+                    android:inputType="textPersonName"
                     style="@style/FirebaseUI.EditText"/>
                 <EditText
                     android:id="@+id/user_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     style="@style/FirebaseUI.EditText"
-                    android:hint="Phone"/>
+                    android:hint="Phone"
+                    android:inputType="phone"/>
+                <EditText
+                    android:id="@+id/user_birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/FirebaseUI.EditText"
+                    android:hint="Birthday"
+                    android:inputType="date"/>
+                <EditText
+                    android:id="@+id/user_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/FirebaseUI.EditText"
+                    android:hint="Email Address"
+                    android:editable="false"/>
+                <EditText
+                    android:id="@+id/user_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/FirebaseUI.EditText"
+                    android:hint="Password"
+                    android:editable="false"/>
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,12 +1,15 @@
 package a15.group.lab4;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,13 +26,21 @@ public class UserActivityShowUserProfile extends BaseActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
+    private ImageView userPhoto;
     private EditText userName;
     private EditText userSurname;
     private EditText userPhone;
+    private EditText userBirthday;
+    private EditText userEmail;
+    private EditText userPassword;
     private DatabaseReference mRef;
     private ValueEventListener userFieldsListener;
     private String userId;
     private User user;
+
+    private static final int PICK_IMAGE_ID = 234;
+    private String imagePath=null;
+    private Uri tempImageUri=null;
 
 
     @Override
@@ -69,6 +80,9 @@ public class UserActivityShowUserProfile extends BaseActivity {
                 userName.setText(user.getName());
                 userSurname.setText(user.getSurname());
                 userPhone.setText(user.getPhone());
+                userBirthday.setText(user.getBirthday());
+                userEmail.setText(user.getEmail());
+                //mettre les *** pour le password
                 hideProgressDialog();
                 // ...
             }
@@ -94,6 +108,10 @@ public class UserActivityShowUserProfile extends BaseActivity {
         userName = (EditText)findViewById(R.id.user_name);
         userSurname = (EditText)findViewById(R.id.user_surname);
         userPhone = (EditText)findViewById(R.id.user_phone);
+        userBirthday = (EditText) findViewById(R.id.user_birthday);
+        userEmail = (EditText) findViewById(R.id.user_email);
+        userPassword = (EditText) findViewById(R.id.user_password);
+
 
     }
 
@@ -101,6 +119,9 @@ public class UserActivityShowUserProfile extends BaseActivity {
         String name = userName.getText().toString();
         String surname = userSurname.getText().toString();
         String phone = userPhone.getText().toString();
+        String birthday = userBirthday.getText().toString();
+        String email = userEmail.getText().toString();
+        String password = userPassword.getText().toString();
         if(name.isEmpty() || surname.isEmpty()){
             Toast.makeText(UserActivityShowUserProfile.this, "Fill at least Name and Surname Fields",
                     Toast.LENGTH_SHORT).show();
@@ -112,6 +133,9 @@ public class UserActivityShowUserProfile extends BaseActivity {
         user.setName(name);
         user.setSurname(surname);
         user.setPhone(phone);
+        user.setBirthday(birthday);
+        user.setEmail(email);
+        user.setPassword(password);
         showProgressDialog();
         mRef.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -127,8 +151,41 @@ public class UserActivityShowUserProfile extends BaseActivity {
                 hideProgressDialog();
             }
         });
-
     }
+
+
+    public void modifyPhoto(View view){
+        Intent chooseImageIntent = imagePicker.getPickImageIntent(this);
+        startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ImageView imageView = (ImageView) findViewById(R.id.user_photo);
+        switch(requestCode) {
+            case PICK_IMAGE_ID:
+                tempImageUri = imagePicker.getUriFromResult(this, resultCode, data);
+                if(tempImageUri != null) {
+                    Bitmap image = imagePicker.getImageResized(this, tempImageUri);
+                    imageView.setImageBitmap(image);
+                }
+                else{
+                    imageView.setImageResource(R.drawable.firebase_auth_120dp);
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle onSave){
+        super.onSaveInstanceState(onSave);
+        onSave.putParcelable("TempUri", tempImageUri);
+    }
+
 
     public void signOutClicked(View view){
         mAuth.signOut();
