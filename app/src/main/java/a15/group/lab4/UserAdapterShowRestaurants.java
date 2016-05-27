@@ -67,7 +67,7 @@ public class UserAdapterShowRestaurants extends RecyclerView.Adapter<UserAdapter
         restaurantViewHolder.restaurantName.setText(restaurants.get(i).getRestaurantName());
         restaurantViewHolder.restaurantPhone.setText(restaurants.get(i).getRestaurantPhone());
         restaurantViewHolder.restaurantAddress.setText(restaurants.get(i).getRestaurantAddress());
-        float km = restaurants.get(i).distance[0] / 1000;
+        float km = restaurants.get(i).distance / 1000;
         restaurantViewHolder.restaurantDistance.setText(String.format(Locale.getDefault(), "%.1f", km));
         restaurantViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -19,12 +19,12 @@ public class Restaurant {
     private String restaurantPhoto;
     private int likeCount;
 
-    public ArrayList<Day> openingDays;
-    public ArrayList<String> reservations; //those are ArrayLists of strings because they have only the IDs
+    //public ArrayList<Day> openingDays;
+    //public ArrayList<String> reservations; //those are ArrayLists of strings because they have only the IDs
     //public ArrayList<String> dailyOffers; //from which you can retrieve the object from DB
-    public ArrayList<String> comments;
+    //public ArrayList<String> comments;
 
-    float distance[] = {0,0,0};
+    float distance;
 
     public Restaurant() {
         this.ID = "";
@@ -37,15 +37,18 @@ public class Restaurant {
         this.restaurantWebsite = "";
         this.restaurantPiva = "";
         this.restaurantPhoto = "";
-        this.openingDays = null;
-        this.reservations = null;
+        this.distance = 0;
+        //this.openingDays = null;
+        //this.reservations = null;
         //this.dailyOffers = null;
-        this.comments = null;
+        //this.comments = null;
         this.likeCount = 0;
     }
 
 
     //getter
+
+
     public String getID() {
         return ID;
     }
@@ -84,6 +87,7 @@ public class Restaurant {
         return restaurantPiva;
     }
 
+
     public String getRestaurantPhoto() {
         return restaurantPhoto;
     }
@@ -106,6 +110,7 @@ public class Restaurant {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
 
     public void setRestaurantName(String restaurantName) {
         this.restaurantName = restaurantName;
@@ -131,10 +136,12 @@ public class Restaurant {
         this.restaurantPiva = restaurantPiva;
     }
 
+
     public void setRestaurantPhoto(String restaurantPhoto) {
         this.restaurantPhoto = restaurantPhoto;
     }
 
+    /*
 
     public class Day {
         private final String[] namesOfDays = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
@@ -190,6 +197,7 @@ public class Restaurant {
 
 
     }
+*/
 
 }
 
