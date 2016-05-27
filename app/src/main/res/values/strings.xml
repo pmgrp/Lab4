@@ -30,6 +30,7 @@
     <string name="button_save">Save</string>
     <string name="button_cancel">Cancel</string>
     <string name="stars_customer_password">********</string>
+    <string name="dialog_title">Add photo</string>
     <!-- login strings -->
     <string name="unknown_response">Unexpected onActivityResult response code 😐</string>
     <string name="unknown_sign_in_response">Unknown response from AuthUI sign-in 😓</string>
