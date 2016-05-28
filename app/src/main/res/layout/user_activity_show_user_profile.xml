@@ -48,40 +48,40 @@
                     android:layout_height="match_parent"
                     android:hint="Name"
                     android:inputType="textPersonName"
-                    style="@style/FirebaseUI.EditText" />
+                    style="@style/Widget.AppCompat.EditText" />
                 <EditText
                     android:id="@+id/user_surname"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Surname"
                     android:inputType="textPersonName"
-                    style="@style/FirebaseUI.EditText"/>
+                    style="@style/Widget.AppCompat.EditText"/>
                 <EditText
                     android:id="@+id/user_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/FirebaseUI.EditText"
+                    style="@style/Widget.AppCompat.EditText"
                     android:hint="Phone"
                     android:inputType="phone"/>
                 <EditText
                     android:id="@+id/user_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/FirebaseUI.EditText"
+                    style="@style/Widget.AppCompat.EditText"
                     android:hint="Birthday"
                     android:inputType="date"/>
                 <EditText
                     android:id="@+id/user_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/FirebaseUI.EditText"
+                    style="@style/Widget.AppCompat.EditText"
                     android:hint="Email Address"
                     android:editable="false"/>
                 <EditText
                     android:id="@+id/user_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/FirebaseUI.EditText"
+                    style="@style/Widget.AppCompat.EditText"
                     android:hint="Password"
                     android:editable="false"/>
 

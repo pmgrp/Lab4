@@ -2,8 +2,10 @@ package a15.group.lab4;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -13,10 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,8 +32,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -41,6 +51,8 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mRef;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
     private Restaurant restaurant;
     private EditText restaurantName;
     private EditText restaurantPhone;
@@ -48,6 +60,9 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
     private EditText restaurantEmail;
     private EditText restaurantWebsite;
     private EditText restaurantPiva;
+    private ImageView restaurantPhoto;
+    private Bitmap currentPhoto = null;
+    private static final int PICK_IMAGE_ID = 234;
 
 
 
@@ -82,6 +97,14 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                     restaurantEmail.setText(restaurant.getRestaurantEmail());
                     restaurantWebsite.setText(restaurant.getRestaurantWebsite());
                     restaurantPiva.setText(restaurant.getRestaurantPiva());
+                    //set the foto
+                    if(!restaurant.getRestaurantPhoto().isEmpty()){
+                        Glide.with(OwnerActivityEditRestaurantProfile.this)
+                                .load(restaurant.getRestaurantPhoto())
+                                .centerCrop()
+                                .into(restaurantPhoto);
+
+                    }
                     // ...
                 }
                 //there is no restaurant set for this owner
@@ -109,11 +132,16 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         restaurantEmail = (EditText) findViewById(R.id.restaurantEmailField);
         restaurantWebsite = (EditText) findViewById(R.id.restaurantWebsiteField);
         restaurantPiva = (EditText) findViewById(R.id.restaurantIVAField);
+        restaurantPhoto = (ImageView) findViewById(R.id.restaurant_photo);
 
         mRef = FirebaseDatabase.getInstance().getReference();
 
+        //database reference
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReferenceFromUrl("gs://lab4-1318.appspot.com");
+
         //here fetch data from database
-        showProgressDialog();
+        //showProgressDialog();
         mRef.child("restaurants").child(mAuth.getCurrentUser().getUid()).addValueEventListener(restaurantFieldsListener);
 
     }
@@ -152,10 +180,39 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
             Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Couldn't find restaurant address",
                     Toast.LENGTH_SHORT).show();
         }
-        restaurant.setRestaurantPhoto("");
-        restaurant.setLikeCount(0);
-        //showProgressDialog();
-        Log.d("TAG", "here save data");
+
+        //save image
+        if(currentPhoto != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            currentPhoto.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+            byte[] data = baos.toByteArray();
+            StorageReference restaurantRef = storageRef.child(mAuth.getCurrentUser().getUid()).child("restaurant_photo.jpg");
+            UploadTask uploadTask = restaurantRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Error in uploading image, please try again",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    restaurant.setRestaurantPhoto(downloadUrl.toString());
+                    currentPhoto.recycle();
+                    currentPhoto = null;
+                    uploadRestaurantProfile();
+                }
+            });
+        }
+        else{
+            uploadRestaurantProfile();
+        }
+
+    }
+
+    public void uploadRestaurantProfile(){
         mRef.child("restaurants").child(mAuth.getCurrentUser().getUid()).setValue(restaurant).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -174,6 +231,28 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
 
             }
         });
+    }
+
+    public void onImageViewClick(View view){
+        Intent chooseImageIntent = imagePicker.getPickImageIntent(this);
+        startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            //there is a foto
+            case PICK_IMAGE_ID:
+                currentPhoto = imagePicker.getImageFromResult(this, resultCode, data);
+                if(currentPhoto != null) {
+                    restaurantPhoto.setImageBitmap(currentPhoto);
+                    restaurantPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }
+
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 
     @Override

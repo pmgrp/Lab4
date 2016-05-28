@@ -1,5 +1,7 @@
 package a15.group.lab4;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 
 /**

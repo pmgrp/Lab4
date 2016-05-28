@@ -106,8 +106,8 @@ public class imagePicker {
             Log.d(TAG, "selectedImage: " + selectedImage);
 
             bm = getImageResized(context, selectedImage);
-            //int rotation = getRotation(context, selectedImage, isCamera);
-            //bm = rotate(bm, rotation);
+            int rotation = getRotation(context, selectedImage, isCamera);
+            bm = rotate(bm, rotation);
         }
         return bm;
     }

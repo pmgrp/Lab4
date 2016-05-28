@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +37,7 @@ public class OwnerActivityRestaurantProfile extends BaseActivity {
     private TextView restaurantEmail;
     private TextView restaurantWebsite;
     private TextView restaurantPiva;
+    private ImageView restaurantPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +67,18 @@ public class OwnerActivityRestaurantProfile extends BaseActivity {
                     restaurantEmail.setText(restaurant.getRestaurantEmail());
                     restaurantWebsite.setText(restaurant.getRestaurantWebsite());
                     restaurantPiva.setText(restaurant.getRestaurantPiva());
-                    hideProgressDialog();
+                    //set the foto
+                    if(!restaurant.getRestaurantPhoto().isEmpty()) {
+                        Glide.with(OwnerActivityRestaurantProfile.this)
+                                .load(restaurant.getRestaurantPhoto())
+                                .centerCrop()
+                                .into(restaurantPhoto);
+                    }
                     // ...
                 }
                 //there is no restaurant set for this owner
                 else{
-                    hideProgressDialog();
+                    //hideProgressDialog();
                     Toast.makeText(OwnerActivityRestaurantProfile.this, "Please Fill in Restaurant Infos",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -95,11 +104,12 @@ public class OwnerActivityRestaurantProfile extends BaseActivity {
         restaurantEmail = (TextView) findViewById(R.id.restaurantEmail);
         restaurantWebsite = (TextView) findViewById(R.id.restaurantWebsite);
         restaurantPiva = (TextView) findViewById(R.id.restaurantIVA);
+        restaurantPhoto = (ImageView) findViewById(R.id.restaurant_photo);
 
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
 
         //here fetch data from database
-        showProgressDialog();
+        //showProgressDialog();
         mRef.child("restaurants").child(mAuth.getCurrentUser().getUid()).addValueEventListener(restaurantFieldsListener);
 
     }
