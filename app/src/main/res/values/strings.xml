@@ -30,7 +30,7 @@
     <string name="button_save">Save</string>
     <string name="button_cancel">Cancel</string>
     <string name="stars_customer_password">********</string>
-    <string name="dialog_title">Add photo</string>
+    <string name="dialog_title">Add Photo</string>
     <!-- login strings -->
     <string name="unknown_response">Unexpected onActivityResult response code 😐</string>
     <string name="unknown_sign_in_response">Unknown response from AuthUI sign-in 😓</string>
@@ -38,8 +38,12 @@
     <string name="sign_out_failed">Sign out failed 😨</string>
     <string name="login_title">OurAppName</string>
     <string name="signed_in_header">You are signed in!</string>
+<<<<<<< HEAD
+    <string name="log_out">Log out</string>
+=======
     <string name="sign_out">Sign out</string>
     <string name="sign_in">Sign in</string>
+>>>>>>> origin/master
     <string name="delete_account_label">Delete account</string>
     <string name="delete_account_failed">Delete account failed 😨</string>
     <string name="loading">Loading…</string>

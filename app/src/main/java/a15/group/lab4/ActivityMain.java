@@ -89,7 +89,6 @@ public class ActivityMain extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 //user may already exist try login
                                 tryLogIn(email,password);
-
                             }
                             else{
                                 Toast.makeText(ActivityMain.this, "New User Created.",
