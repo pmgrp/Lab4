@@ -2,6 +2,8 @@ package a15.group.lab4;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +27,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Locale;
 
 
 public class OwnerActivityEditRestaurantProfile extends BaseActivity {
@@ -119,8 +129,29 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         restaurant.setRestaurantWebsite(restaurantWebsite.getText().toString());
         restaurant.setRestaurantPiva(restaurantPiva.getText().toString());
         restaurant.setID("");
-        restaurant.setLatitude(0);
-        restaurant.setLongitude(0);
+        Geocoder geocoder = new Geocoder(this, Locale.ITALY);
+        List<Address> addresses = null;
+        try{
+            addresses = geocoder.getFromLocationName(restaurantAddress.getText().toString(), 1);
+        }
+        catch (IOException e){
+            Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Can't get coordinates",
+                    Toast.LENGTH_SHORT).show();
+        }
+        if(addresses != null &&  addresses.size() > 0) {
+            Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Restaurant Address found on Gmaps!",
+                    Toast.LENGTH_SHORT).show();
+            double latitude= addresses.get(0).getLatitude();
+            double longitude= addresses.get(0).getLongitude();
+            restaurant.setLatitude(latitude);
+            restaurant.setLongitude(longitude);
+        }
+        else {
+            restaurant.setLatitude(0);
+            restaurant.setLongitude(0);
+            Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Couldn't find restaurant address",
+                    Toast.LENGTH_SHORT).show();
+        }
         restaurant.setRestaurantPhoto("");
         restaurant.setLikeCount(0);
         //showProgressDialog();
@@ -159,3 +190,4 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         }
     }
 }
+
