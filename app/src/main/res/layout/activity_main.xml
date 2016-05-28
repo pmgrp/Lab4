@@ -26,14 +26,14 @@
             android:id="@+id/user_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/FirebaseUI.EditText"
+            style="@style/Widget.AppCompat.EditText"
             android:inputType="textEmailAddress"
             android:hint="Your Email"/>
         <EditText
             android:id="@+id/user_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/FirebaseUI.EditText.PasswordField"
+            style="@style/Widget.AppCompat.EditText"
             android:inputType="textPassword"
             android:hint="Your Password"/>
         <Button

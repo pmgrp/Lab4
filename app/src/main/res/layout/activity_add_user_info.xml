@@ -44,14 +44,14 @@
             android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/FirebaseUI.EditText"
+            style="@style/Widget.AppCompat.EditText"
             android:inputType="textPersonName"
             android:hint="Name"/>
         <EditText
             android:id="@+id/user_surname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/FirebaseUI.EditText"
+            style="@style/Widget.AppCompat.EditText"
             android:hint="Surname"
             android:inputType="textPersonName"/>
 

@@ -15,6 +15,16 @@
         app:theme="@style/ToolbarTheme">
     </android.support.v7.widget.Toolbar>
 
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:layout_below="@id/toolbar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,14 +34,13 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <Button
-            android:id="@+id/saveProfileBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="saveRestaurantData"
-            android:text="Save Profile Info" />
+        <ImageView
+            android:id="@+id/restaurant_photo"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:src="@drawable/anon_user_48dp"
+            android:scaleType="fitCenter"
+            android:onClick="onImageViewClick"/>
 
         <EditText
             android:id="@+id/restaurantNameField"
@@ -39,9 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/restaurantPhoneField"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_alignRight="@+id/restaurantPhoneField"
+            android:layout_below="@id/restaurant_photo"
             android:hint="Restaurant Name" />
 
         <EditText
@@ -98,5 +106,19 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/restaurantWebsiteField"
             android:hint="Partita IVA" />
+
+        <Button
+            android:id="@+id/saveProfileBtn"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="saveRestaurantData"
+            android:textColor="@android:color/white"
+            android:text="Save Profile Info" />
     </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

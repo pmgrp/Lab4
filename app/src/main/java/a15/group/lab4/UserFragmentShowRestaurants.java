@@ -77,10 +77,12 @@ public class UserFragmentShowRestaurants extends Fragment {
     public void updateDistance(){
         mLastLocation = mCallback.getLocation();
         if (mLastLocation != null) {
-            //compute distance in meters in distance[0]
+            //compute distance in meters in distance
             for (int i = 0; i < restaurants.size(); i++) {
+                float[] distance = {0,0,0,};
                 Location.distanceBetween(mLastLocation.getLatitude(), mLastLocation.getLongitude(),
-                        restaurants.get(i).getLatitude(), restaurants.get(i).getLongitude(), restaurants.get(i).distance);
+                        restaurants.get(i).getLatitude(), restaurants.get(i).getLongitude(), distance);
+                restaurants.get(i).distance = distance[0];
             }
         }
     }

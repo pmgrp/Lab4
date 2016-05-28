@@ -1,6 +1,5 @@
 package a15.group.lab4;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -31,7 +30,6 @@ public class ActivityAddUserInfo extends BaseActivity {
     private RadioButton owner;
     private EditText name;
     private EditText surname;
-    private ProgressDialog dialog;
     private final static String CUSTOMER = "Customer";
     private final static String OWNER = "Owner";
     private final static String NOUSER = "NoUser";
@@ -45,46 +43,11 @@ public class ActivityAddUserInfo extends BaseActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
                 FirebaseUser fUser = firebaseAuth.getCurrentUser();
                 if (fUser != null) {
                     // User is signed in
-                    Log.d("TAG", "onAuthStateChanged:signed_in:" + fUser.getUid());
-                    //show a wait dialog while fetching data
-                    showProgressDialog();
-                    //here check if user infos are in database
-                    mRef = FirebaseDatabase.getInstance().getReference();
-                    userId = fUser.getUid();
-                    mRef.child("users").child(userId).addListenerForSingleValueEvent(
-                            new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    //if user infos are not present display form to fill data
-                                    if (!dataSnapshot.exists()) {
-                                        Log.d("TAG", "populate view");
-                                        //display form data if user has no data
-                                        //remove wait dialog
-                                        hideProgressDialog();
-                                        setContentView(R.layout.activity_add_user_info);
-                                        customer = (RadioButton)findViewById(R.id.radio_customer);
-                                        owner = (RadioButton)findViewById(R.id.radio_owner);
-                                        name = (EditText)findViewById(R.id.user_name);
-                                        surname = (EditText)findViewById(R.id.user_surname);
-                                    }
-                                    else if(dataSnapshot.exists()){
-                                        hideProgressDialog();
-                                        User user = dataSnapshot.getValue(User.class);
-                                        goToMainActivity(user.getType());
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    Log.d("TAG", "getUser:onCancelled", databaseError.toException());
-                                }
-
-
-                            });
-
+                    Log.d("TAG", "onAuthStateChanged:signed_in_activity_add_user_info:" + fUser.getUid());
                 } else {
                     // User is signed out
                     Log.d("TAG", "onAuthStateChanged:signed_out");
@@ -93,6 +56,42 @@ public class ActivityAddUserInfo extends BaseActivity {
                 // ...
             }
         };
+
+        //show a wait dialog while fetching data
+        showProgressDialog();
+        //here check if user infos are in database
+        mRef = FirebaseDatabase.getInstance().getReference();
+        userId = mAuth.getCurrentUser().getUid();
+        mRef.child("users").child(userId).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //if user infos are not present display form to fill data
+                        if (!dataSnapshot.exists()) {
+                            Log.d("TAG", "populate view");
+                            //display form data if user has no data
+                            //remove wait dialog
+                            hideProgressDialog();
+                            setContentView(R.layout.activity_add_user_info);
+                            customer = (RadioButton)findViewById(R.id.radio_customer);
+                            owner = (RadioButton)findViewById(R.id.radio_owner);
+                            name = (EditText)findViewById(R.id.user_name);
+                            surname = (EditText)findViewById(R.id.user_surname);
+                        }
+                        else if(dataSnapshot.exists()){
+                            hideProgressDialog();
+                            User user = dataSnapshot.getValue(User.class);
+                            goToMainActivity(user.getType());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("TAG", "getUser:onCancelled", databaseError.toException());
+                    }
+
+
+                });
 
 
     }
