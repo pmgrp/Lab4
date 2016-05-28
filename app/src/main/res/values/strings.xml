@@ -30,7 +30,26 @@
     <string name="button_save">Save</string>
     <string name="button_cancel">Cancel</string>
     <string name="stars_customer_password">********</string>
-    <string name="dialog_title">Add photo</string>
+    <string name="offer_name">Offer name</string>
+    <string name="description">Description</string>
+    <string name="hint_description">Write the description of the offer</string>
+    <string name="price_title">Price</string>
+    <string name="available_quantity_title">Available Quantity</string>
+    <string name="cancel">CANCEL</string>
+    <string name="save">SAVE</string>
+    <string name="dialog_title">Add Photo</string>
+    <string name="daily_offer_name">Offer of the Day</string>
+    <string name="description_daily_offer">This offer is the offer of the day</string>
+    <string name="price_number">5</string>
+    <string name="available_quantity_number">100</string>
+    <string name="title_activity_show_reservations">Reservations</string>
+    <string name="title_activity_show_reservation_detail">Ordered Dishes</string>
+    <string name="title_activity_show_offer">Offers</string>
+    <string name="title_activity_daily_offer">Daily Offer</string>
+    <string name="title_activity_formular_adding_an_offer">Add an Offer</string>
+    <string name="title_activity_modify_offer">Modify my Offer</string>
+    <string name="title_activity_restaurant_profile">Restaurant Profile</string>
+    <string name="title_activity_edit_restaurant_profile">Edit Profile</string>
     <!-- login strings -->
     <string name="unknown_response">Unexpected onActivityResult response code 😐</string>
     <string name="unknown_sign_in_response">Unknown response from AuthUI sign-in 😓</string>

@@ -107,13 +107,33 @@
         </activity>
         <activity
             android:name=".OwnerActivityEditRestaurantProfile"
-            android:label="Restaurant Profile"
+            android:label="Edit Restaurant Profile"
             android:parentActivityName=".OwnerActivityRestaurantProfile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Base">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OwnerActivityRestaurantProfile" />
+        </activity>
+        <activity
+            android:name=".OwnerActivityShowOffers"
+            android:label="Show Offers"
+            android:parentActivityName=".OwnerActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OwnerActivityMain" />
+        </activity>
+        <activity
+            android:name=".OwnerActivityAddOffer"
+            android:label="Add Offer"
+            android:parentActivityName=".OwnerActivityShowOffers"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OwnerActivityShowOffers" />
         </activity>
     </application>
     <meta-data

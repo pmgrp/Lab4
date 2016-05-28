@@ -94,8 +94,10 @@ public class UserFragmentShowOffers extends Fragment {
         if (mLastLocation != null) {
             //compute distance in meters in distance[0]
             for (int i = 0; i < offers.size(); i++) {
+                float dist[] = {0,0,0};
                 Location.distanceBetween(mLastLocation.getLatitude(), mLastLocation.getLongitude(),
-                        offers.get(i).getRestaurantLatitude(), offers.get(i).getRestaurantLongitude(), offers.get(i).distance);
+                        offers.get(i).getRestaurantLatitude(), offers.get(i).getRestaurantLongitude(), dist);
+                        offers.get(i).distance = dist[0];
             }
         }
 

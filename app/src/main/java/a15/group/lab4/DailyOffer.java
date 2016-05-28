@@ -14,7 +14,7 @@ public class DailyOffer {
     private String photo;
     private int price;
     private int availability;
-    float distance[] = {0,0,0};
+    float distance = 0;
 
     //default constructor
     public DailyOffer() {
