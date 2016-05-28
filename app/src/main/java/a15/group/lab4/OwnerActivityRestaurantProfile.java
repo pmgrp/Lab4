@@ -26,10 +26,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
-public class OwnerActivityRestaurantProfile extends BaseActivity {
+public class OwnerActivityRestaurantProfile extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser fUser;
+    private FirebaseDatabase database;
+    private DatabaseReference mRef;
+    private ValueEventListener restaurantFieldsListener;
     private Restaurant restaurant;
     private TextView restaurantName;
     private TextView restaurantPhone;
@@ -43,19 +47,25 @@ public class OwnerActivityRestaurantProfile extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser fUser = firebaseAuth.getCurrentUser();
+                fUser = firebaseAuth.getCurrentUser();
                 if(fUser == null){
                     //go back to main activity if user is not logged in
                     Intent in = new Intent(OwnerActivityRestaurantProfile.this, ActivityMain.class);
                     startActivity(in);
                 }
+                else{
+                    populateView();
+                }
             }
         };
 
-        ValueEventListener restaurantFieldsListener = new ValueEventListener() {
+        restaurantFieldsListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get restaurant object and use the values to update the UI
@@ -92,6 +102,9 @@ public class OwnerActivityRestaurantProfile extends BaseActivity {
             }
         };
 
+    }
+
+    private void populateView(){
         setContentView(R.layout.owner_activity_restaurant_profile);
         //toolbar
         //to add toolbar with back arrow
@@ -106,12 +119,11 @@ public class OwnerActivityRestaurantProfile extends BaseActivity {
         restaurantPiva = (TextView) findViewById(R.id.restaurantIVA);
         restaurantPhoto = (ImageView) findViewById(R.id.restaurant_photo);
 
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+        mRef = database.getReference();
 
         //here fetch data from database
         //showProgressDialog();
-        mRef.child("restaurants").child(mAuth.getCurrentUser().getUid()).addValueEventListener(restaurantFieldsListener);
-
+        mRef.child("restaurants").child(fUser.getUid()).addValueEventListener(restaurantFieldsListener);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,6 +160,9 @@ public class OwnerActivityRestaurantProfile extends BaseActivity {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+        }
+        if(restaurantFieldsListener != null){
+            mRef.child("restaurants").child(fUser.getUid()).removeEventListener(restaurantFieldsListener);
         }
     }
 

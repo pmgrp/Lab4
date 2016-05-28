@@ -5,37 +5,86 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RadioButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class OwnerActivityMain extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser fUser;
+    private FirebaseDatabase database;
+    private DatabaseReference mRef;
+    private String userId;
+    private boolean isRestaurantSet = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser fUser = firebaseAuth.getCurrentUser();
+                fUser = firebaseAuth.getCurrentUser();
                 if(fUser == null){
                     //go back to main activity if user is not logged in
                     Intent in = new Intent(OwnerActivityMain.this, ActivityMain.class);
                     startActivity(in);
                 }
+                else{
+                    checkRestaurant();
+                }
             }
         };
+    }
+
+    private void checkRestaurant(){
+        //here check if user infos are in database
+        mRef = database.getReference();
+        userId = fUser.getUid();
+        mRef.child("restaurants").child(userId).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //if user infos are not present display form to fill data
+                        if (!dataSnapshot.exists()) {
+                            isRestaurantSet = false;
+                        }
+                        else if(dataSnapshot.exists()){
+                            isRestaurantSet = true;
+                        }
+                        populateView();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("TAG", "getUser:onCancelled", databaseError.toException());
+                    }
 
 
+                });
+
+    }
+
+
+    private void populateView(){
         setContentView(R.layout.owner_activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,14 +92,20 @@ public class OwnerActivityMain extends AppCompatActivity {
 
 
 
-    /*
-    public void showReservations(View view) {
 
-        Intent show_reservations = new Intent(this, ActivityShowReservations.class);
-        startActivity(show_reservations);
+    public void onShowReservationsClicked(View view) {
+
+        //Intent show_reservations = new Intent(this, ActivityShowReservations.class);
+        //startActivity(show_reservations);
     }
-    */
-    public void openRestaurantProfile(View view) {
+
+    public void onDailyOffersClicked(View view) {
+
+
+    }
+
+
+    public void onRestaurantProfileClicked(View view) {
 
         Intent in = new Intent(this, OwnerActivityRestaurantProfile.class);
         startActivity(in);

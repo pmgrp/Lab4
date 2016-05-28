@@ -24,7 +24,9 @@ public class ActivityAddUserInfo extends BaseActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase database;
     private DatabaseReference mRef;
+    private FirebaseUser fUser;
     private String userId;
     private RadioButton customer;
     private RadioButton owner;
@@ -39,15 +41,18 @@ public class ActivityAddUserInfo extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                FirebaseUser fUser = firebaseAuth.getCurrentUser();
+                fUser = firebaseAuth.getCurrentUser();
                 if (fUser != null) {
                     // User is signed in
                     Log.d("TAG", "onAuthStateChanged:signed_in_activity_add_user_info:" + fUser.getUid());
+                    populateView();
                 } else {
                     // User is signed out
                     Log.d("TAG", "onAuthStateChanged:signed_out");
@@ -57,11 +62,16 @@ public class ActivityAddUserInfo extends BaseActivity {
             }
         };
 
+
+    }
+
+
+    private void populateView(){
         //show a wait dialog while fetching data
         showProgressDialog();
         //here check if user infos are in database
-        mRef = FirebaseDatabase.getInstance().getReference();
-        userId = mAuth.getCurrentUser().getUid();
+        mRef = database.getReference();
+        userId = fUser.getUid();
         mRef.child("users").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -92,8 +102,6 @@ public class ActivityAddUserInfo extends BaseActivity {
 
 
                 });
-
-
     }
 
     public void saveUserData(View view){
@@ -114,8 +122,8 @@ public class ActivityAddUserInfo extends BaseActivity {
         }
         user.setName(uName);
         user.setSurname(uSurname);
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            ref.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            mRef = database.getReference();
+            mRef.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){

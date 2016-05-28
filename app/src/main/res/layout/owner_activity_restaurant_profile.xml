@@ -38,8 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:src="@drawable/anon_user_48dp"
-            android:scaleType="fitCenter"
-            android:onClick="onImageViewClick"/>
+            android:scaleType="fitCenter"/>
 
         <TextView
             android:layout_width="match_parent"

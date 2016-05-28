@@ -29,13 +29,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class ActivityMain extends AppCompatActivity {
 
     //request code for login
-    Button mSignIn;
-    EditText mEmail;
-    EditText mPassword;
-    RadioButton mCustomer;
-    RadioButton mOwner;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser fUser;
+    private EditText mEmail;
+    private EditText mPassword;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,26 +44,15 @@ public class ActivityMain extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                fUser = firebaseAuth.getCurrentUser();
+                if (fUser != null) {
                     // User is signed in
-                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d("TAG", "onAuthStateChanged:signed_in:" + fUser.getUid());
                     addUserInfo();
                 } else {
                     // User is signed out
                     Log.d("TAG", "onAuthStateChanged:signed_out");
-                    //set layout file
-                    setContentView(R.layout.activity_main);
-                    //the email
-                    mEmail = (EditText) findViewById(R.id.user_email);
-                    //the password
-                    mPassword = (EditText) findViewById(R.id.user_password);
-                    //Customer radio
-                    mCustomer = (RadioButton) findViewById(R.id.radio_customer);
-                    //Owner radio
-                    mOwner = (RadioButton) findViewById(R.id.radio_owner);
-                    //the sign in button
-                    mSignIn = (Button) findViewById(R.id.sign_in);
+                    populateView();
                 }
 
 
@@ -74,6 +61,16 @@ public class ActivityMain extends AppCompatActivity {
         };
 
     }
+
+    private void populateView(){
+        //set layout file
+        setContentView(R.layout.activity_main);
+        //the email
+        mEmail = (EditText) findViewById(R.id.user_email);
+        //the password
+        mPassword = (EditText) findViewById(R.id.user_password);
+    }
+
 
     //function related to signin button
     public void signIn(View view) {

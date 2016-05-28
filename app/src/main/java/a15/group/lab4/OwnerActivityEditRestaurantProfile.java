@@ -50,9 +50,12 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseUser fUser;
+    private FirebaseDatabase database;
     private DatabaseReference mRef;
     private FirebaseStorage storage;
     private StorageReference storageRef;
+    private ValueEventListener restaurantFieldsListener;
     private Restaurant restaurant;
     private EditText restaurantName;
     private EditText restaurantPhone;
@@ -69,23 +72,27 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //manage login part
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser fUser = firebaseAuth.getCurrentUser();
+                fUser = firebaseAuth.getCurrentUser();
                 if (fUser == null) {
                     //go back to main activity if user is not logged in
                     Intent in = new Intent(OwnerActivityEditRestaurantProfile.this, ActivityMain.class);
                     startActivity(in);
                 }
+                else{
+                    populateView();
+                }
             }
         };
 
         //This listener Fill in fields when data changes
-        ValueEventListener restaurantFieldsListener = new ValueEventListener() {
+        restaurantFieldsListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get restaurant object and use the values to update the UI
@@ -107,8 +114,6 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                     }
                     // ...
                 }
-                //there is no restaurant set for this owner
-                hideProgressDialog();
             }
 
             @Override
@@ -119,7 +124,9 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
             }
         };
 
+    }
 
+    private void populateView(){
         setContentView(R.layout.owner_activity_edit_restaurant_profile);
         //toolbar
         //to add toolbar with back arrow
@@ -134,16 +141,13 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         restaurantPiva = (EditText) findViewById(R.id.restaurantIVAField);
         restaurantPhoto = (ImageView) findViewById(R.id.restaurant_photo);
 
-        mRef = FirebaseDatabase.getInstance().getReference();
-
-        //database reference
+        //storage
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReferenceFromUrl("gs://lab4-1318.appspot.com");
 
         //here fetch data from database
-        //showProgressDialog();
-        mRef.child("restaurants").child(mAuth.getCurrentUser().getUid()).addValueEventListener(restaurantFieldsListener);
-
+        mRef = database.getReference();
+        mRef.child("restaurants").child(fUser.getUid()).addValueEventListener(restaurantFieldsListener);
     }
 
     public void saveRestaurantData(View view) {
@@ -186,7 +190,7 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             currentPhoto.compress(Bitmap.CompressFormat.JPEG, 90, baos);
             byte[] data = baos.toByteArray();
-            StorageReference restaurantRef = storageRef.child(mAuth.getCurrentUser().getUid()).child("restaurant_photo.jpg");
+            StorageReference restaurantRef = storageRef.child(fUser.getUid()).child("restaurant_photo.jpg");
             UploadTask uploadTask = restaurantRef.putBytes(data);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -200,7 +204,6 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     restaurant.setRestaurantPhoto(downloadUrl.toString());
-                    currentPhoto.recycle();
                     currentPhoto = null;
                     uploadRestaurantProfile();
                 }
@@ -213,7 +216,7 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
     }
 
     public void uploadRestaurantProfile(){
-        mRef.child("restaurants").child(mAuth.getCurrentUser().getUid()).setValue(restaurant).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mRef.child("restaurants").child(fUser.getUid()).setValue(restaurant).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //hideProgressDialog();
@@ -266,6 +269,9 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+        }
+        if(restaurantFieldsListener != null){
+            mRef.child("restaurants").child(fUser.getUid()).removeEventListener(restaurantFieldsListener);
         }
     }
 }
