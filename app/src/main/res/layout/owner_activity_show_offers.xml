@@ -14,18 +14,14 @@
         app:popupTheme="@style/Theme.AppCompat">
     </android.support.v7.widget.Toolbar>
 
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/grid_view"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/offers_grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:numColumns="auto_fit"
-    android:verticalSpacing="10dp"
-    android:horizontalSpacing="10dp"
-    android:stretchMode="columnWidth"
-    android:gravity="center"
     android:layout_below="@id/toolbar"
-    />
+    tools:listitem="@layout/owner_offer_item">
+
+</android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -34,8 +30,9 @@
         android:layout_gravity="bottom|end"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_alignBottom="@id/offers_grid"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
         android:src="@android:drawable/ic_input_add" />
 
     </RelativeLayout>

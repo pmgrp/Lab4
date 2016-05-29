@@ -15,24 +15,22 @@
     </android.support.v7.widget.Toolbar>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
     tools:context=".ActivityAddOffer"
     android:padding="16dp"
-    android:layout_below="@id/toolbar">
+    android:layout_below="@id/toolbar"
+    android:layout_height="match_parent">
 
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:src="@mipmap/daily_offer"
         android:layout_gravity="center_horizontal"
         android:id="@+id/add_offer_photo"
-        android:onClick="onImageViewClick"
-        android:src="@mipmap/daily_offer"/>
+        android:onClick="onImageViewClick"/>
     <TextView
         android:id="@+id/add_offer_name_title"
         android:layout_marginTop="20dp"

@@ -3,6 +3,7 @@ package a15.group.lab4;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -39,7 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerActivityAddOffer extends AppCompatActivity {
+public class OwnerActivityAddOffer extends BaseActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -50,6 +51,7 @@ public class OwnerActivityAddOffer extends AppCompatActivity {
     private StorageReference storageRef;
     private Restaurant restaurant;
     private String restaurantId;
+    private String offerId;
     private DailyOffer offer;
     private NumberPicker pickerPrice;
     private NumberPicker pickerAvailability;
@@ -82,8 +84,38 @@ public class OwnerActivityAddOffer extends AppCompatActivity {
             }
         };
 
+        populateView();
 
 
+    }
+
+
+    private void checkRestaurant(){
+        //here check if user infos are in database
+        mRef = database.getReference();
+        String userId = fUser.getUid();
+        mRef.child("restaurants").child(userId).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //if user infos are not present display form to fill data
+                        if (!dataSnapshot.exists()) {
+                            Intent in = new Intent(OwnerActivityAddOffer.this, OwnerActivityMain.class);
+                            startActivity(in);
+                        }
+                        else {
+                            restaurantId = dataSnapshot.getKey();
+                            restaurant = dataSnapshot.getValue(Restaurant.class);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("TAG", "getUser:onCancelled", databaseError.toException());
+                    }
+
+
+                });
 
     }
 
@@ -123,68 +155,38 @@ public class OwnerActivityAddOffer extends AppCompatActivity {
 
     }
 
-
-    private void checkRestaurant(){
-        //here check if user infos are in database
-        mRef = database.getReference();
-        String userId = fUser.getUid();
-        mRef.child("restaurants").child(userId).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //if user infos are not present display form to fill data
-                        if (!dataSnapshot.exists()) {
-                            Intent in = new Intent(OwnerActivityAddOffer.this, OwnerActivityMain.class);
-                            startActivity(in);
-                        }
-                        else {
-                            restaurantId = dataSnapshot.getKey();
-                            restaurant = dataSnapshot.getValue(Restaurant.class);
-                            populateView();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("TAG", "getUser:onCancelled", databaseError.toException());
-                    }
-
-
-                });
-
-    }
-
     public void saveOfferData(View view) {
 
         offer = new DailyOffer();
         offer.setName(offerName.getText().toString());
         offer.setDescription(offerDescription.getText().toString());
         offer.setPrice(pickerPrice.getValue());
-        offer.setAvailability(pickerPrice.getValue());
+        offer.setAvailability(pickerAvailability.getValue());
         offer.setRestaurantID(restaurantId);
         offer.setRestaurantName(restaurant.getRestaurantName());
         offer.setRestaurantLatitude(restaurant.getLatitude());
         offer.setRestaurantLongitude(restaurant.getLongitude());
+        showProgressDialog();
         uploadOffer();
 
 
-        Intent intent = new Intent(this, OwnerActivityShowOffers.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+
 
     }
 
-    public void uploadOffer(){
-        mRef.child("offers").push().setValue(offer).addOnCompleteListener(new OnCompleteListener<Void>() {
+    private void uploadOffer(){
+        offerId = mRef.child("offers").push().getKey();
+        mRef.child("offers").child(offerId).setValue(offer).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //hideProgressDialog();
                 if(task.isSuccessful()){
-                    Toast.makeText(OwnerActivityAddOffer.this, "Offer has been saved",
-                            Toast.LENGTH_SHORT).show();
+                    uploadOfferImage();
+
+                    /*
                     Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityMain.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    startActivity(intent);*/
                 }
                 else{
                     Toast.makeText(OwnerActivityAddOffer.this, "An error occurred please try again",
@@ -193,6 +195,51 @@ public class OwnerActivityAddOffer extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void uploadOfferImage(){
+        if(currentPhoto != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            currentPhoto.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+            byte[] data = baos.toByteArray();
+            StorageReference offerRef = storageRef.child(offerId).child("offer_photo.jpg");
+            UploadTask uploadTask = offerRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Toast.makeText(OwnerActivityAddOffer.this, "Error in uploading image, please try again",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    String photoUrl = downloadUrl.toString();
+                    offer.setPhoto(photoUrl.toString());
+                    mRef.child("restaurant-offers").child(fUser.getUid()).child(offerId).setValue(offer);
+                    mRef.child("offers").child(offerId).child("photo").setValue(photoUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                currentPhoto = null;
+                                hideProgressDialog();
+                                Toast.makeText(OwnerActivityAddOffer.this, "Offer has been saved",
+                                        Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityShowOffers.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(OwnerActivityAddOffer.this, "Some error occurred please try again",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                }
+            });
+        }
     }
 
     public void onImageViewClick(View view){

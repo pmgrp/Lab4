@@ -10,13 +10,17 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -30,7 +34,10 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase databse;
+    private DatabaseReference mRef;
     private FirebaseUser fUser;
+    private FirebaseRecyclerAdapter mAdapter;
 
     ArrayList<DailyOffer> dailyOffers;
     AdapterShowOffers adapter;
@@ -39,6 +46,8 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        databse = FirebaseDatabase.getInstance();
+
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -50,10 +59,13 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
                     Intent in = new Intent(OwnerActivityShowOffers.this, ActivityMain.class);
                     startActivity(in);
                 } else {
-                    populateView();
+
                 }
             }
         };
+
+        populateView();
+
     }
 
     private void populateView(){
@@ -72,11 +84,29 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
             }
         });
 
+        mRef = databse.getReference().child("restaurant-offers").child(mAuth.getCurrentUser().getUid());
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.offers_grid);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        mAdapter = new FirebaseRecyclerAdapter<DailyOffer, OwnerDishHolder>(
+                DailyOffer.class, R.layout.owner_offer_item, OwnerDishHolder.class, mRef) {
+            @Override
+            public void populateViewHolder(OwnerDishHolder viewHolder, DailyOffer offer, int position) {
+                viewHolder.setName(offer.getName());
+                viewHolder.setImage(offer.getPhoto());
+            }
+        };
 
-        //make grid view
-        GridView gridView = (GridView) findViewById(R.id.grid_view);
-        //adapter = new AdapterShowOffers(dailyOffers);
-        //gridView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
+
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mAdapter != null) {
+            mAdapter.cleanup();
+        }
     }
 
     @Override
