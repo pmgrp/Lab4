@@ -1,15 +1,21 @@
 package a15.group.lab4;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -82,6 +88,19 @@ public class UserActivityShowUserProfile extends BaseActivity {
                 userPhone.setText(user.getPhone());
                 userBirthday.setText(user.getBirthday());
                 userEmail.setText(user.getEmail());
+                imagePath = user.getPhoto();
+                Bitmap bitmap = imagePicker.loadImageFromStorage(imagePath);
+
+                userPhoto.setImageBitmap(bitmap);
+                //if an image has been shot but not saved get it
+                /*if(savedInstanceState != null){
+                    tempImageUri = savedInstanceState.getParcelable("TempUri");
+                }
+                if(tempImageUri != null){
+                    bitmap = imagePicker.getImageResized(this, tempImageUri);
+                    if(userPhoto!=null)
+                        userPhoto.setImageBitmap(bitmap);
+                }*/
                 //mettre les *** pour le password
                 hideProgressDialog();
                 // ...
@@ -111,7 +130,7 @@ public class UserActivityShowUserProfile extends BaseActivity {
         userBirthday = (EditText) findViewById(R.id.user_birthday);
         userEmail = (EditText) findViewById(R.id.user_email);
         userPassword = (EditText) findViewById(R.id.user_password);
-
+        userPhoto = (ImageView) findViewById(R.id.user_photo);
 
     }
 
@@ -122,6 +141,9 @@ public class UserActivityShowUserProfile extends BaseActivity {
         String birthday = userBirthday.getText().toString();
         String email = userEmail.getText().toString();
         String password = userPassword.getText().toString();
+        ImageView photo = (ImageView) findViewById(R.id.user_photo);
+        Bitmap bitmap = ((BitmapDrawable)photo.getDrawable()).getBitmap();
+        imagePath = imagePicker.saveToInternalStorage(bitmap,this);
         if(name.isEmpty() || surname.isEmpty()){
             Toast.makeText(UserActivityShowUserProfile.this, "Fill at least Name and Surname Fields",
                     Toast.LENGTH_SHORT).show();
@@ -136,6 +158,7 @@ public class UserActivityShowUserProfile extends BaseActivity {
         user.setBirthday(birthday);
         user.setEmail(email);
         user.setPassword(password);
+        user.setPhoto(imagePath);
         showProgressDialog();
         mRef.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -178,6 +201,104 @@ public class UserActivityShowUserProfile extends BaseActivity {
                 break;
         }
     }
+
+
+    public void popupChangeEmail(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityShowUserProfile.this);
+        builder.setTitle("Modify Your Email Address");
+
+        LinearLayout layout= new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        final TextView currentEmail = new TextView(this);
+        final EditText newEmail = new EditText(this);
+
+        currentEmail.setText("current email address");
+        currentEmail.setSingleLine();
+        newEmail.setHint("New email address");
+        newEmail.setSingleLine();
+        newEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+        layout.addView(currentEmail);
+        layout.addView(newEmail);
+        builder.setView(layout);
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+
+        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getBaseContext(), "Email modified with success", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.show();
+    }
+
+
+    public void popupChangePassword(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityShowUserProfile.this);
+        builder.setTitle("Modify Your Password");
+
+        LinearLayout layout= new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        final EditText oldPassword = new EditText(this);
+        final EditText newPassword = new EditText(this);
+        final EditText confirmNewPassword = new EditText(this);
+
+        oldPassword.setHint("Your old password");
+        newPassword.setHint("Your new password");
+        confirmNewPassword.setHint("Confirm your new password");
+        oldPassword.setSingleLine();
+        newPassword.setSingleLine();
+        confirmNewPassword.setSingleLine();
+        oldPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        newPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        confirmNewPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        layout.addView(oldPassword);
+        layout.addView(newPassword);
+        layout.addView(confirmNewPassword);
+        builder.setView(layout);
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (verifyOldPassword()) {
+                    if ( newPassword.getText().toString().equals(confirmNewPassword.getText().toString()) ) {
+                        Toast.makeText(getBaseContext(), "Password modified with success", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getBaseContext(), "You didn't write the same new password", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Your old password is incorrect", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        builder.show();
+    }
+
+    public boolean verifyOldPassword() {
+
+        return true;
+    }
+
+
 
 
     @Override

@@ -25,18 +25,11 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-        <!--<TextView
-            style="@style/Base.TextAppearance.AppCompat.Headline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:drawableTop="@drawable/firebase_auth_120dp"
-            android:text="@string/signed_in_header" />-->
 
                 <ImageView
                     android:id="@+id/user_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/firebase_auth_120dp"
                     android:onClick="modifyPhoto"
@@ -74,16 +67,18 @@
                     android:id="@+id/user_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/Widget.AppCompat.EditText"
-                    android:hint="Email Address"
-                    android:editable="false"/>
+                    android:text="Modify your email address"
+                    android:textColor="@color/button_color"
+                    android:editable="false"
+                    android:onClick="popupChangeEmail"/>
                 <EditText
                     android:id="@+id/user_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/Widget.AppCompat.EditText"
-                    android:hint="Password"
-                    android:editable="false"/>
+                    android:text="Modify your password"
+                    android:textColor="@color/button_color"
+                    android:editable="false"
+                    android:onClick="popupChangePassword"/>
 
 
         <LinearLayout
@@ -92,6 +87,7 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
                 <Button
+                    android:id="@+id/update_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
