@@ -157,6 +157,7 @@ public class DataGen {
         res1.setLikeCount(2453);
         res1.setRestaurantPiva("1234567865");
 
+
         Restaurant res2 = new Restaurant();
         uri = Uri.parse("android.resource://a15.group.lab4/drawable/restaurant_paris");
         imagePath = uri.toString();

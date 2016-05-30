@@ -20,6 +20,7 @@ public class Restaurant {
     private String restaurantPiva;
     private String restaurantPhoto;
     private int likeCount;
+    private boolean liked;
 
     //public ArrayList<Day> openingDays;
     //public ArrayList<String> reservations; //those are ArrayLists of strings because they have only the IDs
@@ -45,6 +46,7 @@ public class Restaurant {
         //this.dailyOffers = null;
         //this.comments = null;
         this.likeCount = 0;
+        this.liked = false;
     }
 
 
@@ -52,47 +54,48 @@ public class Restaurant {
 
 
     public String getID() {
-        return ID;
+        return this.ID;
     }
 
-    public int getLikeCount() { return likeCount; }
+    public int getLikeCount() { return this.likeCount; }
 
     public double getLatitude() {
-        return latitude;
+        return this.latitude;
     }
 
     public double getLongitude() {
-        return longitude;
+        return this.longitude;
     }
 
     public String getRestaurantName() {
-        return restaurantName;
+        return this.restaurantName;
     }
 
     public String getRestaurantPhone() {
-        return restaurantPhone;
+        return this.restaurantPhone;
     }
 
     public String getRestaurantAddress() {
-        return restaurantAddress;
+        return this.restaurantAddress;
     }
 
     public String getRestaurantEmail() {
-        return restaurantEmail;
+        return this.restaurantEmail;
     }
 
     public String getRestaurantWebsite() {
-        return restaurantWebsite;
+        return this.restaurantWebsite;
     }
 
     public String getRestaurantPiva() {
-        return restaurantPiva;
+        return this.restaurantPiva;
     }
-
 
     public String getRestaurantPhoto() {
-        return restaurantPhoto;
+        return this.restaurantPhoto;
     }
+
+    public boolean getLiked() {return this.liked;}
 
 
     //setter
@@ -138,10 +141,11 @@ public class Restaurant {
         this.restaurantPiva = restaurantPiva;
     }
 
-
     public void setRestaurantPhoto(String restaurantPhoto) {
         this.restaurantPhoto = restaurantPhoto;
     }
+
+    public void setLiked(boolean liked) {this.liked = liked;}
 
     /*
 

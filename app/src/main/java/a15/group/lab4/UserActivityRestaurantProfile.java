@@ -1,6 +1,7 @@
 package a15.group.lab4;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,6 +19,7 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
     Restaurant restaurant;
     ImageView imageView;
     TextView textView;
+    ImageView likeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,31 +57,43 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
             textView.setText(restaurant.getRestaurantPiva());
 
             textView = (TextView) findViewById(R.id.likeStatText);
-            textView.setText(Integer.toString(restaurant.getLikeCount()) + " people like this restaurant.");
+            textView.setText("+ " + Integer.toString(restaurant.getLikeCount()));
+
+            likeButton = (ImageView) findViewById(R.id.likeButton);
+            if (restaurant.getLiked()) {
+                likeButton.setBackgroundColor(getResources().getColor(R.color.button_color));
+            } else {
+                likeButton.setBackgroundColor(Color.TRANSPARENT);
+            }
         }
 
-        final Button likeButton = (Button) findViewById(R.id.likeButton);
-        final TextView likeStatText = (TextView) findViewById(R.id.likeStatText);
-
-        final String textBeforeLike = likeStatText.getText().toString();
-
-
-        likeButton.setTag(1);
-        likeButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                final int status = (Integer) v.getTag();
-                if (status == 1) {
-                    likeStatText.setText("You and " + Integer.toString(restaurant.getLikeCount()) + " people like this restaurant.");
-                    likeButton.setText("Unlike this Restaurant");
-                    v.setTag(0); //unlike
-                } else {
-                    likeButton.setText("Like this Restaurant");
-                    likeStatText.setText(textBeforeLike);
-                    v.setTag(1); //like
-                }
-            }
-        });
     }
+
+    public void likeTheRestaurant(View view) {
+        if (restaurant.getLiked()) {
+            likeButton.setBackgroundColor(Color.TRANSPARENT);
+            restaurant.setLiked(false);
+            saveInGson();
+        } else {
+            likeButton.setBackgroundColor(getResources().getColor(R.color.button_color));
+            restaurant.setLiked(true);
+            saveInGson();
+        }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        saveInGson();
+    }
+
+    private void saveInGson() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(restaurant);
+        editor.putString("restaurant", json);
+        editor.commit();
+    }
+
 }

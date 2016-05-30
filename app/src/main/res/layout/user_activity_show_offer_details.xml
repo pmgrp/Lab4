@@ -21,45 +21,14 @@
         </android.support.v7.widget.Toolbar>
 
         <ImageView
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:id="@+id/offer_details_image"
             android:layout_gravity="center_horizontal"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/chicken"
             android:layout_below="@id/toolbar_offer_details"
             android:scaleType="centerCrop"
             android:layout_centerInParent="true"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="20dp"
-            android:id="@+id/offer_details_offer_name"
-            android:hint="@string/hint_offer_name"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:layout_below="@id/offer_details_image"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"/>
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="20dp"
-            android:id="@+id/offer_details_price"
-            android:hint="@string/hint_price"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:layout_below="@+id/offer_details_image"
-            android:layout_alignParentRight="true"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"/>
 
 
 
@@ -72,12 +41,12 @@
             android:text="@string/description_offer"
             android:textSize="22sp"
             android:textColor="@color/colorPrimary"
-            android:layout_below="@+id/offer_details_offer_name"/>
+            android:layout_below="@+id/offer_details_image"/>
 
         <TextView
             android:layout_below="@id/offer_description"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="130dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -91,34 +60,38 @@
 
 
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:text="@string/restaurant_details"
             android:textAlignment="center"
+            android:gravity="bottom"
             android:textStyle="bold"
+            android:textSize="20sp"
+            android:background="@drawable/restaurant_paris"
             android:textColor="@color/button_text_color"
             android:id="@+id/offer_details_button_restaurant"
-            android:background="#009dff"
+
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:onClick="goToRestaurantDescription"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:background="@mipmap/circle"
             android:text="@string/buy_button"
             android:textAlignment="center"
+            android:gravity="center_vertical"
             android:textStyle="bold"
-            android:textColor="@color/button_text_color"
+            android:textSize="20sp"
+            android:textColor="@color/button_color"
             android:id="@+id/button_buy"
-            android:background="#009dff"
+            android:clickable="true"
             android:onClick="showDateTimePicker"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

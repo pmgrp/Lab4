@@ -178,19 +178,23 @@
             android:id="@+id/myLayout"
             android:layout_below="@id/restaurantTextInfoLayout">
 
-            <Button
-                android:layout_width="125dp"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Like this Restaurant"
-                android:id="@+id/likeButton" />
+                android:layout_marginTop="50dp"
+                android:src="@mipmap/like_button_thumb"
+                android:id="@+id/likeButton"
+                android:clickable="true"
+                android:onClick="likeTheRestaurant"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/likeButton"
-                android:layout_alignParentRight="true"
-                android:text="420 people like this restaurant"
-                android:layout_marginTop="21dp"
+                android:layout_toRightOf="@id/likeButton"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:text="+ 420"
+                android:textColor="@color/cardview_dark_background"
+                android:layout_marginTop="70dp"
                 android:id="@+id/likeStatText" />
 
 

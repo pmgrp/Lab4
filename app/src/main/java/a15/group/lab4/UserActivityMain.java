@@ -45,7 +45,7 @@ public class UserActivityMain extends AppCompatActivity implements
     //spinner
     Spinner spinner;
     //used to pre
-    int current_fragment=0;
+    public int current_fragment=0;
     int spinner_position=0;
 
     @Override

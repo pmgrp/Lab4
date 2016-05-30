@@ -2,6 +2,10 @@ package a15.group.lab4;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -56,19 +60,8 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        /*
-        //final Calendar cal = Calendar.getInstance();
-        xyear = cal.get(Calendar.YEAR);
-        xmonth = cal.get(Calendar.MONTH);
-        xday = cal.get(Calendar.DAY_OF_MONTH);
-
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        */
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Gson gson = new Gson();
-
 
         String json = preferences.getString("offer", null);
 
@@ -93,18 +86,16 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
             ImageView imageView = (ImageView) findViewById(R.id.offer_details_image);
             imageView.setImageURI(Uri.parse(dailyOffer.getPhoto()));
 
-            TextView textView = (TextView) findViewById(R.id.offer_details_offer_name);
-            textView.setText(dailyOffer.getName());
-            textView = (TextView) findViewById(R.id.offer_details_price);
+            TextView textView = (TextView) findViewById(R.id.button_buy);
             textView.setText(String.format(Locale.getDefault(), "%d", dailyOffer.getPrice()) + " €");
-
             textView = (TextView) findViewById(R.id.offer_details_description);
             textView.setText(dailyOffer.getDescription());
 
-
-
-            Button button = (Button) findViewById(R.id.offer_details_button_restaurant);
-            button.setText(restaurant.getRestaurantName());
+            textView = (TextView) findViewById(R.id.offer_details_button_restaurant);
+            Resources res = getResources();
+            Bitmap bmp = imagePicker.loadImageFromStorage(restaurant.getRestaurantPhoto());
+            BitmapDrawable bd = new BitmapDrawable(res, bmp);
+            textView.setBackgroundDrawable(bd);
         }
 
 
@@ -129,7 +120,6 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         newFragment.show(getSupportFragmentManager(), "timePicker");
         newFragment = new UserFragmentDatePicker();
         newFragment.show(getSupportFragmentManager(), "datePicker");
-        //Log.d("HOUR", Integer.toString(xhour));
     }
 
     public void onTimeFragmentOkListener(){
