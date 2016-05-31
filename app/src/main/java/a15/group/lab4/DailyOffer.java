@@ -12,6 +12,7 @@ public class DailyOffer {
     private String name;
     private String description;
     private String photo;
+    private String photoThumb;
     private int price;
     private int availability;
     float distance = 0;
@@ -27,6 +28,7 @@ public class DailyOffer {
         this.name = "";
         this.description = "";
         this.photo = "";
+        this.photoThumb = "";
         this.price = -1;
         this.availability = -1;
 
@@ -62,6 +64,7 @@ public class DailyOffer {
     public String getPhoto(){
         return this.photo;
     }
+    public String getPhotoThumb(){return  this.photoThumb;}
     public int getPrice(){
         return this.price;
     }
@@ -97,6 +100,7 @@ public class DailyOffer {
     public void setPhoto(String photo){
         this.photo = photo;
     }
+    public void setPhotoThumb(String photoThumb){this.photoThumb = photoThumb;}
     public void setPrice(int price){
         this.price = price;
     }

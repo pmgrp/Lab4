@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -59,6 +60,9 @@ public class OwnerActivityAddOffer extends BaseActivity {
     private EditText offerName;
     private EditText offerDescription;
     private Bitmap currentPhoto = null;
+    private Bitmap currentThumb = null;
+    private String photoUrl;
+    private String thumbUrl;
     private static final int PICK_IMAGE_ID = 234;
 
 
@@ -176,34 +180,14 @@ public class OwnerActivityAddOffer extends BaseActivity {
 
     private void uploadOffer(){
         offerId = mRef.child("offers").push().getKey();
-        mRef.child("offers").child(offerId).setValue(offer).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                //hideProgressDialog();
-                if(task.isSuccessful()){
-                    uploadOfferImage();
-
-                    /*
-                    Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityMain.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);*/
-                }
-                else{
-                    Toast.makeText(OwnerActivityAddOffer.this, "An error occurred please try again",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-    }
-
-    private void uploadOfferImage(){
         if(currentPhoto != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             currentPhoto.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            byte[] data = baos.toByteArray();
+            currentThumb = ThumbnailUtils.extractThumbnail(currentPhoto, currentPhoto.getWidth()/8, currentPhoto.getHeight()/8);
+            byte[] dataPhoto = baos.toByteArray();
             StorageReference offerRef = storageRef.child(offerId).child("offer_photo.jpg");
-            UploadTask uploadTask = offerRef.putBytes(data);
+            //upload photo
+            UploadTask uploadTask = offerRef.putBytes(dataPhoto);
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
@@ -215,28 +199,49 @@ public class OwnerActivityAddOffer extends BaseActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    String photoUrl = downloadUrl.toString();
-                    offer.setPhoto(photoUrl.toString());
-                    mRef.child("restaurant-offers").child(fUser.getUid()).child(offerId).setValue(offer);
-                    mRef.child("offers").child(offerId).child("photo").setValue(photoUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    photoUrl = downloadUrl.toString();
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    currentThumb.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    byte[] dataThumb = baos.toByteArray();
+                    StorageReference thumbRef = storageRef.child(offerId).child("offer_thumb.jpg");
+                    //upload Thumb
+                    UploadTask thumbTask = thumbRef.putBytes(dataThumb);
+                    thumbTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                currentPhoto = null;
-                                hideProgressDialog();
-                                Toast.makeText(OwnerActivityAddOffer.this, "Offer has been saved",
-                                        Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityShowOffers.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            }
-                            else{
-                                Toast.makeText(OwnerActivityAddOffer.this, "Some error occurred please try again",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                            thumbUrl = downloadUrl.toString();
+                            offer.setPhoto(photoUrl.toString());
+                            offer.setPhotoThumb(thumbUrl.toString());
+                            mRef.child("restaurant-offers").child(fUser.getUid()).child(offerId).setValue(offer);
+                            mRef.child("offers").child(offerId).setValue(offer).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        currentPhoto = null;
+                                        //save thumbnail
+                                        hideProgressDialog();
+                                        Toast.makeText(OwnerActivityAddOffer.this, "Offer has been saved",
+                                                Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityShowOffers.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                    else{
+                                        Toast.makeText(OwnerActivityAddOffer.this, "Some error occurred please try again",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(OwnerActivityAddOffer.this, "Error in uploading image, please try again",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
             });
         }

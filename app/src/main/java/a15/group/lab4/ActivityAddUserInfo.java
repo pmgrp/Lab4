@@ -53,6 +53,7 @@ public class ActivityAddUserInfo extends BaseActivity {
                     // User is signed in
                     Log.d("TAG", "onAuthStateChanged:signed_in_activity_add_user_info:" + fUser.getUid());
                     populateView();
+
                 } else {
                     // User is signed out
                     Log.d("TAG", "onAuthStateChanged:signed_out");
@@ -69,9 +70,11 @@ public class ActivityAddUserInfo extends BaseActivity {
     private void populateView(){
         //show a wait dialog while fetching data
         showProgressDialog();
-        //here check if user infos are in database
+        //here check if user infos are in databse
         mRef = database.getReference();
+        mRef.goOnline();
         userId = fUser.getUid();
+        Log.d("CURRENT ID", userId);
         mRef.child("users").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
