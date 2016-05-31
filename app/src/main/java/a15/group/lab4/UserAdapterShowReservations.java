@@ -2,12 +2,14 @@ package a15.group.lab4;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -31,6 +33,7 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
         TextView restaurantName;
         TextView time;
         TextView status;
+        ImageView image;
 
         ReservationViewHolder(View itemView) {
             super(itemView);
@@ -39,6 +42,7 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
             restaurantName = (TextView) itemView.findViewById(R.id.reservation_card_restaurant);
             time = (TextView) itemView.findViewById(R.id.reservation_card_time);
             status = (TextView) itemView.findViewById(R.id.reservation_card_status);
+            image = (ImageView) itemView.findViewById(R.id.reservation_card_image);
         }
     }
 
@@ -60,6 +64,7 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
         reservationViewHolder.offerName.setText(reservations.get(i).getDailyOffer().getName());
         reservationViewHolder.restaurantName.setText(reservations.get(i).getDailyOffer().getRestaurantName());
         reservationViewHolder.time.setText(reservations.get(i).getDate() + " at " + reservations.get(i).getTime());
+        reservationViewHolder.image.setImageURI(Uri.parse(reservations.get(i).getDailyOffer().getPhoto()));
         int status = reservations.get(i).getStatus();
         switch (status) {
             case Reservation.ARRIVED:

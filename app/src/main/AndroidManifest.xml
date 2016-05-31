@@ -53,7 +53,7 @@
         <activity
             android:name=".UserActivityShowReservationDetails"
             android:label="@string/title_show_reservation_details"
-            android:parentActivityName=".UserActivityMain"
+            android:parentActivityName="UserActivityShowReservationDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data

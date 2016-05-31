@@ -24,14 +24,16 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_activity_restaurant_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_restaurant_profile);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Gson gson = new Gson();
-
+        setContentView(R.layout.user_activity_restaurant_profile);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_restaurant_profile);
         String json = preferences.getString("restaurant", null);
+        restaurant = gson.fromJson(json, Restaurant.class);
+        toolbar.setTitle(restaurant.getRestaurantName());
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (json != null) {
             restaurant = gson.fromJson(json, Restaurant.class);
 

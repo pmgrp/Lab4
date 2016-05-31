@@ -138,7 +138,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
             //create new reservation
             myReservation = new Reservation();
             myReservation.setCustomer(dummyCustomer);
-            myReservation.setDate(Integer.toString(xday) + "-" + Integer.toString(xmonth) +"-" + Integer.toString(xyear));
+            myReservation.setDate(Integer.toString(xday) + "/" + Integer.toString(xmonth) +"/" + Integer.toString(xyear));
 
             String tempMin = Integer.toString(xminute);
             String tempMin2;
