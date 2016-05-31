@@ -92,10 +92,10 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
             textView.setText(dailyOffer.getDescription());
 
             textView = (TextView) findViewById(R.id.offer_details_button_restaurant);
-            Resources res = getResources();
-            Bitmap bmp = imagePicker.loadImageFromStorage(restaurant.getRestaurantPhoto());
-            BitmapDrawable bd = new BitmapDrawable(res, bmp);
-            textView.setBackgroundDrawable(bd);
+            textView.setText(restaurant.getRestaurantName());
+            imageView = (ImageView) findViewById(R.id.offer_details_restaurant_image);
+            imageView.setImageURI(Uri.parse(restaurant.getRestaurantPhoto()));
+
         }
 
 

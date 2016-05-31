@@ -63,7 +63,7 @@
         <activity
             android:name=".UserActivityRestaurantProfile"
             android:label="Restaurant Profile"
-            android:parentActivityName=".UserActivityMain"
+            android:parentActivityName=".UserActivityRestaurantProfile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Base">
             <meta-data

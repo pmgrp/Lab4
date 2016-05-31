@@ -55,17 +55,17 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
             textView = (TextView) findViewById(R.id.restaurant_profile_restaurant_website);
             textView.setText(restaurant.getRestaurantWebsite());
 
-            textView = (TextView) findViewById(R.id.restaurant_profile_restaurant_iva);
-            textView.setText(restaurant.getRestaurantPiva());
+            /*textView = (TextView) findViewById(R.id.restaurant_profile_restaurant_iva);
+            textView.setText(restaurant.getRestaurantPiva());*/
 
             textView = (TextView) findViewById(R.id.likeStatText);
             textView.setText("+ " + Integer.toString(restaurant.getLikeCount()));
 
             likeButton = (ImageView) findViewById(R.id.likeButton);
             if (restaurant.getLiked()) {
-                likeButton.setBackgroundColor(getResources().getColor(R.color.button_color));
+                likeButton.setImageResource(R.mipmap.like_blue_thumb);
             } else {
-                likeButton.setBackgroundColor(Color.TRANSPARENT);
+                likeButton.setImageResource(R.mipmap.like_button_thumb);
             }
         }
 
@@ -73,11 +73,11 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
 
     public void likeTheRestaurant(View view) {
         if (restaurant.getLiked()) {
-            likeButton.setBackgroundColor(Color.TRANSPARENT);
+            likeButton.setImageResource(R.mipmap.like_button_thumb);
             restaurant.setLiked(false);
             saveInGson();
         } else {
-            likeButton.setBackgroundColor(getResources().getColor(R.color.button_color));
+            likeButton.setImageResource(R.mipmap.like_blue_thumb);
             restaurant.setLiked(true);
             saveInGson();
         }

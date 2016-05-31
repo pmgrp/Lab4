@@ -2,6 +2,7 @@ package a15.group.lab4;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -40,7 +41,7 @@ public class UserActivityMain extends AppCompatActivity implements
     DrawerLayout mDrawerLayout;
     ListView mDrawerList;
     ActionBarDrawerToggle mDrawerToggle;
-    int mDrawerPosition;
+    int mDrawerPosition = 0;
     boolean mDrawerClick;
     //spinner
     Spinner spinner;
@@ -56,6 +57,10 @@ public class UserActivityMain extends AppCompatActivity implements
             current_fragment = savedInstanceState.getInt("current_fragment");
             spinner_position = savedInstanceState.getInt("spinner_position");
         }
+
+        SharedPreferences sharedPref = getSharedPreferences("PrefsMain", MODE_PRIVATE);
+        spinner_position = sharedPref.getInt("spinner_pos", -1);
+
         setContentView(R.layout.user_activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_spinner);
         setSupportActionBar(toolbar);
@@ -79,6 +84,7 @@ public class UserActivityMain extends AppCompatActivity implements
         mDrawerListItems = getResources().getStringArray(R.array.drawer_options);
         //set drawer adapter
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerListItems));
+        mDrawerList.setSelection(mDrawerPosition);
         //set listener
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -118,15 +124,20 @@ public class UserActivityMain extends AppCompatActivity implements
          *
          * */
         spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setVerticalScrollbarPosition(spinner_position);
+
         final ArrayAdapter spinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.spinner_options, R.layout.user_spinner_item);
         spinnerAdapter.setDropDownViewResource(R.layout.user_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
+        spinner.setSelection(spinner_position);
         if (spinner != null) {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                     //the fragment that contains the offers
                     UserFragmentShowOffers fo;
+                    SharedPreferences sharedPref = getSharedPreferences("PrefsMain", 0);
+                    SharedPreferences.Editor prefEditor = sharedPref.edit();
                     switch (position) {
                         case 0:
                             //offers ordered by distance
@@ -136,7 +147,11 @@ public class UserActivityMain extends AppCompatActivity implements
                                 //fo.updateDistance();
                                 fo.sortByDistance();
                             }
-                            spinner_position = 0;
+                            //spinner_position = spinner.getSelectedItemPosition();
+                            spinner_position = spinner.getSelectedItemPosition();
+                            prefEditor.putInt("spinner_pos", spinner_position);
+                            prefEditor.commit();
+
                             break;
                         case 1:
                             //offers ordered by price
@@ -146,7 +161,10 @@ public class UserActivityMain extends AppCompatActivity implements
                                 //fo.updateDistance();
                                 fo.sortByPrice();
                             }
-                            spinner_position = 1;
+                            //spinner_position = spinner.getSelectedItemPosition();
+                            spinner_position = spinner.getSelectedItemPosition();
+                            prefEditor.putInt("spinner_pos", spinner_position);
+                            prefEditor.commit();
                             break;
                     }
                 }
@@ -165,34 +183,32 @@ public class UserActivityMain extends AppCompatActivity implements
             });
         }
 
+
         /**
          * populate view according to current fragment
          */
-        switch (current_fragment) {
+        getSupportActionBar().setTitle("Offers");
+        UserFragmentShowOffers fragment = new UserFragmentShowOffers();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment, "OFFERS").commit();
+        switch (mDrawerPosition) {
             //activity has been just created
-            case 0:
-                getSupportActionBar().setTitle("Offers");
-                UserFragmentShowOffers fragment = new UserFragmentShowOffers();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_container, fragment, "OFFERS").commit();
-                break;
             //offers fragment is the one in the view
-            case 1:
+            case 0:
                 spinner.setVisibility(View.VISIBLE);
                 getSupportActionBar().setTitle("Offers");
                 break;
             //restaurants fragment is the one in the view
-            case 2:
+            case 1:
                 spinner.setVisibility(View.GONE);
                 getSupportActionBar().setTitle("Restaurants");
                 break;
             //reservations fragment is the one in the view
-            case 3:
+            case 2:
                 spinner.setVisibility(View.GONE);
                 getSupportActionBar().setTitle("Reservations");
                 break;
             //Profile fragment is the one in the view
-            case 4:
+            case 3:
                 spinner.setVisibility(View.GONE);
                 getSupportActionBar().setTitle("Profile");
                 break;
@@ -234,7 +250,8 @@ public class UserActivityMain extends AppCompatActivity implements
                 fragment = new UserFragmentShowOffers();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_container, fragment, "OFFERS").commit();
-                current_fragment = 1;
+                current_fragment = 0;
+                mDrawerPosition = mDrawerList.getSelectedItemPosition();
                 break;
             case 1:
                 //mDrawerLayout.closeDrawer(mDrawerList);
@@ -245,7 +262,8 @@ public class UserActivityMain extends AppCompatActivity implements
                 fragment = new UserFragmentShowRestaurants();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_container, fragment, "RESTAURANTS").commit();
-                current_fragment = 2;
+                current_fragment = 1;
+                mDrawerPosition = mDrawerList.getSelectedItemPosition();
                 break;
 
             case 2:
@@ -255,14 +273,16 @@ public class UserActivityMain extends AppCompatActivity implements
                 fragment = new UserFragmentShowReservations();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_container, fragment, "RESERVATIONS").commit();
-                current_fragment = 3;
+                current_fragment = 2;
+                mDrawerPosition = mDrawerList.getSelectedItemPosition();
                 break;
             case 3:
                 spinner.setVisibility(View.GONE);
                 mDrawerList.setSelection(3);
                 getSupportActionBar().setTitle("Profile");
                 startActivity(new Intent(UserActivityMain.this, UserActivityShowUserProfile.class));
-                current_fragment = 4;
+                current_fragment = 3;
+                mDrawerPosition = mDrawerList.getSelectedItemPosition();
                 break;
         }
     }

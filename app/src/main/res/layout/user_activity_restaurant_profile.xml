@@ -147,7 +147,7 @@
                 android:textColor="@color/dark_text_color"
                 android:textSize="16sp" />
 
-
+            <!--
             <TextView
                 android:id="@+id/restaurant_profile_restaurant_iva_title"
                 android:layout_width="wrap_content"
@@ -168,6 +168,8 @@
                 android:layout_alignParentRight="true"
                 android:textColor="@color/dark_text_color"
                 android:textSize="16sp" />
+                -->
+
         </RelativeLayout>
 
 
@@ -179,9 +181,10 @@
             android:layout_below="@id/restaurantTextInfoLayout">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="50dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:src="@mipmap/like_button_thumb"
                 android:id="@+id/likeButton"
                 android:clickable="true"
@@ -194,7 +197,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:text="+ 420"
                 android:textColor="@color/cardview_dark_background"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="80dp"
                 android:id="@+id/likeStatText" />
 
 
