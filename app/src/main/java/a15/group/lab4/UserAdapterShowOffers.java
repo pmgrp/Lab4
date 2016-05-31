@@ -67,7 +67,7 @@ public class UserAdapterShowOffers extends RecyclerView.Adapter<UserAdapterShowO
         offerViewHolder.offerRestaurantName.setText(offers.get(i).getRestaurantName());
         offerViewHolder.offerName.setText(offers.get(i).getName());
         offerViewHolder.offerPrice.setText(String.format(Locale.getDefault(),"%d", offers.get(i).getPrice()));
-        float km = offers.get(i).distance[0]/1000;
+        float km = offers.get(i).distance/1000;
         offerViewHolder.offerDistance.setText(String.format(Locale.getDefault(),"%.1f", km));
         offerViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override

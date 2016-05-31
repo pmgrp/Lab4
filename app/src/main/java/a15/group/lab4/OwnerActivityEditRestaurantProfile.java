@@ -48,6 +48,14 @@ import java.util.Locale;
 
 public class OwnerActivityEditRestaurantProfile extends BaseActivity {
 
+    //values for bundle
+    private final String RESTAURANT_NAME = "restaurant_name";
+    private final String RESTAURANT_PHONE = "restaurant_phone";
+    private final String RESTAURANT_ADDRESS = "restaurant_address";
+    private final String RESTAURANT_EMAIL = "restaurant_email";
+    private final String RESTAURANT_WEBSITE = "restaurant_website";
+    private final String RESTAURANT_PIVA = "restaurant_piva";
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser fUser;
@@ -55,7 +63,6 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
     private DatabaseReference mRef;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-    private ValueEventListener restaurantFieldsListener;
     private Restaurant restaurant;
     private EditText restaurantName;
     private EditText restaurantPhone;
@@ -70,7 +77,7 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -85,14 +92,17 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                     Intent in = new Intent(OwnerActivityEditRestaurantProfile.this, ActivityMain.class);
                     startActivity(in);
                 }
-                else{
-                    populateView();
-                }
+
             }
         };
 
-        //This listener Fill in fields when data changes
-        restaurantFieldsListener = new ValueEventListener() {
+        //storage
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReferenceFromUrl("gs://lab4-1318.appspot.com");
+
+        //here fetch data from database
+        mRef = database.getReference();
+        mRef.child("restaurants").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get restaurant object and use the values to update the UI
@@ -105,14 +115,13 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                     restaurantWebsite.setText(restaurant.getRestaurantWebsite());
                     restaurantPiva.setText(restaurant.getRestaurantPiva());
                     //set the foto
-                    if(!restaurant.getRestaurantPhoto().isEmpty()){
+                    if (!restaurant.getRestaurantPhoto().isEmpty() && currentPhoto == null) {
                         Glide.with(OwnerActivityEditRestaurantProfile.this)
                                 .load(restaurant.getRestaurantPhoto())
                                 .centerCrop()
                                 .into(restaurantPhoto);
 
                     }
-                    // ...
                 }
             }
 
@@ -120,13 +129,15 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
                 Log.d("ERR", "loadPost:onCancelled", databaseError.toException());
-                // ...
             }
-        };
+        });
+
+
+        populateView(savedInstanceState);
 
     }
 
-    private void populateView(){
+    private void populateView(Bundle savedInstanceState){
         setContentView(R.layout.owner_activity_edit_restaurant_profile);
         //toolbar
         //to add toolbar with back arrow
@@ -140,14 +151,18 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         restaurantWebsite = (EditText) findViewById(R.id.restaurantWebsiteField);
         restaurantPiva = (EditText) findViewById(R.id.restaurantIVAField);
         restaurantPhoto = (ImageView) findViewById(R.id.restaurant_photo);
-
-        //storage
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReferenceFromUrl("gs://lab4-1318.appspot.com");
-
-        //here fetch data from database
-        mRef = database.getReference();
-        mRef.child("restaurants").child(fUser.getUid()).addValueEventListener(restaurantFieldsListener);
+        if(savedInstanceState != null) {
+            restaurantName.setText(savedInstanceState.getString(RESTAURANT_NAME));
+            restaurantPhone.setText(savedInstanceState.getString(RESTAURANT_PHONE));
+            restaurantAddress.setText(savedInstanceState.getString(RESTAURANT_ADDRESS));
+            restaurantEmail.setText(savedInstanceState.getString(RESTAURANT_EMAIL));
+            restaurantWebsite.setText(savedInstanceState.getString(RESTAURANT_WEBSITE));
+            restaurantPiva.setText(savedInstanceState.getString(RESTAURANT_PIVA));
+            if (currentPhoto != null) {
+                restaurantPhoto.setImageBitmap(currentPhoto);
+                restaurantPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
+        }
     }
 
     public void saveRestaurantData(View view) {
@@ -251,11 +266,24 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                     restaurantPhoto.setImageBitmap(currentPhoto);
                     restaurantPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
-
             default:
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putString(RESTAURANT_NAME, restaurantName.getText().toString());
+        savedInstanceState.putString(RESTAURANT_PHONE, restaurantPhone.getText().toString());
+        savedInstanceState.putString(RESTAURANT_ADDRESS, restaurantAddress.getText().toString());
+        savedInstanceState.putString(RESTAURANT_EMAIL, restaurantEmail.getText().toString());
+        savedInstanceState.putString(RESTAURANT_WEBSITE, restaurantWebsite.getText().toString());
+        savedInstanceState.putString(RESTAURANT_PIVA, restaurantPiva.getText().toString());
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -269,9 +297,6 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
-        }
-        if(restaurantFieldsListener != null){
-            mRef.child("restaurants").child(fUser.getUid()).removeEventListener(restaurantFieldsListener);
         }
     }
 }

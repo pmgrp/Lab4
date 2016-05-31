@@ -100,8 +100,8 @@ public class OwnerActivityMain extends AppCompatActivity {
     }
 
     public void onDailyOffersClicked(View view) {
-
-
+        Intent in = new Intent(this, OwnerActivityShowOffers.class);
+        startActivity(in);
     }
 
 

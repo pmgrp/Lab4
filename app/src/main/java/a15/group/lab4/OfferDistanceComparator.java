@@ -9,6 +9,6 @@ public class OfferDistanceComparator implements Comparator<DailyOffer> {
 
     public int compare(DailyOffer lhs, DailyOffer rhs){
 
-        return (int) (lhs.distance[0] - rhs.distance[0]);
+        return (int) (lhs.distance - rhs.distance);
     }
 }
