@@ -32,10 +32,6 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_show_reservation_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reservation_details);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Gson gson = new Gson();
@@ -49,8 +45,7 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
             restaurantID = dailyOffer.getRestaurantID();
             restaurants = DataGen.makeRestaurants();
 
-            for (Restaurant r : restaurants)
-            {
+            for (Restaurant r : restaurants) {
                 if (r.getID().contentEquals(restaurantID)) {
                     restaurant = r;
                 }
@@ -66,24 +61,25 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
             editor.putString("offer", json);
             editor.commit();
 
-
             ImageView imageView = (ImageView) findViewById(R.id.reservation_details_image);
             imageView.setImageURI(Uri.parse(dailyOffer.getPhoto()));
 
-            TextView textView = (TextView) findViewById(R.id.reservation_details_offer_name);
-            textView.setText(dailyOffer.getName());
-            textView = (TextView) findViewById(R.id.reservation_details_price);
+            TextView textView = (TextView) findViewById(R.id.reservation_details_price);
             textView.setText(String.format(Locale.getDefault(), "%d", dailyOffer.getPrice()) + " €");
             textView = (TextView) findViewById(R.id.reservation_details_date_time);
             textView.setText(reservation.getDate() + " at " + reservation.getTime());
             textView = (TextView) findViewById(R.id.reservation_details_customer_name);
             textView.setText(customer.getName() + " " + customer.getSurname());
 
-            Button button = (Button) findViewById(R.id.restaurant_details_button_restaurant);
-            button.setText(restaurant.getRestaurantName());
+            textView = (TextView) findViewById(R.id.reservation_details_button_restaurant);
+            textView.setText(restaurant.getRestaurantName());
+
         }
 
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reservation_details);
+        toolbar.setTitle(dailyOffer.getName());
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

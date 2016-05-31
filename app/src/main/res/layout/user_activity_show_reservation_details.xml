@@ -20,46 +20,41 @@
             app:popupTheme="@style/Theme.AppCompat">
         </android.support.v7.widget.Toolbar>
 
-        <ImageView
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:id="@+id/reservation_details_image"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="centerCrop"
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_below="@id/toolbar_reservation_details"
-            android:layout_centerInParent="true" />
+            android:id="@+id/layout_image">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:id="@+id/reservation_details_offer_name"
-            android:hint="@string/hint_offer_name"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:layout_below="@+id/reservation_details_image"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/reservation_details_image"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/pasta"
+                android:scaleType="centerCrop"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/reservation_details_price"
+                android:hint="@string/hint_price"
+                android:paddingRight="10dp"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@drawable/rectangle"
+                android:backgroundTint="@color/button_text_color"/>
+
+        </RelativeLayout>
 
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:id="@+id/reservation_details_price"
-            android:hint="@string/hint_price"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:layout_below="@+id/reservation_details_image"
-            android:layout_alignParentRight="true"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"/>
+
 
 
 
@@ -72,7 +67,7 @@
             android:text="@string/reservation_details_date"
             android:textSize="22sp"
             android:textColor="@color/grey"
-            android:layout_below="@+id/reservation_details_offer_name"
+            android:layout_below="@+id/layout_image"
             />
 
 
@@ -114,7 +109,42 @@
             android:textColor="@color/colorPrimaryDark"/>
 
 
+        <RelativeLayout
+            android:layout_width="170dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:onClick="goToRestaurantDescription">
 
+            <ImageView
+                android:id="@+id/reservation_details_restaurant_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/restaurant_paris"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/restaurant_details"
+                android:textAlignment="center"
+                android:layout_centerInParent="true"
+                android:gravity="bottom"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="@color/button_color"
+                android:id="@+id/reservation_details_button_restaurant"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/rectangle"
+                android:backgroundTint="@color/button_text_color"/>
+
+        </RelativeLayout>
+
+        <!--
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,6 +162,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"/>
 
+            -->
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -147,7 +179,6 @@
             android:background="#009dff"
             android:onClick="goToOfferDescription"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"/>
 
 

@@ -56,9 +56,6 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_show_offer_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_offer_details);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Gson gson = new Gson();
@@ -82,7 +79,6 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
             editor.putString("restaurant", json);
             editor.commit();
 
-
             ImageView imageView = (ImageView) findViewById(R.id.offer_details_image);
             imageView.setImageURI(Uri.parse(dailyOffer.getPhoto()));
 
@@ -97,6 +93,11 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
             imageView.setImageURI(Uri.parse(restaurant.getRestaurantPhoto()));
 
         }
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_offer_details);
+        toolbar.setTitle(dailyOffer.getName());
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         //get reservations if there were already saved

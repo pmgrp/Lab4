@@ -81,16 +81,6 @@
                 android:value=".UserActivityMain" />
         </activity>
         <activity
-            android:name=".UserActivityModifyUserProfile"
-            android:label="Modify Your Profile"
-            android:parentActivityName=".UserActivityShowUserProfile"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Base">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".UserActivityShowUserProfile" />
-        </activity>
-        <activity
             android:name=".OwnerActivityMain"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Base">

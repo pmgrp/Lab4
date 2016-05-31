@@ -61,10 +61,23 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
     @Override
     public void onBindViewHolder(final ReservationViewHolder reservationViewHolder, int i) {
 
+        ArrayList<Restaurant> restaurants;
+        Restaurant restaurant = null;
+        String restaurantID;
+        DailyOffer dailyOffer = reservations.get(i).getDailyOffer();
+        restaurants = DataGen.makeRestaurants();
+        restaurantID = dailyOffer.getRestaurantID();
+        for (Restaurant r : restaurants)
+        {
+            if (r.getID().contentEquals(restaurantID)) {
+                restaurant = r;
+            }
+        }
+
         reservationViewHolder.offerName.setText(reservations.get(i).getDailyOffer().getName());
         reservationViewHolder.restaurantName.setText(reservations.get(i).getDailyOffer().getRestaurantName());
         reservationViewHolder.time.setText(reservations.get(i).getDate() + " at " + reservations.get(i).getTime());
-        reservationViewHolder.image.setImageURI(Uri.parse(reservations.get(i).getDailyOffer().getPhoto()));
+        reservationViewHolder.image.setImageURI(Uri.parse(restaurant.getRestaurantPhoto()));
         int status = reservations.get(i).getStatus();
         switch (status) {
             case Reservation.ARRIVED:

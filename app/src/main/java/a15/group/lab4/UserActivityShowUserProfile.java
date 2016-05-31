@@ -3,6 +3,14 @@ package a15.group.lab4;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,8 +45,8 @@ public class UserActivityShowUserProfile extends BaseActivity {
     private EditText userSurname;
     private EditText userPhone;
     private EditText userBirthday;
-    private EditText userEmail;
-    private EditText userPassword;
+    //private EditText userEmail;
+    //private EditText userPassword;
     private DatabaseReference mRef;
     private ValueEventListener userFieldsListener;
     private String userId;
@@ -87,11 +95,18 @@ public class UserActivityShowUserProfile extends BaseActivity {
                 userSurname.setText(user.getSurname());
                 userPhone.setText(user.getPhone());
                 userBirthday.setText(user.getBirthday());
-                userEmail.setText(user.getEmail());
-                imagePath = user.getPhoto();
-                Bitmap bitmap = imagePicker.loadImageFromStorage(imagePath);
+                //userEmail.setText(user.getEmail());
 
-                userPhoto.setImageBitmap(bitmap);
+                if (imagePath != null) {
+                    imagePath = user.getPhoto();
+                    Bitmap bitmap = imagePicker.loadImageFromStorage(imagePath);
+                    userPhoto.setImageBitmap(getCircleBitmap(bitmap));
+                } else {
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.firebase_auth_120dp);
+                    ImageView imageView = (ImageView) findViewById(R.id.user_photo);
+                    imageView.setImageBitmap(getCircleBitmap(bitmap));
+                }
+
                 //if an image has been shot but not saved get it
                 /*if(savedInstanceState != null){
                     tempImageUri = savedInstanceState.getParcelable("TempUri");
@@ -128,8 +143,8 @@ public class UserActivityShowUserProfile extends BaseActivity {
         userSurname = (EditText)findViewById(R.id.user_surname);
         userPhone = (EditText)findViewById(R.id.user_phone);
         userBirthday = (EditText) findViewById(R.id.user_birthday);
-        userEmail = (EditText) findViewById(R.id.user_email);
-        userPassword = (EditText) findViewById(R.id.user_password);
+        //userEmail = (EditText) findViewById(R.id.user_email);
+        //userPassword = (EditText) findViewById(R.id.user_password);
         userPhoto = (ImageView) findViewById(R.id.user_photo);
 
     }
@@ -139,8 +154,8 @@ public class UserActivityShowUserProfile extends BaseActivity {
         String surname = userSurname.getText().toString();
         String phone = userPhone.getText().toString();
         String birthday = userBirthday.getText().toString();
-        String email = userEmail.getText().toString();
-        String password = userPassword.getText().toString();
+        //String email = userEmail.getText().toString();
+        //String password = userPassword.getText().toString();
         ImageView photo = (ImageView) findViewById(R.id.user_photo);
         Bitmap bitmap = ((BitmapDrawable)photo.getDrawable()).getBitmap();
         imagePath = imagePicker.saveToInternalStorage(bitmap,this);
@@ -156,8 +171,8 @@ public class UserActivityShowUserProfile extends BaseActivity {
         user.setSurname(surname);
         user.setPhone(phone);
         user.setBirthday(birthday);
-        user.setEmail(email);
-        user.setPassword(password);
+        //user.setEmail(email);
+        //user.setPassword(password);
         user.setPhoto(imagePath);
         showProgressDialog();
         mRef.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -299,7 +314,28 @@ public class UserActivityShowUserProfile extends BaseActivity {
     }
 
 
+    private Bitmap getCircleBitmap(Bitmap bitmap) {
+        final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
 
+        final int color = Color.RED;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawOval(rectF, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        bitmap.recycle();
+
+        return output;
+    }
 
     @Override
     public void onSaveInstanceState(Bundle onSave){
