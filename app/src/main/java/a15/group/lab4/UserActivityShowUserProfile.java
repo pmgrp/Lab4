@@ -69,6 +69,7 @@ public class UserActivityShowUserProfile extends BaseActivity {
                 if (user != null) {
                     // User is signed in
                     userId = user.getUid();
+
                     //get database reference
                     mRef = FirebaseDatabase.getInstance().getReference();
                     mRef.child("users").child(userId).addValueEventListener(userFieldsListener);
@@ -90,6 +91,16 @@ public class UserActivityShowUserProfile extends BaseActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
+
+                //user name
+                userName = (EditText) findViewById(R.id.user_name);
+                userSurname = (EditText) findViewById(R.id.user_surname);
+                userPhone = (EditText) findViewById(R.id.user_phone);
+                userBirthday = (EditText) findViewById(R.id.user_birthday);
+                //userEmail = (EditText) findViewById(R.id.user_email);
+                //userPassword = (EditText) findViewById(R.id.user_password);
+                userPhoto = (ImageView) findViewById(R.id.user_photo);
+
                 user = dataSnapshot.getValue(User.class);
                 userName.setText(user.getName());
                 userSurname.setText(user.getSurname());
@@ -97,14 +108,14 @@ public class UserActivityShowUserProfile extends BaseActivity {
                 userBirthday.setText(user.getBirthday());
                 //userEmail.setText(user.getEmail());
 
+
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.firebase_auth_120dp);
+                userPhoto.setImageBitmap(getCircleBitmap(bitmap));
+
+                imagePath = user.getPhoto();
                 if (imagePath != null) {
-                    imagePath = user.getPhoto();
-                    Bitmap bitmap = imagePicker.loadImageFromStorage(imagePath);
+                    bitmap = imagePicker.loadImageFromStorage(imagePath);
                     userPhoto.setImageBitmap(getCircleBitmap(bitmap));
-                } else {
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.firebase_auth_120dp);
-                    ImageView imageView = (ImageView) findViewById(R.id.user_photo);
-                    imageView.setImageBitmap(getCircleBitmap(bitmap));
                 }
 
                 //if an image has been shot but not saved get it
@@ -116,9 +127,7 @@ public class UserActivityShowUserProfile extends BaseActivity {
                     if(userPhoto!=null)
                         userPhoto.setImageBitmap(bitmap);
                 }*/
-                //mettre les *** pour le password
                 hideProgressDialog();
-                // ...
             }
 
             @Override
@@ -129,23 +138,12 @@ public class UserActivityShowUserProfile extends BaseActivity {
             }
         };
 
-
-
-
         //set template
         setContentView(R.layout.user_activity_show_user_profile);
         //set toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_offer_details);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //user name
-        userName = (EditText)findViewById(R.id.user_name);
-        userSurname = (EditText)findViewById(R.id.user_surname);
-        userPhone = (EditText)findViewById(R.id.user_phone);
-        userBirthday = (EditText) findViewById(R.id.user_birthday);
-        //userEmail = (EditText) findViewById(R.id.user_email);
-        //userPassword = (EditText) findViewById(R.id.user_password);
-        userPhoto = (ImageView) findViewById(R.id.user_photo);
 
     }
 
@@ -156,9 +154,9 @@ public class UserActivityShowUserProfile extends BaseActivity {
         String birthday = userBirthday.getText().toString();
         //String email = userEmail.getText().toString();
         //String password = userPassword.getText().toString();
-        ImageView photo = (ImageView) findViewById(R.id.user_photo);
-        Bitmap bitmap = ((BitmapDrawable)photo.getDrawable()).getBitmap();
-        imagePath = imagePicker.saveToInternalStorage(bitmap,this);
+        Bitmap bitmap = ((BitmapDrawable) userPhoto.getDrawable()).getBitmap();
+        imagePath = imagePicker.saveToInternalStorage(bitmap, this);
+
         if(name.isEmpty() || surname.isEmpty()){
             Toast.makeText(UserActivityShowUserProfile.this, "Fill at least Name and Surname Fields",
                     Toast.LENGTH_SHORT).show();
@@ -167,6 +165,7 @@ public class UserActivityShowUserProfile extends BaseActivity {
         if(user == null || userId == null || mRef == null){
             return;
         }
+
         user.setName(name);
         user.setSurname(surname);
         user.setPhone(phone);
@@ -199,16 +198,15 @@ public class UserActivityShowUserProfile extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageView imageView = (ImageView) findViewById(R.id.user_photo);
         switch(requestCode) {
             case PICK_IMAGE_ID:
                 tempImageUri = imagePicker.getUriFromResult(this, resultCode, data);
                 if(tempImageUri != null) {
                     Bitmap image = imagePicker.getImageResized(this, tempImageUri);
-                    imageView.setImageBitmap(image);
+                    userPhoto.setImageBitmap(image);
                 }
                 else{
-                    imageView.setImageResource(R.drawable.firebase_auth_120dp);
+                    userPhoto.setImageResource(R.drawable.firebase_auth_120dp);
                 }
                 break;
             default:
