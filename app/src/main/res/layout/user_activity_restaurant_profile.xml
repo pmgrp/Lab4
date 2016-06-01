@@ -168,7 +168,6 @@
                 android:textColor="@color/cardview_dark_background"
                 android:id="@+id/likeStatText" />
 
-
     </RelativeLayout>
 
 </LinearLayout>

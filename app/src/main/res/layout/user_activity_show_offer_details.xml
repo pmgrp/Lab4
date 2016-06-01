@@ -60,9 +60,8 @@
                     android:background="@drawable/rectangle"
                     android:backgroundTint="@color/lightgrey"
                     android:text="@string/total_description"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="18sp"
-                    android:visibility="visible" />
+                    android:textColor="@color/dark_text_color"
+                    android:textSize="18sp"/>
 
 
                 <RelativeLayout

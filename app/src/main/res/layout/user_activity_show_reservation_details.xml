@@ -7,24 +7,25 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_reservation_details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_reservation_details"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:theme="@style/ToolbarTheme"
-            app:popupTheme="@style/Theme.AppCompat">
-        </android.support.v7.widget.Toolbar>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:theme="@style/ToolbarTheme"
+        app:popupTheme="@style/Theme.AppCompat">
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/toolbar_reservation_details"
-            android:id="@+id/layout_image">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -56,110 +57,115 @@
 
 
 
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:id="@+id/reservation_details_date"
-            android:text="@string/reservation_details_date"
-            android:textSize="22sp"
-            android:textColor="@color/grey"
-            android:layout_below="@+id/layout_image"
-            />
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_weight="1">
 
-
-        <TextView
-            android:layout_below="@id/reservation_details_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:hint="@string/hint_reservation_details_date"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:id="@+id/reservation_details_date_time"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_below="@id/reservation_details_date_time"
-            android:id="@+id/reservation_details_introduction_customer"
-            android:text="@string/introduction_customer"
-            android:textSize="22sp"
-            android:textColor="@color/grey"/>
-
-        <TextView
-            android:layout_below="@id/reservation_details_introduction_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:hint="@string/customer_name"
-            android:textColorHint="@color/colorPrimaryDark"
-            android:id="@+id/reservation_details_customer_name"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"/>
-
-
-        <RelativeLayout
-            android:layout_width="170dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:onClick="goToRestaurantDescription">
-
-            <ImageView
-                android:id="@+id/reservation_details_restaurant_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/restaurant_paris"
-                android:scaleType="fitXY"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/restaurant_details"
-                android:textAlignment="center"
-                android:layout_centerInParent="true"
-                android:gravity="bottom"
+                android:id="@+id/reservation_details_date"
+                android:text="@string/reservation_details_date"
+                android:textSize="22sp"
+                android:textColor="@color/grey"
+                android:layout_below="@+id/layout_image"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_reservation_details_date"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:id="@+id/reservation_details_date_time"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:textSize="12sp"
-                android:textColor="@color/button_color"
-                android:id="@+id/reservation_details_button_restaurant"
-                android:layout_alignParentTop="true"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:id="@+id/reservation_details_introduction_customer"
+                android:text="@string/introduction_customer"
+                android:textSize="20sp"
+                android:textColor="@color/grey"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/customer_name"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:id="@+id/reservation_details_customer_name"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:onClick="goToRestaurantDescription">
+
+                <ImageView
+                    android:id="@+id/reservation_details_restaurant_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/restaurant_paris"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restaurant_details"
+                    android:textAlignment="center"
+                    android:layout_centerInParent="true"
+                    android:gravity="bottom"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/button_color"
+                    android:id="@+id/reservation_details_button_restaurant"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/rectangle"
+                    android:backgroundTint="@color/button_text_color"/>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/rectangle"
-                android:backgroundTint="@color/button_text_color"/>
+                android:backgroundTint="@color/lightgrey"
+                android:text="Description"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textColor="@color/dark_text_color"
+                android:gravity="center"
+                android:onClick="goToOfferDescription"/>
 
         </RelativeLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/offer_description_button"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textColor="@color/button_text_color"
-            android:id="@+id/offer_description_button"
-            android:background="#009dff"
-            android:onClick="goToOfferDescription"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"/>
-
-
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

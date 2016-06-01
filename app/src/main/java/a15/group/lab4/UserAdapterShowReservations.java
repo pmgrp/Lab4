@@ -31,6 +31,7 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
         CardView cv;
         TextView offerName;
         TextView restaurantName;
+        TextView date;
         TextView time;
         TextView status;
         ImageView image;
@@ -40,6 +41,7 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
             cv = (CardView) itemView.findViewById(R.id.reservation_card);
             offerName = (TextView) itemView.findViewById(R.id.reservation_card_offer_name);
             restaurantName = (TextView) itemView.findViewById(R.id.reservation_card_restaurant);
+            date = (TextView) itemView.findViewById(R.id.reservation_card_date);
             time = (TextView) itemView.findViewById(R.id.reservation_card_time);
             status = (TextView) itemView.findViewById(R.id.reservation_card_status);
             image = (ImageView) itemView.findViewById(R.id.reservation_card_image);
@@ -76,7 +78,8 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
 
         reservationViewHolder.offerName.setText(reservations.get(i).getDailyOffer().getName());
         reservationViewHolder.restaurantName.setText(reservations.get(i).getDailyOffer().getRestaurantName());
-        reservationViewHolder.time.setText(reservations.get(i).getDate() + " at " + reservations.get(i).getTime());
+        reservationViewHolder.date.setText(reservations.get(i).getDate());
+        reservationViewHolder.time.setText(reservations.get(i).getTime());
         reservationViewHolder.image.setImageURI(Uri.parse(restaurant.getRestaurantPhoto()));
         int status = reservations.get(i).getStatus();
         switch (status) {
