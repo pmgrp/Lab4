@@ -101,6 +101,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
 
 
         //get reservations if there were already saved
+
         json = preferences.getString("reservations", null);
         if(json != null) {
             reservations = gson.fromJson(json, new TypeToken<List<Reservation>>() {

@@ -73,7 +73,8 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
 
             textView = (TextView) findViewById(R.id.reservation_details_button_restaurant);
             textView.setText(restaurant.getRestaurantName());
-
+            imageView = (ImageView) findViewById(R.id.reservation_details_restaurant_image);
+            imageView.setImageURI(Uri.parse(restaurant.getRestaurantPhoto()));
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reservation_details);

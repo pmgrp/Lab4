@@ -75,7 +75,7 @@ public class DataGen {
         off5.setPhoto(imagePath);
         off5.setName("Chicken");
         off5.setPrice(8);
-        off5.setRestaurantLatitude(35.689487); //Tokio
+        off5.setRestaurantLatitude(35.689487); //Tokyo
         off5.setRestaurantLongitude(139.691706);
         off5.setRestaurantName("Keio Sushi");
         off5.setDescription("Japanese style fried chicken");
@@ -88,7 +88,7 @@ public class DataGen {
         off6.setPhoto(imagePath);
         off6.setName("Sushi");
         off6.setPrice(16);
-        off6.setRestaurantLatitude(35.689487); //Tokio
+        off6.setRestaurantLatitude(35.689487); //Tokyo
         off6.setRestaurantLongitude(139.691706);
         off6.setRestaurantName("Keio Sushi");
         off6.setDescription("World famous Japanese sushi");
