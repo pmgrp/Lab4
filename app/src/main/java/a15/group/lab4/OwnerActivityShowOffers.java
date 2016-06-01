@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -39,6 +41,8 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase databse;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
     private DatabaseReference mRef;
     private FirebaseUser fUser;
     private FirebaseRecyclerAdapter mAdapter;
@@ -48,6 +52,8 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         databse = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReferenceFromUrl("gs://lab4-1318.appspot.com");
 
 
 
@@ -102,6 +108,13 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
                         startActivity(in);
                     }
                 });
+                viewHolder.getOfferContainer().setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        onClickPopupOptions(v, mAdapter.getRef(position).getKey());
+                        return true;
+                    }
+                });
             }
         };
 
@@ -109,6 +122,30 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
 
 
     }
+
+    public void onClickPopupOptions(View v, final String offerId) {
+        final CharSequence[] items = { "Delete", "Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(OwnerActivityShowOffers.this);
+        builder.setTitle("Options");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Delete")) {
+                    //remove this offer from database
+                    mRef.child(offerId).removeValue();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("offers").child(offerId);
+                    ref.removeValue();
+                    storageRef.child(offerId).child("offer_photo.jpg").delete();
+                    storageRef.child(offerId).child("offer_thumb.jpg").delete();
+                    mAdapter.notifyDataSetChanged();
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
 
     @Override
     public void onDestroy() {
