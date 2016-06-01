@@ -3,6 +3,7 @@ package a15.group.lab4;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
  */
 public class OwnerDishHolder extends RecyclerView.ViewHolder {
     View mView;
+    RelativeLayout mOfferContainer;
 
     public OwnerDishHolder(View view){
         super(view);
@@ -30,6 +32,11 @@ public class OwnerDishHolder extends RecyclerView.ViewHolder {
                 .centerCrop()
                 .into(offerPhoto);
 
+    }
+
+    public RelativeLayout getOfferContainer(){
+        mOfferContainer = (RelativeLayout)mView.findViewById(R.id.offer_container);
+        return mOfferContainer;
     }
 
 }

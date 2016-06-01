@@ -2,17 +2,21 @@ package a15.group.lab4;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.DimenRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -39,9 +43,6 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
     private FirebaseUser fUser;
     private FirebaseRecyclerAdapter mAdapter;
 
-    ArrayList<DailyOffer> dailyOffers;
-    AdapterShowOffers adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +59,6 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
                     //go back to main activity if user is not logged in
                     Intent in = new Intent(OwnerActivityShowOffers.this, ActivityMain.class);
                     startActivity(in);
-                } else {
-
                 }
             }
         };
@@ -87,12 +86,22 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
         mRef = databse.getReference().child("restaurant-offers").child(mAuth.getCurrentUser().getUid());
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.offers_grid);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+
         mAdapter = new FirebaseRecyclerAdapter<DailyOffer, OwnerDishHolder>(
                 DailyOffer.class, R.layout.owner_offer_item, OwnerDishHolder.class, mRef) {
             @Override
-            public void populateViewHolder(OwnerDishHolder viewHolder, DailyOffer offer, int position) {
+            public void populateViewHolder(final OwnerDishHolder viewHolder, DailyOffer offer, final int position) {
                 viewHolder.setName(offer.getName());
-                viewHolder.setImage(offer.getPhoto());
+                viewHolder.setImage(offer.getPhotoThumb());
+                viewHolder.getOfferContainer().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent in = new Intent(v.getContext(), OwnerActivityModifyOffer.class);
+                        in.putExtra("offerID", mAdapter.getRef(position).getKey());
+                        startActivity(in);
+                    }
+                });
             }
         };
 
@@ -122,65 +131,5 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
-
-        //set listeners on elements of grid view
-        /*
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent intent = new Intent(OwnerActivityShowOffers.this, ActivityDisplayOffer.class);
-                intent.putExtra("index", position);
-                startActivity(intent);
-            }
-        });
-
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
-                onClickPopupOptions(parent, v, position);
-                return true;
-            }
-        });
-
-    }
-
-    public void onClickPopupOptions(final AdapterView<?> parent, View v, final int position) {
-        final CharSequence[] items = { "Delete", "Cancel" };
-        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityShowOffers.this);
-        builder.setTitle("Options");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (items[item].equals("Delete")) {
-                    dailyOffers.remove(position);
-                    adapter.notifyDataSetChanged();
-                } else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
-    /*
-    public void onClickPopupOffer() {
-        final CharSequence[] items = { "Yes", "No" };
-        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityShowOffers.this);
-        builder.setTitle("Do you want to add an offer_item ?");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (items[item].equals("Yes")) {
-                    startActivity(new Intent(ActivityShowOffers.this, ActivityAddOffer.class));
-                } else if (items[item].equals("No")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-    */
-
-        //save alla data when switch activity
-
 
 }

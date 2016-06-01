@@ -1,15 +1,11 @@
 package a15.group.lab4;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,16 +29,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-public class OwnerActivityAddOffer extends BaseActivity {
+/**
+ * Created by eugeniosorbellini on 01/06/16.
+ */
+public class OwnerActivityModifyOffer extends BaseActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -50,8 +44,6 @@ public class OwnerActivityAddOffer extends BaseActivity {
     private DatabaseReference mRef;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-    private Restaurant restaurant;
-    private String restaurantId;
     private String offerId;
     private DailyOffer offer;
     private NumberPicker pickerPrice;
@@ -73,6 +65,7 @@ public class OwnerActivityAddOffer extends BaseActivity {
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        offerId = getIntent().getExtras().getString("offerID");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -80,46 +73,14 @@ public class OwnerActivityAddOffer extends BaseActivity {
                 fUser = firebaseAuth.getCurrentUser();
                 if (fUser == null) {
                     //go back to main activity if user is not logged in
-                    Intent in = new Intent(OwnerActivityAddOffer.this, ActivityMain.class);
+                    Intent in = new Intent(OwnerActivityModifyOffer.this, ActivityMain.class);
                     startActivity(in);
-                } else {
-                    checkRestaurant();
                 }
             }
         };
 
         populateView();
 
-
-    }
-
-
-    private void checkRestaurant(){
-        //here check if user infos are in database
-        mRef = database.getReference();
-        String userId = fUser.getUid();
-        mRef.child("restaurants").child(userId).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //if restaurant profile is not present go to main activity
-                        if (!dataSnapshot.exists()) {
-                            Intent in = new Intent(OwnerActivityAddOffer.this, OwnerActivityMain.class);
-                            startActivity(in);
-                        }
-                        else {
-                            restaurantId = dataSnapshot.getKey();
-                            restaurant = dataSnapshot.getValue(Restaurant.class);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.d("TAG", "getUser:onCancelled", databaseError.toException());
-                    }
-
-
-                });
 
     }
 
@@ -156,20 +117,38 @@ public class OwnerActivityAddOffer extends BaseActivity {
         //database reference
         mRef = database.getReference();
 
+        mRef.child("offers").child(offerId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    offer = dataSnapshot.getValue(DailyOffer.class);
+                    offerName.setText(offer.getName());
+                    offerDescription.setText(offer.getDescription());
+                    pickerAvailability.setValue(offer.getAvailability());
+                    pickerPrice.setValue(offer.getPrice());
+                    Glide.with(OwnerActivityModifyOffer.this)
+                            .load(offer.getPhotoThumb())
+                            .centerCrop()
+                            .into(offerPhoto);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.d("ERR", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+
 
     }
 
     public void saveOfferData(View view) {
 
-        offer = new DailyOffer();
         offer.setName(offerName.getText().toString());
         offer.setDescription(offerDescription.getText().toString());
         offer.setPrice(pickerPrice.getValue());
         offer.setAvailability(pickerAvailability.getValue());
-        offer.setRestaurantID(restaurantId);
-        offer.setRestaurantName(restaurant.getRestaurantName());
-        offer.setRestaurantLatitude(restaurant.getLatitude());
-        offer.setRestaurantLongitude(restaurant.getLongitude());
         showProgressDialog();
         uploadOffer();
 
@@ -179,7 +158,6 @@ public class OwnerActivityAddOffer extends BaseActivity {
     }
 
     private void uploadOffer(){
-        offerId = mRef.child("offers").push().getKey();
         if(currentPhoto != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             currentPhoto.compress(Bitmap.CompressFormat.JPEG, 90, baos);
@@ -191,7 +169,7 @@ public class OwnerActivityAddOffer extends BaseActivity {
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(OwnerActivityAddOffer.this, "Error in uploading image, please try again",
+                    Toast.makeText(OwnerActivityModifyOffer.this, "Error in uploading image, please try again",
                             Toast.LENGTH_SHORT).show();
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -222,14 +200,14 @@ public class OwnerActivityAddOffer extends BaseActivity {
                                         currentPhoto = null;
                                         //save thumbnail
                                         hideProgressDialog();
-                                        Toast.makeText(OwnerActivityAddOffer.this, "Offer has been saved",
+                                        Toast.makeText(OwnerActivityModifyOffer.this, "Offer has been saved",
                                                 Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityShowOffers.class);
+                                        Intent intent = new Intent(OwnerActivityModifyOffer.this, OwnerActivityShowOffers.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
                                     }
                                     else{
-                                        Toast.makeText(OwnerActivityAddOffer.this, "Some error occurred please try again",
+                                        Toast.makeText(OwnerActivityModifyOffer.this, "Some error occurred please try again",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -238,12 +216,36 @@ public class OwnerActivityAddOffer extends BaseActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(OwnerActivityAddOffer.this, "Error in uploading image, please try again",
+                            Toast.makeText(OwnerActivityModifyOffer.this, "Error in uploading image, please try again",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             });
+        }
+        //upload just text values
+        else{
+            mRef.child("restaurant-offers").child(fUser.getUid()).child(offerId).setValue(offer);
+            mRef.child("offers").child(offerId).setValue(offer).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        currentPhoto = null;
+                        //save thumbnail
+                        hideProgressDialog();
+                        Toast.makeText(OwnerActivityModifyOffer.this, "Offer has been saved",
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(OwnerActivityModifyOffer.this, OwnerActivityShowOffers.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(OwnerActivityModifyOffer.this, "Some error occurred please try again",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         }
     }
 

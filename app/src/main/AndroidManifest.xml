@@ -125,6 +125,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OwnerActivityShowOffers" />
         </activity>
+        <activity
+            android:name=".OwnerActivityModifyOffer"
+            android:label="Modify Offer"
+            android:parentActivityName=".OwnerActivityShowOffers"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OwnerActivityShowOffers" />
+        </activity>
     </application>
     <meta-data
         android:name="com.google.android.gms.version"

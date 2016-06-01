@@ -18,8 +18,7 @@
     android:id="@+id/offers_grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@id/toolbar"
-    tools:listitem="@layout/owner_offer_item">
+    android:layout_below="@id/toolbar">
 
 </android.support.v7.widget.RecyclerView>
 
