@@ -99,6 +99,11 @@ public class OwnerActivityMain extends AppCompatActivity {
         //startActivity(show_reservations);
     }
 
+    public void onUserProfileClicked(View view){
+        Intent in = new Intent(this, UserActivityShowUserProfile.class);
+        startActivity(in);
+    }
+
     public void onDailyOffersClicked(View view) {
         Intent in = new Intent(this, OwnerActivityShowOffers.class);
         startActivity(in);

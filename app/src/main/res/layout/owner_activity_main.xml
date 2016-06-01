@@ -69,9 +69,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="Daily Offer"
+                android:text="Offers"
                 android:layout_below="@id/daily_offer"
                 android:textStyle="bold"/>
+                <ImageView
+                    android:id="@+id/user_profile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/profile"
+                    android:layout_alignParentRight="true"
+                    android:onClick="onUserProfileClicked"/>
+                <TextView
+                    android:id="@+id/user_profile_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textAlignment="center"
+                    android:text="User Profile"
+                    android:layout_below="@id/daily_offer"
+                    android:textStyle="bold"/>
             </RelativeLayout>
     </RelativeLayout>
 
