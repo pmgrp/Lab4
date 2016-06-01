@@ -26,7 +26,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="25sp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="5dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,7 +38,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="3">
+                android:layout_weight="3.2"
+                android:gravity="center_vertical">
 
 
                 <TextView
@@ -47,8 +48,7 @@
                     android:layout_height="wrap_content"
                     android:text="Restaurant"
                     android:textColor="@color/dark_text_color"
-                    android:textSize="20sp"
-                    android:layout_below="@+id/reservation_card_offer_name" />
+                    android:textSize="20sp"/>
 
 
                 <TextView
@@ -58,8 +58,7 @@
                     android:text="Restaurant Name"
                     android:textColor="@color/dark_text_color"
                     android:textSize="16sp"
-                    android:layout_below="@id/reservation_card_restaurant_title"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="20dp"/>
 
                 <TextView
                     android:id="@+id/reservation_card_time_title"
@@ -77,7 +76,7 @@
                     android:text="13:00"
                     android:textColor="@color/dark_text_color"
                     android:textSize="16sp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="20dp"/>
 
                 <TextView
                     android:id="@+id/reservation_card_status_title"
@@ -91,6 +90,7 @@
                     android:id="@+id/reservation_card_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
                     android:text="To Be Confirmed"
                     android:textColor="@color/dark_text_color"
                     android:textSize="16sp"/>
@@ -102,7 +102,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/reservation_card_image"
                 android:src="@drawable/restaurant_paris"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:layout_weight="5"/>
 
 

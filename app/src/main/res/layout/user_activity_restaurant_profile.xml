@@ -26,18 +26,15 @@
             android:id="@+id/restaurant_profile_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/pizza"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="8dp"
-            />
+            android:src="@drawable/restaurant_rome"
+            android:scaleType="fitXY"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:layout_below="@id/restaurant_profile_image"
-            android:id="@+id/restaurantTextInfoLayout"
-            >
+            android:id="@+id/restaurantTextInfoLayout">
 
 
             <TextView
@@ -55,9 +52,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/restaurant_profile_restaurant_title"
+                android:layout_marginBottom="8dp"
                 android:text="Restaurant Name"
                 android:textColor="@color/dark_text_color"
-                android:layout_marginBottom="4dp"
                 android:textSize="16sp" />
 
             <TextView
@@ -74,12 +71,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/restaurant_profile_mail_title"
+                android:layout_marginBottom="8dp"
                 android:text="Email"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/dark_text_color"
                 android:textSize="16sp" />
-
-
 
             <TextView
                 android:id="@+id/restaurant_profile_restaurant_address_title"
@@ -97,6 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/restaurant_profile_restaurant_address_title"
+                android:layout_marginBottom="8dp"
                 android:text="Restaurant Address"
                 android:textColor="@color/dark_text_color"
                 android:textSize="16sp" />
@@ -147,43 +144,14 @@
                 android:textColor="@color/dark_text_color"
                 android:textSize="16sp" />
 
-            <!--
-            <TextView
-                android:id="@+id/restaurant_profile_restaurant_iva_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/restaurant_profile_restaurant_phone"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="4dp"
-                android:text="IVA"
-                android:textColor="@color/dark_text_color"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/restaurant_profile_restaurant_iva"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/restaurant_profile_restaurant_iva_title"
-                android:text="Restaurant IVA"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/dark_text_color"
-                android:textSize="16sp" />
-                -->
-
         </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/myLayout"
-            android:layout_below="@id/restaurantTextInfoLayout">
 
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:src="@mipmap/like_button_thumb"
                 android:id="@+id/likeButton"
@@ -192,20 +160,13 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_toRightOf="@id/likeButton"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
                 android:text="+ 420"
                 android:textColor="@color/cardview_dark_background"
-                android:layout_marginTop="80dp"
                 android:id="@+id/likeStatText" />
-
-
-        </RelativeLayout>
-
-
-
-
 
 
     </RelativeLayout>
