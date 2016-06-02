@@ -30,7 +30,6 @@ import com.google.android.gms.location.LocationServices;
 public class UserActivityMain extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        UserFragmentShowRestaurants.FragmentListener,
         UserFragmentShowOffers.FragmentListener,
         UserFragmentShowReservations.FragmentListener{
 
@@ -259,11 +258,15 @@ public class UserActivityMain extends AppCompatActivity implements
                 mDrawerList.setSelection(1);
                 getSupportActionBar().setTitle("Restaurants");
                 //getSupportActionBar().setDisplayShowTitleEnabled(true);
+                /*
                 fragment = new UserFragmentShowRestaurants();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_container, fragment, "RESTAURANTS").commit();
+                        */
                 current_fragment = 1;
                 mDrawerPosition = mDrawerList.getSelectedItemPosition();
+                Intent in = new Intent(this, UserFragmentShowRestaurants.class);
+                startActivity(in);
                 break;
 
             case 2:
@@ -344,11 +347,13 @@ public class UserActivityMain extends AppCompatActivity implements
                     break;
             }
         }
+        /*
         UserFragmentShowRestaurants fr = (UserFragmentShowRestaurants) getSupportFragmentManager().findFragmentByTag("RESTAURANTS");
         if(fr!=null){
             fr.updateDistance();
             fr.sortByDistance();
         }
+        */
 
     }
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ public class UserAdapterShowRestaurants extends RecyclerView.Adapter<UserAdapter
         TextView restaurantPhone;
         TextView restaurantAddress;
         TextView restaurantDistance;
-        ;
 
         RestaurantViewHolder(View itemView) {
             super(itemView);
@@ -63,7 +63,11 @@ public class UserAdapterShowRestaurants extends RecyclerView.Adapter<UserAdapter
     @Override
     public void onBindViewHolder(final RestaurantViewHolder restaurantViewHolder, int i) {
 
-        restaurantViewHolder.restaurantImage.setImageURI(Uri.parse(restaurants.get(i).getRestaurantPhoto()));
+        //restaurantViewHolder.restaurantImage.setImageURI(Uri.parse(restaurants.get(i).getRestaurantPhoto()));
+        Glide.with(restaurantViewHolder.cv.getContext())
+                .load(restaurants.get(i).getRestaurantPhoto())
+                .centerCrop()
+                .into(restaurantViewHolder.restaurantImage);
         restaurantViewHolder.restaurantName.setText(restaurants.get(i).getRestaurantName());
         restaurantViewHolder.restaurantPhone.setText(restaurants.get(i).getRestaurantPhone());
         restaurantViewHolder.restaurantAddress.setText(restaurants.get(i).getRestaurantAddress());

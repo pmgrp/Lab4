@@ -41,6 +41,16 @@
             android:theme="@style/AppTheme.Base">
         </activity>
         <activity
+            android:name=".UserFragmentShowRestaurants"
+            android:label="Restaurants"
+            android:parentActivityName=".UserActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserActivityMain" />
+        </activity>
+        <activity
             android:name=".UserActivityShowOfferDetails"
             android:label="@string/title_show_offer_details"
             android:parentActivityName=".UserActivityMain"
