@@ -14,7 +14,7 @@
     <string name="reservation_details_date">Date</string>
     <string name="hint_reservation_details_date">10/05/2016 at 17:50</string>
     <string name="offer_description_button">Offer Description</string>
-    <string name="introduction_customer">The reservation is at the name:</string>
+    <string name="introduction_customer">Name for the reservation</string>
     <string name="customer_surname">Surname of the customer</string>
     <string name="customer_name">Name of the customer</string>
     <string name="customer_email">Email of the customer</string>
