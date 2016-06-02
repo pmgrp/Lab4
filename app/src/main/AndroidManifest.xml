@@ -14,6 +14,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBWRtUFgbhys7aX2hRw4kgOuPxotTRlJok" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,16 +37,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityAddUserInfo"
+        <activity
+            android:name=".ActivityAddUserInfo"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Base">
-        </activity>
+            android:theme="@style/AppTheme.Base"></activity>
         <activity
             android:name=".UserActivityMain"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Base">
-        </activity>
+            android:theme="@style/AppTheme.Base"></activity>
         <activity
             android:name=".UserActivityShowOfferDetails"
             android:label="@string/title_show_offer_details"
@@ -53,7 +59,7 @@
         <activity
             android:name=".UserActivityShowReservationDetails"
             android:label="@string/title_show_reservation_details"
-            android:parentActivityName="UserActivityShowReservationDetails"
+            android:parentActivityName=".UserActivityShowReservationDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
@@ -83,8 +89,7 @@
         <activity
             android:name=".OwnerActivityMain"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Base">
-        </activity>
+            android:theme="@style/AppTheme.Base"></activity>
         <activity
             android:name=".OwnerActivityRestaurantProfile"
             android:label="Restaurant Profile"
@@ -125,12 +130,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OwnerActivityShowOffers" />
         </activity>
+        <activity android:name=".OwnerChoosingOpeningHours"></activity>
     </application>
-    <meta-data
-        android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version"/>
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyBWRtUFgbhys7aX2hRw4kgOuPxotTRlJok"/>
 
 </manifest>

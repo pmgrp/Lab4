@@ -69,8 +69,7 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
         DailyOffer dailyOffer = reservations.get(i).getDailyOffer();
         restaurants = DataGen.makeRestaurants();
         restaurantID = dailyOffer.getRestaurantID();
-        for (Restaurant r : restaurants)
-        {
+        for (Restaurant r : restaurants) {
             if (r.getID().contentEquals(restaurantID)) {
                 restaurant = r;
             }

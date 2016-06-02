@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="a15.group.lab4.OwnerChoosingOpeningHours">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:popupTheme="@style/Theme.AppCompat"
+        app:theme="@style/ToolbarTheme">
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/monday_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/monday_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Monday"/>
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tuesday_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/monday_layout"
+            android:text="Tuesday"/>
+        <TextView
+            android:id="@+id/wednesday_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tuesday_title"
+            android:text="Wednesday"/>
+        <TextView
+            android:id="@+id/thursday_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/wednesday_title"
+            android:text="Thursday"/>
+        <TextView
+            android:id="@+id/friday_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/thursday_title"
+            android:text="Friday"/>
+        <TextView
+            android:id="@+id/saturday_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/friday_title"
+            android:text="Saturday"/>
+        <TextView
+            android:id="@+id/sunday_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/saturday_title"
+            android:text="Sunday"/>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
