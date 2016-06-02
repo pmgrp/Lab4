@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by eugeniosorbellini on 10/05/16.
  */
-public class UserFragmentShowReservations extends AppCompatActivity {
+public class UserActivityShowReservations extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference mRef;

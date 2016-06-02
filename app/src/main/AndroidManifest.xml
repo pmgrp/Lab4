@@ -41,7 +41,7 @@
             android:theme="@style/AppTheme.Base">
         </activity>
         <activity
-            android:name=".UserFragmentShowRestaurants"
+            android:name=".UserActivityShowRestaurants"
             android:label="Restaurants"
             android:parentActivityName=".UserActivityMain"
             android:screenOrientation="portrait"
@@ -51,7 +51,7 @@
                 android:value=".UserActivityMain" />
         </activity>
         <activity
-            android:name=".UserFragmentShowOffers"
+            android:name=".UserActivityShowOffers"
             android:label="Offers"
             android:parentActivityName=".UserActivityMain"
             android:screenOrientation="portrait"
@@ -61,7 +61,7 @@
                 android:value=".UserActivityMain" />
         </activity>
         <activity
-            android:name=".UserFragmentShowReservations"
+            android:name=".UserActivityShowReservations"
             android:label="Reservations"
             android:parentActivityName=".UserActivityMain"
             android:screenOrientation="portrait"

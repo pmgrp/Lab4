@@ -42,6 +42,7 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
     private String userId;
     private String offerId;
     private String restaurantId;
+    private DailyOffer offer;
 
 
     @Override
@@ -98,7 +99,7 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    DailyOffer offer = dataSnapshot.getValue(DailyOffer.class);
+                    offer = dataSnapshot.getValue(DailyOffer.class);
                     toolbar.setTitle(offer.getName());
                     TextView textView = (TextView) findViewById(R.id.reservation_details_price);
                     textView.setText(String.format(Locale.getDefault(), "%d", offer.getPrice()) + " €");
@@ -189,12 +190,12 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityShowReservationDetails.this);
 
-        builder.setTitle(dailyOffer.getName()+" : ");
+        builder.setTitle(offer.getName()+" : ");
         LinearLayout layout= new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
         final TextView description = new TextView(this);
-        description.setText(dailyOffer.getDescription());
+        description.setText(offer.getDescription());
         description.setTextColor(Color.GRAY);
         description.setGravity(Gravity.CENTER);
         description.setTextSize(18);

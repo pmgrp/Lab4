@@ -207,6 +207,8 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
                             if(task.isSuccessful()){
                                 Toast.makeText(context, "Reservation Booked",
                                         Toast.LENGTH_LONG).show();
+                                Intent in = new Intent(context, UserActivityShowReservations.class);
+                                startActivity(in);
                             }
                             else{
                                 Toast.makeText(context, "Connection Error",
