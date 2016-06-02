@@ -111,13 +111,12 @@ public class UserActivityShowUserProfile extends BaseActivity {
 
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.firebase_auth_120dp);
                 userPhoto.setImageBitmap(getCircleBitmap(bitmap));
-
+/*
                 imagePath = user.getPhoto();
                 if (imagePath != null) {
                     bitmap = imagePicker.loadImageFromStorage(imagePath);
                     userPhoto.setImageBitmap(getCircleBitmap(bitmap));
                 }
-
                 //if an image has been shot but not saved get it
                 /*if(savedInstanceState != null){
                     tempImageUri = savedInstanceState.getParcelable("TempUri");

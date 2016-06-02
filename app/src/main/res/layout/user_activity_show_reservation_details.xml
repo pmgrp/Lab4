@@ -152,8 +152,9 @@
 
 
             <TextView
+                android:id="@+id/reservation_details_button_offers"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/rectangle"

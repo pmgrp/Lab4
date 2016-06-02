@@ -1,16 +1,24 @@
 package a15.group.lab4;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -86,8 +94,32 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
 
 
     public void goToOfferDescription(View view) {
-        startActivity(new Intent(this, UserActivityShowOfferDetails.class));
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityShowReservationDetails.this);
+
+        builder.setTitle(dailyOffer.getName()+" : ");
+        LinearLayout layout= new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final TextView description = new TextView(this);
+        description.setText(dailyOffer.getDescription());
+        description.setTextColor(Color.GRAY);
+        description.setGravity(Gravity.CENTER);
+        description.setTextSize(18);
+        description.setPadding(0,15,0,0);
+        layout.addView(description);
+        builder.setView(layout);
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+        //startActivity(new Intent(this, UserActivityShowOfferDetails.class));
     }
+
 
 
 
