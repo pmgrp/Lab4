@@ -19,22 +19,22 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/restaurant_card_image"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:scaleType="centerCrop"
+                    android:layout_height="220dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/restaurant_paris" />
+
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:paddingTop="4dp">
 
                 <TextView

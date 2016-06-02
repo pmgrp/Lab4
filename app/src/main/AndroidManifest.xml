@@ -135,6 +135,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OwnerActivityShowOffers" />
         </activity>
+        <activity android:name=".OwnerChoosingOpeningHours"></activity>
     </application>
     <meta-data
         android:name="com.google.android.gms.version"
