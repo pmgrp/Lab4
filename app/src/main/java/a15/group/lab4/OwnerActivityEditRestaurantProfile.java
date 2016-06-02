@@ -168,7 +168,7 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         restaurant.setRestaurantEmail(restaurantEmail.getText().toString());
         restaurant.setRestaurantWebsite(restaurantWebsite.getText().toString());
         restaurant.setRestaurantPiva(restaurantPiva.getText().toString());
-        restaurant.setID("");
+        restaurant.setID(fUser.getUid());
         Geocoder geocoder = new Geocoder(this, Locale.ITALY);
         List<Address> addresses = null;
         try{

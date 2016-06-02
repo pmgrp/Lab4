@@ -198,6 +198,9 @@ public class UserFragmentShowRestaurants extends AppCompatActivity implements
     @Override
     protected void onStop() {
         mGoogleApiClient.disconnect();
+        if(childEventListener != null){
+            mRef.child("restaurants").removeEventListener(childEventListener);
+        }
         super.onStop();
     }
 }

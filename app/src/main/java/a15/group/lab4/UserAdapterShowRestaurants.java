@@ -77,15 +77,9 @@ public class UserAdapterShowRestaurants extends RecyclerView.Adapter<UserAdapter
             @Override
             public void onClick(View v) {
                 //save current restaurant in shared preferences
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
-                SharedPreferences.Editor editor = prefs.edit();
-                Gson gson = new Gson();
                 Restaurant restaurant = restaurants.get(restaurantViewHolder.getAdapterPosition());
-                String json = gson.toJson(restaurant);
-                editor.putString("restaurant", json);
-                editor.commit();
-                //call activity to display details
                 Intent i = new Intent(v.getContext(), UserActivityRestaurantProfile.class);
+                i.putExtra("restaurantID", restaurant.getID());
                 v.getContext().startActivity(i);
             }
         });

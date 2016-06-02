@@ -9,9 +9,13 @@ import java.util.ArrayList;
  */
 public class DataGen {
 
+    /*
+
     static DailyOffer off1,off2,off3,off4,off5,off6;
 
     public static ArrayList<DailyOffer> makeOffers() {
+
+
 
         off1 = new DailyOffer();
         Uri uri = Uri.parse("android.resource://a15.group.lab4/drawable/pizza");
@@ -193,4 +197,5 @@ public class DataGen {
         return restaurants;
 
     }
+    */
 }

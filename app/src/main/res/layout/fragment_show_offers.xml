@@ -1,12 +1,31 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="a15.group.lab4.UserFragmentShowOffers">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UserFragmentShowOffers">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:theme="@style/ToolbarTheme"
+        app:popupTheme="@style/Theme.AppCompat">
+    </android.support.v7.widget.Toolbar>
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@null">
+    </Spinner>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_spinner"
         android:id="@+id/offers"/>
 
-</FrameLayout>
+</RelativeLayout>
