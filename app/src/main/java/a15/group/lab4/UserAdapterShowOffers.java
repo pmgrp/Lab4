@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -63,7 +64,11 @@ public class UserAdapterShowOffers extends RecyclerView.Adapter<UserAdapterShowO
     @Override
     public void onBindViewHolder(final OfferViewHolder offerViewHolder, int i) {
 
-        offerViewHolder.offerImage.setImageURI(Uri.parse(offers.get(i).getPhoto()));
+        //offerViewHolder.offerImage.setImageURI(Uri.parse(offers.get(i).getPhoto()));
+        Glide.with(offerViewHolder.cv.getContext())
+                .load(offers.get(i).getPhotoThumb())
+                .centerCrop()
+                .into(offerViewHolder.offerImage);
         offerViewHolder.offerRestaurantName.setText(offers.get(i).getRestaurantName());
         offerViewHolder.offerName.setText(offers.get(i).getName());
         offerViewHolder.offerPrice.setText(String.format(Locale.getDefault(),"%d", offers.get(i).getPrice()));
@@ -73,6 +78,7 @@ public class UserAdapterShowOffers extends RecyclerView.Adapter<UserAdapterShowO
             @Override
             public void onClick(View v) {
                 //save current offer in shared preferences
+                /*
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
                 SharedPreferences.Editor editor = prefs.edit();
                 Gson gson = new Gson();
@@ -80,8 +86,12 @@ public class UserAdapterShowOffers extends RecyclerView.Adapter<UserAdapterShowO
                 String json = gson.toJson(offer);
                 editor.putString("offer", json);
                 editor.commit();
+                */
                 //call activity to display details
+                DailyOffer offer = offers.get(offerViewHolder.getAdapterPosition());
                 Intent i = new Intent(v.getContext(), UserActivityShowOfferDetails.class);
+                i.putExtra("offerID", offer.getID());
+                i.putExtra("restaurantID", offer.getRestaurantID());
                 v.getContext().startActivity(i);
             }
         });

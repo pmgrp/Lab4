@@ -29,10 +29,7 @@ import com.google.android.gms.location.LocationServices;
 
 public class UserActivityMain extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        UserFragmentShowRestaurants.FragmentListener,
-        UserFragmentShowOffers.FragmentListener,
-        UserFragmentShowReservations.FragmentListener{
+        GoogleApiClient.OnConnectionFailedListener{
 
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
@@ -142,11 +139,13 @@ public class UserActivityMain extends AppCompatActivity implements
                         case 0:
                             //offers ordered by distance
                             //fo = (UserFragmentShowOffers) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                            /*
                             fo = (UserFragmentShowOffers) getSupportFragmentManager().findFragmentByTag("OFFERS");
                             if(fo != null) {
                                 //fo.updateDistance();
                                 fo.sortByDistance();
                             }
+                            */
                             //spinner_position = spinner.getSelectedItemPosition();
                             spinner_position = spinner.getSelectedItemPosition();
                             prefEditor.putInt("spinner_pos", spinner_position);
@@ -156,12 +155,14 @@ public class UserActivityMain extends AppCompatActivity implements
                         case 1:
                             //offers ordered by price
                             //fo = (UserFragmentShowOffers) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                            /*
                             fo = (UserFragmentShowOffers) getSupportFragmentManager().findFragmentByTag("OFFERS");
                             if(fo != null) {
                                 //fo.updateDistance();
                                 fo.sortByPrice();
                             }
                             //spinner_position = spinner.getSelectedItemPosition();
+                            */
                             spinner_position = spinner.getSelectedItemPosition();
                             prefEditor.putInt("spinner_pos", spinner_position);
                             prefEditor.commit();
@@ -171,12 +172,14 @@ public class UserActivityMain extends AppCompatActivity implements
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
+                    /*
                     UserFragmentShowOffers fo;
                     fo = (UserFragmentShowOffers) getSupportFragmentManager().findFragmentByTag("OFFERS");
                     if(fo != null) {
                         //fo.updateDistance();
                         fo.sortByDistance();
                     }
+                    */
                     spinner_position = 0;
                 }
 
@@ -188,8 +191,8 @@ public class UserActivityMain extends AppCompatActivity implements
          * populate view according to current fragment
          */
         getSupportActionBar().setTitle("Offers");
-        UserFragmentShowOffers fragment = new UserFragmentShowOffers();
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment, "OFFERS").commit();
+        //UserFragmentShowOffers fragment = new UserFragmentShowOffers();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment, "OFFERS").commit();
         switch (mDrawerPosition) {
             //activity has been just created
             //offers fragment is the one in the view
@@ -239,6 +242,7 @@ public class UserActivityMain extends AppCompatActivity implements
 
     public void displayView(int position) {
         Fragment fragment = null;
+        Intent in;
         switch (position) {
 
             case 0:
@@ -247,11 +251,15 @@ public class UserActivityMain extends AppCompatActivity implements
                 mDrawerList.setSelection(0);
                 getSupportActionBar().setTitle("Offers");
                 //getSupportActionBar().setDisplayShowTitleEnabled(true);
+                /*
                 fragment = new UserFragmentShowOffers();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_container, fragment, "OFFERS").commit();
+                        */
                 current_fragment = 0;
                 mDrawerPosition = mDrawerList.getSelectedItemPosition();
+                in = new Intent(this, UserFragmentShowOffers.class);
+                startActivity(in);
                 break;
             case 1:
                 //mDrawerLayout.closeDrawer(mDrawerList);
@@ -259,22 +267,30 @@ public class UserActivityMain extends AppCompatActivity implements
                 mDrawerList.setSelection(1);
                 getSupportActionBar().setTitle("Restaurants");
                 //getSupportActionBar().setDisplayShowTitleEnabled(true);
+                /*
                 fragment = new UserFragmentShowRestaurants();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_container, fragment, "RESTAURANTS").commit();
+                        */
                 current_fragment = 1;
                 mDrawerPosition = mDrawerList.getSelectedItemPosition();
+                in = new Intent(this, UserFragmentShowRestaurants.class);
+                startActivity(in);
                 break;
 
             case 2:
                 spinner.setVisibility(View.GONE);
                 mDrawerList.setSelection(2);
                 getSupportActionBar().setTitle("Reservations");
+                /*
                 fragment = new UserFragmentShowReservations();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_container, fragment, "RESERVATIONS").commit();
+                        */
                 current_fragment = 2;
                 mDrawerPosition = mDrawerList.getSelectedItemPosition();
+                in = new Intent(this, UserFragmentShowReservations.class);
+                startActivity(in);
                 break;
             case 3:
                 spinner.setVisibility(View.GONE);
@@ -332,6 +348,7 @@ public class UserActivityMain extends AppCompatActivity implements
         } else {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         }
+        /*
         //if a fragment with offers has already been created updates the view
         UserFragmentShowOffers fo = (UserFragmentShowOffers)getSupportFragmentManager().findFragmentByTag("OFFERS");
         if(fo!=null){
@@ -344,11 +361,13 @@ public class UserActivityMain extends AppCompatActivity implements
                     break;
             }
         }
+        /*
         UserFragmentShowRestaurants fr = (UserFragmentShowRestaurants) getSupportFragmentManager().findFragmentByTag("RESTAURANTS");
         if(fr!=null){
             fr.updateDistance();
             fr.sortByDistance();
         }
+        */
 
     }
 

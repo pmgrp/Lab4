@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -63,23 +64,14 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
     @Override
     public void onBindViewHolder(final ReservationViewHolder reservationViewHolder, int i) {
 
-        ArrayList<Restaurant> restaurants;
-        Restaurant restaurant = null;
-        String restaurantID;
-        DailyOffer dailyOffer = reservations.get(i).getDailyOffer();
-        restaurants = DataGen.makeRestaurants();
-        restaurantID = dailyOffer.getRestaurantID();
-        for (Restaurant r : restaurants) {
-            if (r.getID().contentEquals(restaurantID)) {
-                restaurant = r;
-            }
-        }
-
-        reservationViewHolder.offerName.setText(reservations.get(i).getDailyOffer().getName());
-        reservationViewHolder.restaurantName.setText(reservations.get(i).getDailyOffer().getRestaurantName());
+        reservationViewHolder.offerName.setText(reservations.get(i).getOfferName());
+        reservationViewHolder.restaurantName.setText(reservations.get(i).getRestaurantName());
         reservationViewHolder.date.setText(reservations.get(i).getDate());
         reservationViewHolder.time.setText(reservations.get(i).getTime());
-        reservationViewHolder.image.setImageURI(Uri.parse(restaurant.getRestaurantPhoto()));
+        Glide.with(reservationViewHolder.cv.getContext())
+                .load(reservations.get(i).getRestaurantPhoto())
+                .centerCrop()
+                .into(reservationViewHolder.image);
         int status = reservations.get(i).getStatus();
         switch (status) {
             case Reservation.ARRIVED:
@@ -99,15 +91,11 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
             @Override
             public void onClick(View v) {
                 //save current offer in shared preferences
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
-                SharedPreferences.Editor editor = prefs.edit();
-                Gson gson = new Gson();
                 Reservation reservation = reservations.get(reservationViewHolder.getAdapterPosition());
-                String json = gson.toJson(reservation);
-                editor.putString("reservation", json);
-                editor.commit();
-                //call activity to display details
                 Intent i = new Intent(v.getContext(), UserActivityShowReservationDetails.class);
+                i.putExtra("offerID", reservation.getOfferId());
+                i.putExtra("restaurantID", reservation.getRestaurantId());
+                i.putExtra("reservationID", reservation.getReservationId());
                 v.getContext().startActivity(i);
             }
         });

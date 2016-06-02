@@ -180,6 +180,7 @@ public class OwnerActivityAddOffer extends BaseActivity {
 
     private void uploadOffer(){
         offerId = mRef.child("offers").push().getKey();
+        offer.setID(offerId);
         if(currentPhoto != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             currentPhoto.compress(Bitmap.CompressFormat.JPEG, 90, baos);

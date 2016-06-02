@@ -20,7 +20,6 @@ public class DailyOffer {
     //default constructor
     public DailyOffer() {
         this.ID = null;
-
         this.restaurantID = null;
         this.restaurantName = null;
         this.restaurantLatitude = 0;

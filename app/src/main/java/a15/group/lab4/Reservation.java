@@ -11,9 +11,13 @@ public class Reservation {
     public static final int COMPLETED = 3;
     //private String ID;
     //private String restaurantID;
-    private Customer customer;
-    private DailyOffer dailyOffer;
-    private Restaurant restaurant;
+    private String customerId;
+    private String offerId;
+    private String restaurantId;
+    private String reservationId;
+    private String offerName;
+    private String restaurantName;
+    private String restaurantPhoto;
     private String date;
     private String time;
     private String comment; //@TODO implement comment feature
@@ -22,45 +26,52 @@ public class Reservation {
     public Reservation(){
         //this.ID = null;
         //this.restaurantID = null;
-        this.customer = null;
-        this.dailyOffer = null;
+        this.customerId = null;
+        this.offerId = null;
         this.time = null;
         this.comment = null;
         this.status = ARRIVED;
         this.date = null;
-        this.restaurant = null;
+        this.restaurantId = null;
     }
 
 
 
-    public Reservation (String ID, String restaurantID, Customer customer, String date, DailyOffer dailyOffer,
-                        String time) {
-        /*this.ID = ID;
-        this.restaurantID = restaurantID;*/
-        this.customer = customer;
-        this.dailyOffer = dailyOffer;
+    public Reservation (String customerId, String offerId, String restaurantId, String reservationId,
+                        String offerName, String restaurantName, String restaurantPhoto, String date, String time, String comment, int status) {
+
+        this.customerId = customerId;
+        this.offerId = offerId;
+        this.restaurantId = restaurantId;
+        this.reservationId = reservationId;
+        this.offerName = offerName;
+        this.restaurantName = restaurantName;
+        this.restaurantPhoto = restaurantPhoto;
         this.date = date;
         this.time = time;
-        this.comment = null;
+        this.comment = comment;
         this.status = ARRIVED;
-        this.restaurant = null;
     }
 
     //getter
-    //public String getID(){ return ID; }
-    //public String getRestaurantID(){ return restaurantID; }
-    public Customer getCustomer(){ return this.customer; }
+    public String getReservationId(){return this.reservationId;}
+    public String getCustomerId(){ return this.customerId; }
     public String getTime(){ return this.time; }
     public String getDate() { return this.date; }
     public String getComment(){ return this.comment; }
     public int getStatus(){ return this.status; }
-    public DailyOffer getDailyOffer(){ return dailyOffer; }
-    public Restaurant getRestaurant() { return restaurant; }
+    public String getOfferId(){ return this.offerId; }
+    public String getRestaurantId() { return this.restaurantId; }
+    public String getOfferName() { return this.offerName;}
+    public String getRestaurantName() {return this.restaurantName; }
+    public String getRestaurantPhoto() { return this.restaurantPhoto; }
 
     //setter
-    public void setCustomer(Customer customer){
-        this.customer = customer;
+    public void setCustomerId(String customerId){
+        this.customerId = customerId;
     }
+
+    public void setReservationId(String reservationId) {this.reservationId = reservationId;}
 
     public void setTime(String time){
         this.time = time;
@@ -75,8 +86,14 @@ public class Reservation {
 
     public void setStatus(int status){ this.status = status; }
 
-    public void setDailyOffer(DailyOffer dailyOffer){ this.dailyOffer = dailyOffer; }
+    public void setOfferId(String offerId){ this.offerId = offerId; }
 
-    public void setRestaurant(Restaurant restaurant) { this.restaurant = restaurant; }
+    public void setRestaurantId(String restaurantId) { this.restaurantId = restaurantId; }
+
+    public void setOfferName(String offerName) { this.offerName = offerName; }
+
+    public void setRestaurantName(String restaurantName ) { this.restaurantName = restaurantName;}
+
+    public void setRestaurantPhoto(String restaurantPhoto) {this.restaurantPhoto = restaurantPhoto;}
 
 }
