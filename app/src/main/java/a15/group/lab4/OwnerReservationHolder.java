@@ -65,6 +65,11 @@ public class OwnerReservationHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    public CardView getCard(){
+        CardView cv = (CardView)mView.findViewById(R.id.reservation_card);
+        return cv;
+    }
+
     public Button getDeleteButton(){
         Button deleteButton = (Button)mView.findViewById(R.id.reservation_delete);
         return deleteButton;

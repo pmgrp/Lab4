@@ -75,7 +75,7 @@ public class OwnerActivityShowReservations extends AppCompatActivity {
         mAdapter = new FirebaseRecyclerAdapter<Reservation, OwnerReservationHolder>(
                 Reservation.class, R.layout.owner_reservation_card, OwnerReservationHolder.class, mRef) {
             @Override
-            public void populateViewHolder(final OwnerReservationHolder viewHolder, Reservation reservation, final int position) {
+            public void populateViewHolder(final OwnerReservationHolder viewHolder, final Reservation reservation, final int position) {
                 viewHolder.setName(reservation.getUserName(), reservation.getUserSurname());
                 viewHolder.setPhone(reservation.getUserPhone());
                 viewHolder.setComment(reservation.getComment());
@@ -87,6 +87,15 @@ public class OwnerActivityShowReservations extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         onClickPopupOptions(v, mAdapter.getRef(position).getKey(), position);
+                    }
+                });
+                viewHolder.getCard().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent in = new Intent(OwnerActivityShowReservations.this, OwnerActivityReservationDetails.class);
+                        in.putExtra("reservationID", mAdapter.getRef(position).getKey());
+                        in.putExtra("offerID", reservation.getOfferId());
+                        startActivity(in);
                     }
                 });
             }
