@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.internal.StreetViewLifecycleDelegate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +49,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     private DatabaseReference mRefRestaurant;
     private DatabaseReference mRefUserReservation;
     private DatabaseReference mRefOwnerReservation;
+    private DatabaseReference mRefUser;
 
     private String offerId;
     private String restaurantId;
@@ -56,6 +58,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     private DailyOffer offer;
     private Restaurant restaurant;
     private Reservation reservation;
+    private User user;
     private Context context;
 
     private Toolbar toolbar;
@@ -90,12 +93,14 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         mRefRestaurant = database.getReference().child("restaurants").child(restaurantId);
         mRefUserReservation = database.getReference().child("user-reservations").child(userId);
         mRefOwnerReservation = database.getReference().child("owner-reservations").child(restaurantId);
+        mRefUser = database.getReference().child("users").child(userId);
 
         mRefRestaurant.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     restaurant = dataSnapshot.getValue(Restaurant.class);
+                    getUser(mRefUser);
                     getOffer(mRefOffer);
                 }
             }
@@ -111,6 +116,23 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    private void getUser(DatabaseReference mRefUser){
+        mRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    user = dataSnapshot.getValue(User.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.d("ERR", "loadPost:onCancelled", databaseError.toException());
+            }
+        });
     }
 
     private void getOffer(DatabaseReference mRefOffer){
@@ -195,8 +217,9 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         String time = Integer.toString(xhour) + ":" + tempMin2;
 
         reservationId = mRefUserReservation.push().getKey();
-        reservation = new Reservation(userId, offerId, restaurantId, reservationId, offer.getName(), restaurant.getRestaurantName(),
-                restaurant.getRestaurantPhoto(), date, time, "", Reservation.ARRIVED);
+        reservation = new Reservation(userId, offerId, restaurantId, reservationId,
+                user.getName(), user.getSurname(), user.getPhone(), user.getEmail(), offer.getPrice(),
+                offer.getName(), restaurant.getRestaurantName(), restaurant.getRestaurantPhoto(), date, time, "", Reservation.ARRIVED);
         mRefUserReservation.child(reservationId).setValue(reservation).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

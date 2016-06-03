@@ -63,6 +63,21 @@
     <string name="delete_account_failed">Delete account failed 😨</string>
     <string name="loading">Loading…</string>
 
+    <!-- reservations strings -->
+    <string name="reservations_customer_details">Customer Details</string>
+    <string name="reservations_status">Status</string>
+    <string name="reservations_lunch_time">Lunch Time</string>
+    <string name="reservations_tot_price">Total Price</string>
+    <string name="reservations_delete_button">Delete</string>
+    <string name="reservations_availability">Availability</string>
+    <string name="reservations_price">Price</string>
+    <string name="reservations_tel">Tel:&#160;</string>
+    <string name="reservations_arrived">Arrived</string>
+    <string name="reservations_confirmed">Confirmed</string>
+    <string name="reservations_rejected">Rejected</string>
+    <string name="reservations_completed">Completed</string>
+    <string name="reservations_euro">€</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

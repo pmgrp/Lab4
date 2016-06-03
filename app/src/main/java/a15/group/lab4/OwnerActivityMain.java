@@ -95,8 +95,8 @@ public class OwnerActivityMain extends AppCompatActivity {
 
     public void onShowReservationsClicked(View view) {
 
-        //Intent show_reservations = new Intent(this, ActivityShowReservations.class);
-        //startActivity(show_reservations);
+        Intent in = new Intent(this, OwnerActivityShowReservations.class);
+        startActivity(in);
     }
 
     public void onUserProfileClicked(View view){

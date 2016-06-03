@@ -156,6 +156,16 @@
                 android:value=".OwnerActivityShowOffers" />
         </activity>
         <activity
+            android:name=".OwnerActivityShowReservations"
+            android:label="Reservations"
+            android:parentActivityName=".OwnerActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OwnerActivityMain" />
+        </activity>
+        <activity
             android:name=".OwnerActivityModifyOffer"
             android:label="Modify Offer"
             android:parentActivityName=".OwnerActivityShowOffers"

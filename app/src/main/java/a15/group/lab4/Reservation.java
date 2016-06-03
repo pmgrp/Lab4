@@ -15,6 +15,11 @@ public class Reservation {
     private String offerId;
     private String restaurantId;
     private String reservationId;
+    private String userName;
+    private String userSurname;
+    private String userPhone;
+    private String userEmail;
+    private int offerPrice;
     private String offerName;
     private String restaurantName;
     private String restaurantPhoto;
@@ -24,26 +29,39 @@ public class Reservation {
     private int status;
 
     public Reservation(){
-        //this.ID = null;
-        //this.restaurantID = null;
         this.customerId = null;
         this.offerId = null;
+        this.restaurantId = null;
+        this.reservationId = null;
+        this.userName = null;
+        this.userSurname = null;
+        this.userPhone = null;
+        this.userEmail = null;
+        this.offerPrice = 0;
+        this.offerName = null;
+        this.restaurantName = null;
+        this.restaurantPhoto = null;
         this.time = null;
         this.comment = null;
         this.status = ARRIVED;
         this.date = null;
-        this.restaurantId = null;
     }
 
 
 
     public Reservation (String customerId, String offerId, String restaurantId, String reservationId,
+                        String userName, String userSurname, String userPhone, String userEmail, int offerPrice,
                         String offerName, String restaurantName, String restaurantPhoto, String date, String time, String comment, int status) {
 
         this.customerId = customerId;
         this.offerId = offerId;
         this.restaurantId = restaurantId;
         this.reservationId = reservationId;
+        this.userName = userName;
+        this.userSurname = userSurname;
+        this.userPhone = userPhone;
+        this.userEmail = userEmail;
+        this.offerPrice = offerPrice;
         this.offerName = offerName;
         this.restaurantName = restaurantName;
         this.restaurantPhoto = restaurantPhoto;
@@ -54,6 +72,11 @@ public class Reservation {
     }
 
     //getter
+    public int getOfferPrice(){return this.offerPrice; }
+    public String getUserName(){return this.userName;}
+    public String getUserSurname(){return this .userSurname;}
+    public String getUserPhone(){return this.userPhone;}
+    public String getUserEmail(){return this.userEmail;}
     public String getReservationId(){return this.reservationId;}
     public String getCustomerId(){ return this.customerId; }
     public String getTime(){ return this.time; }
@@ -67,6 +90,16 @@ public class Reservation {
     public String getRestaurantPhoto() { return this.restaurantPhoto; }
 
     //setter
+    public void setOfferPrice(int offerPrice){this.offerPrice = offerPrice;}
+
+    public void setUserName(String userName){this.userName = userName;}
+
+    public void setUserSurname(String userSurname){this .userSurname = userSurname;}
+
+    public void setUserPhone(String userPhone){this.userPhone = userPhone;}
+
+    public void setUserEmail(String userEmail){this.userEmail = userEmail;}
+
     public void setCustomerId(String customerId){
         this.customerId = customerId;
     }
