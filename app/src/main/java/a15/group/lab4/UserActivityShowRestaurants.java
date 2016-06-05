@@ -201,6 +201,7 @@ public class UserActivityShowRestaurants extends AppCompatActivity implements
         if(childEventListener != null){
             mRef.child("restaurants").removeEventListener(childEventListener);
         }
+        restaurants.clear();
         super.onStop();
     }
 }

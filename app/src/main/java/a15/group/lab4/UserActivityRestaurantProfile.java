@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,43 +27,97 @@ import com.google.gson.Gson;
 
 public class UserActivityRestaurantProfile extends AppCompatActivity {
 
-    Restaurant restaurant;
-    ImageView imageView;
-    TextView textView;
-    ImageView likeButton;
+    private Restaurant restaurant;
+    private ImageView imageView;
+    private TextView textView;
+    private ImageView likeButton;
+    private FirebaseAuth mAuth;
+    private String userId;
+    private DatabaseReference mRefLike;
     private Context context;
     private Toolbar toolbar;
+    private ValueEventListener likeListener;
+    private ValueEventListener restaurantListener;
+    private boolean liked;
+    private int likeCount = 0;
+    private DatabaseReference mRefRestaurant;
+    //lock for like count
+    private final Object lock = new Object();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         context = this;
-        String restaurantId = getIntent().getStringExtra("restaurantID");
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         if(mAuth == null){
-            Intent in = new Intent(context, ActivityMain.class);
-            startActivity(in);
+            startActivity(new Intent(context, ActivityMain.class));
+        }
+        else{
+            userId = mAuth.getCurrentUser().getUid();
         }
 
+        //set template
         setContentView(R.layout.user_activity_restaurant_profile);
         toolbar = (Toolbar) findViewById(R.id.toolbar_restaurant_profile);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        final String restaurantId = getIntent().getStringExtra("restaurantID");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mRefRestaurant = database.getReference().child("restaurants").child(restaurantId);
-        getRestaurant(mRefRestaurant);
-    }
+        mRefRestaurant = database.getReference().child("restaurants").child(restaurantId);
+        mRefLike = FirebaseDatabase.getInstance().getReference().child("restaurants-likes").child(restaurantId).child(userId);
 
-    private void getRestaurant(DatabaseReference mRefRestaurant){
-        mRefRestaurant.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        //listener for likes
+        likeListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //like is already set
+                if(dataSnapshot.exists()){
+                    likeButton.setImageResource(R.mipmap.like_blue_thumb);
+                    liked = true;
+                }
+                else if(!dataSnapshot.exists()){
+                    likeButton.setImageResource(R.mipmap.like_button_thumb);
+                    liked = false;
+                }
+
+                likeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseReference mRef = FirebaseDatabase.getInstance()
+                                .getReference().child("restaurants-likes").child(restaurantId);
+                        int nLikes = getLikeCount();
+                        if(!liked){
+                            mRefRestaurant.child("likeCount").setValue(nLikes+1);
+                            mRef.child(userId).setValue(userId);
+                        }
+                        else{
+                            mRefRestaurant.child("likeCount").setValue(nLikes-1);
+                            mRef.child(userId).removeValue();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.d("ERR", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+
+        //listener for restaurant
+        restaurantListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     restaurant = dataSnapshot.getValue(Restaurant.class);
+                    //get number of likes
+                    setLikeCount(restaurant.getLikeCount());
                     toolbar.setTitle(restaurant.getRestaurantName());
+
                     imageView = (ImageView) findViewById(R.id.restaurant_profile_image);
                     Glide.with(context)
                             .load(restaurant.getRestaurantPhoto())
@@ -91,11 +146,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
                     textView.setText("+ " + Integer.toString(restaurant.getLikeCount()));
 
                     likeButton = (ImageView) findViewById(R.id.likeButton);
-                    if (restaurant.getLiked()) {
-                        likeButton.setImageResource(R.mipmap.like_blue_thumb);
-                    } else {
-                        likeButton.setImageResource(R.mipmap.like_button_thumb);
-                    }
 
                 }
             }
@@ -105,10 +155,28 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
                 // Getting Post failed, log a message
                 Log.d("ERR", "loadPost:onCancelled", databaseError.toException());
             }
-        });
+        };
+
+        //set listeners
+        mRefRestaurant.addValueEventListener(restaurantListener);
+        mRefLike.addValueEventListener(likeListener);
 
     }
 
+    //that methods should be thread safe
+    public void setLikeCount(int value){
+        synchronized (lock) {
+            this.likeCount = value;
+        }
+    }
+
+    public int getLikeCount(){
+        synchronized (lock){
+            return this.likeCount;
+        }
+    }
+
+    /*
     public void likeTheRestaurant(View view) {
         if (restaurant.getLiked()) {
             likeButton.setImageResource(R.mipmap.like_button_thumb);
@@ -120,10 +188,16 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
             //saveInGson();
         }
     }
-
+    */
     @Override
-    public void onPause(){
-        super.onPause();
+    public void onStop(){
+        super.onStop();
+        if(likeListener != null){
+            mRefLike.removeEventListener(likeListener);
+        }
+        if(restaurantListener != null){
+            mRefRestaurant.removeEventListener(restaurantListener);
+        }
     }
 
 }

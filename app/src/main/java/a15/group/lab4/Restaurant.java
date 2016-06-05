@@ -41,10 +41,6 @@ public class Restaurant {
         this.restaurantPiva = "";
         this.restaurantPhoto = "";
         this.distance = 0;
-        //this.openingDays = null;
-        //this.reservations = null;
-        //this.dailyOffers = null;
-        //this.comments = null;
         this.likeCount = 0;
         this.liked = false;
     }
