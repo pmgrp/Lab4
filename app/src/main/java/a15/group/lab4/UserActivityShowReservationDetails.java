@@ -226,5 +226,10 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         startActivity(in);
     }
 
+    public void backToMenu(View view){
+        Intent in = new Intent(this, ActivityMain.class);
+        startActivity(in);
+    }
+
 
 }

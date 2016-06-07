@@ -14,12 +14,20 @@
         android:layout_marginTop="16dp"
         android:orientation="vertical">
 
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/logo_app_coyote"
+            android:layout_gravity="center_horizontal"
+
+            />
+
         <TextView
             style="@style/Base.TextAppearance.AppCompat.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:drawableTop="@drawable/firebase_auth_120dp"
             android:text="@string/login_title" />
 
         <EditText

@@ -200,4 +200,9 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
         }
     }
 
+    public void backToMenu(View view){
+        Intent in = new Intent(this, ActivityMain.class);
+        startActivity(in);
+    }
+
 }

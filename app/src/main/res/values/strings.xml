@@ -55,7 +55,7 @@
     <string name="unknown_sign_in_response">Unknown response from AuthUI sign-in 😓</string>
     <string name="sign_in_cancelled">Sign in cancelled 😔</string>
     <string name="sign_out_failed">Sign out failed 😨</string>
-    <string name="login_title">OurAppName</string>
+    <string name="login_title">MAD</string>
     <string name="signed_in_header">You are signed in!</string>
     <string name="log_out">Log out</string>
     <string name="log_in">Log in</string>

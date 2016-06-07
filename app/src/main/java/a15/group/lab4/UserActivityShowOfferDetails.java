@@ -260,6 +260,10 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         this.xday = xday;
     }
 
+    public void backToMenu(View view){
+        Intent in = new Intent(this, ActivityMain.class);
+        startActivity(in);
+    }
 
 
 
