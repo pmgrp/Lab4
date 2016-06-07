@@ -57,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/first_row"
+                android:id="@+id/second_row"
                 android:padding="20dp">
             <ImageView
                 android:id="@+id/daily_offer"
@@ -89,5 +90,31 @@
                     android:layout_below="@id/daily_offer"
                     android:textStyle="bold"/>
             </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/second_row"
+        android:padding="20dp">
+        <ImageView
+            android:id="@+id/opening_hours"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/clock"
+            android:onClick="onOpeningHoursClicked"/>
+        <TextView
+            android:id="@+id/opening_hours_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Opening Hours"
+            android:layout_below="@id/opening_hours"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+
+
     </RelativeLayout>
 

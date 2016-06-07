@@ -129,4 +129,9 @@ public class OwnerActivityMain extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+    public void onOpeningHoursClicked(View view){
+        Intent in = new Intent(this, OwnerChoosingOpeningHours.class);
+        startActivity(in);
+    }
 }
