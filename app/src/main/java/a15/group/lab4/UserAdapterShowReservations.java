@@ -70,7 +70,6 @@ public class UserAdapterShowReservations extends RecyclerView.Adapter<UserAdapte
         reservationViewHolder.time.setText(reservations.get(i).getTime());
         Glide.with(reservationViewHolder.cv.getContext())
                 .load(reservations.get(i).getRestaurantPhoto())
-                .centerCrop()
                 .into(reservationViewHolder.image);
         int status = reservations.get(i).getStatus();
         switch (status) {

@@ -42,8 +42,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="selectAllDays"
                     android:text="Select All"
-                    android:onClick="selectAllDays"/>
+                    android:checked="true"/>
 
 
                 <CheckBox
@@ -51,8 +52,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Continuous hours"
-                    android:onClick="continuous"/>
+                    android:onClick="continuous"
+                    android:text="Continuous hours" />
 
 
                 <CheckBox
@@ -60,6 +61,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="sameHours"
                     android:text="Same Hours (Monday)" />
 
 
@@ -77,12 +79,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Monday" />
+                    android:text="Monday"
+                    android:checked="true"
+                    android:onClick="monday"/>
 
                 <RelativeLayout
+                    android:id="@+id/RL_lunch_monday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/lunch_monday_radioButton"
@@ -91,7 +97,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch" />
+                        android:text="Lunch"
+                        android:onClick="mondayLunch"/>
 
 
                     <LinearLayout
@@ -102,12 +109,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_lunch_monday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="11:00"
                             android:inputType="time"
+                            android:text="11:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -116,12 +124,13 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_lunch_monday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="15:00"
                             android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -129,9 +138,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/RL_diner_monday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/diner_monday_radioButton"
@@ -140,7 +151,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner" />
+                        android:text="Diner"
+                        android:onClick="mondayDiner"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -150,12 +162,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_diner_monday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="19:00"
                             android:inputType="time"
+                            android:text="19:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -164,12 +177,58 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_diner_monday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="23:00"
                             android:inputType="time"
+                            android:text="23:00"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RL_continuous_monday"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/start_hour_monday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="11:00"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - " />
+
+                        <EditText
+                            android:id="@+id/end_hour_monday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -189,12 +248,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Tuesday" />
+                    android:text="Tuesday"
+                    android:checked="true"
+                    android:onClick="tuesday"/>
 
                 <RelativeLayout
+                    android:id="@+id/RL_lunch_tuesday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/lunch_tuesday_radioButton"
@@ -203,7 +266,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch" />
+                        android:text="Lunch"
+                        android:onClick="tuesdayLunch"/>
 
 
                     <LinearLayout
@@ -214,12 +278,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_lunch_tuesday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="11:00"
                             android:inputType="time"
+                            android:text="11:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -228,12 +293,13 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_lunch_tuesday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="15:00"
                             android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -241,9 +307,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/RL_diner_tuesday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/diner_tuesday_radioButton"
@@ -252,7 +320,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner" />
+                        android:text="Diner"
+                        android:onClick="tuesdayDiner"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -262,12 +331,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_diner_tuesday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="19:00"
                             android:inputType="time"
+                            android:text="19:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -276,12 +346,58 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_diner_tuesday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="23:00"
                             android:inputType="time"
+                            android:text="23:00"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RL_continuous_tuesday"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/start_hour_tuesday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="11:00"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - " />
+
+                        <EditText
+                            android:id="@+id/end_hour_tuesday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -302,12 +418,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:text="Wednesday" />
+                    android:text="Wednesday"
+                    android:checked="true"
+                    android:onClick="wednesday"/>
 
                 <RelativeLayout
+                    android:id="@+id/RL_lunch_wednesday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/lunch_wednesday_radioButton"
@@ -316,7 +436,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch" />
+                        android:text="Lunch"
+                        android:onClick="wednesdayLunch"/>
 
 
                     <LinearLayout
@@ -327,12 +448,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_lunch_wednesday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="11:00"
                             android:inputType="time"
+                            android:text="11:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -341,12 +463,13 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_lunch_wednesday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="15:00"
                             android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -354,9 +477,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/RL_diner_wednesday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/diner_wednesday_radioButton"
@@ -365,7 +490,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner" />
+                        android:text="Diner"
+                        android:onClick="wednesdayDiner"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -375,12 +501,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_diner_wednesday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="19:00"
                             android:inputType="time"
+                            android:text="19:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -389,12 +516,58 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_diner_wednesday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="23:00"
                             android:inputType="time"
+                            android:text="23:00"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RL_continuous_wednesday"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/start_hour_wednesday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="11:00"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - " />
+
+                        <EditText
+                            android:id="@+id/end_hour_wednesday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -414,12 +587,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Thursday" />
+                    android:text="Thursday"
+                    android:checked="true"
+                    android:onClick="thursday"/>
 
                 <RelativeLayout
+                    android:id="@+id/RL_lunch_thursday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/lunch_thursday_radioButton"
@@ -428,7 +605,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch" />
+                        android:text="Lunch"
+                        android:onClick="thursdayLunch"/>
 
 
                     <LinearLayout
@@ -439,12 +617,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_lunch_thursday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="11:00"
                             android:inputType="time"
+                            android:text="11:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -453,12 +632,13 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_lunch_thursday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="15:00"
                             android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -466,9 +646,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/RL_diner_thursday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/diner_thursday_radioButton"
@@ -477,7 +659,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner" />
+                        android:text="Diner"
+                        android:onClick="thursdayDiner"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -487,12 +670,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_diner_thursday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="19:00"
                             android:inputType="time"
+                            android:text="19:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -501,12 +685,58 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_diner_thursday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="23:00"
                             android:inputType="time"
+                            android:text="23:00"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RL_continuous_thursday"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/start_hour_thursday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="11:00"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - " />
+
+                        <EditText
+                            android:id="@+id/end_hour_thursday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -526,12 +756,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Friday" />
+                    android:text="Friday"
+                    android:checked="true"
+                    android:onClick="friday"/>
 
                 <RelativeLayout
+                    android:id="@+id/RL_lunch_friday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/lunch_friday_radioButton"
@@ -540,7 +774,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch" />
+                        android:text="Lunch"
+                        android:onClick="fridayLunch"/>
 
 
                     <LinearLayout
@@ -551,12 +786,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_lunch_friday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="11:00"
                             android:inputType="time"
+                            android:text="11:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -565,12 +801,13 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_lunch_friday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="15:00"
                             android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -578,9 +815,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/RL_diner_friday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/diner_friday_radioButton"
@@ -589,7 +828,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner" />
+                        android:text="Diner"
+                        android:onClick="fridayDiner"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -599,12 +839,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_diner_friday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="19:00"
                             android:inputType="time"
+                            android:text="19:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -613,12 +854,58 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_diner_friday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="23:00"
                             android:inputType="time"
+                            android:text="23:00"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RL_continuous_friday"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/start_hour_friday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="11:00"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - " />
+
+                        <EditText
+                            android:id="@+id/end_hour_friday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -638,12 +925,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Saturday" />
+                    android:text="Saturday"
+                    android:checked="true"
+                    android:onClick="saturday"/>
 
                 <RelativeLayout
+                    android:id="@+id/RL_lunch_saturday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/lunch_saturday_radioButton"
@@ -652,7 +943,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch" />
+                        android:text="Lunch"
+                        android:onClick="saturdayLunch"/>
 
 
                     <LinearLayout
@@ -663,12 +955,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_lunch_saturday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="11:00"
                             android:inputType="time"
+                            android:text="11:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -677,12 +970,13 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_lunch_saturday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="15:00"
                             android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -690,9 +984,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/RL_diner_saturday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/diner_saturday_radioButton"
@@ -701,7 +997,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner" />
+                        android:text="Diner"
+                        android:onClick="saturdayDiner"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -711,12 +1008,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_diner_saturday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="19:00"
                             android:inputType="time"
+                            android:text="19:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -725,12 +1023,58 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_diner_saturday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="23:00"
                             android:inputType="time"
+                            android:text="23:00"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RL_continuous_saturday"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/start_hour_saturday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="11:00"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - " />
+
+                        <EditText
+                            android:id="@+id/end_hour_saturday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -750,12 +1094,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Sunday" />
+                    android:text="Sunday"
+                    android:checked="true"
+                    android:onClick="sunday"/>
 
                 <RelativeLayout
+                    android:id="@+id/RL_lunch_sunday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/lunch_sunday_radioButton"
@@ -764,7 +1112,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch" />
+                        android:text="Lunch"
+                        android:onClick="sundayLunch"/>
 
 
                     <LinearLayout
@@ -775,12 +1124,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_lunch_sunday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="11:00"
                             android:inputType="time"
+                            android:text="11:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -789,12 +1139,13 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_lunch_sunday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="15:00"
                             android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -802,9 +1153,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/RL_diner_sunday"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/diner_sunday_radioButton"
@@ -813,7 +1166,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner" />
+                        android:text="Diner"
+                        android:onClick="sundayDiner"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -823,12 +1177,13 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/start_hour_diner_sunday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="19:00"
                             android:inputType="time"
+                            android:text="19:00"
                             android:textAlignment="center" />
 
                         <TextView
@@ -837,12 +1192,58 @@
                             android:text=" - " />
 
                         <EditText
+                            android:id="@+id/end_hour_diner_sunday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
-                            android:hint="23:00"
                             android:inputType="time"
+                            android:text="23:00"
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RL_continuous_sunday"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/start_hour_sunday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="11:00"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - " />
+
+                        <EditText
+                            android:id="@+id/end_hour_sunday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:inputType="time"
+                            android:text="15:00"
                             android:textAlignment="center" />
 
                     </LinearLayout>
