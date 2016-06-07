@@ -1,5 +1,7 @@
 package a15.group.lab4;
 
+import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,8 +10,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TimePicker;
 
 import java.sql.Time;
+import java.util.Calendar;
 
 public class OwnerChoosingOpeningHours extends AppCompatActivity {
 
@@ -65,12 +69,30 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
     private EditText endLunchSunday;
     private EditText startDinerSunday;
     private EditText endDinerSunday;
+    private EditText startHourMonday;
+    private EditText endHourMonday;
+    private EditText startHourTuesday;
+    private EditText endHourTuesday;
+    private EditText startHourWednesday;
+    private EditText endHourWednesday;
+    private EditText startHourThursday;
+    private EditText endHourThursday;
+    private EditText startHourFriday;
+    private EditText endHourFriday;
+    private EditText startHourSaturday;
+    private EditText endHourSaturday;
+    private EditText startHourSunday;
+    private EditText endHourSunday;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_choosing_opening_hours);
+
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         initAllID();
 
@@ -85,6 +107,48 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             friday.setChecked(true);
             saturday.setChecked(true);
             sunday.setChecked(true);
+            mondayLunch.setChecked(true);
+            tuesdayLunch.setChecked(true);
+            wednesdayLunch.setChecked(true);
+            thursdayLunch.setChecked(true);
+            fridayLunch.setChecked(true);
+            saturdayLunch.setChecked(true);
+            sundayLunch.setChecked(true);
+            mondayDiner.setChecked(true);
+            tuesdayDiner.setChecked(true);
+            wednesdayDiner.setChecked(true);
+            thursdayDiner.setChecked(true);
+            fridayDiner.setChecked(true);
+            saturdayDiner.setChecked(true);
+            sundayDiner.setChecked(true);
+            startLunchMonday.setEnabled(true);
+            endLunchMonday.setEnabled(true);
+            startDinerMonday.setEnabled(true);
+            endDinerMonday.setEnabled(true);
+            startLunchTuesday.setEnabled(true);
+            endLunchTuesday.setEnabled(true);
+            startDinerTuesday.setEnabled(true);
+            endDinerTuesday.setEnabled(true);
+            startLunchWednesday.setEnabled(true);
+            endLunchWednesday.setEnabled(true);
+            startDinerWednesday.setEnabled(true);
+            endDinerWednesday.setEnabled(true);
+            startLunchThursday.setEnabled(true);
+            endLunchThursday.setEnabled(true);
+            startDinerThursday.setEnabled(true);
+            endDinerThursday.setEnabled(true);
+            startLunchFriday.setEnabled(true);
+            endLunchFriday.setEnabled(true);
+            startDinerFriday.setEnabled(true);
+            endDinerFriday.setEnabled(true);
+            startLunchSaturday.setEnabled(true);
+            endLunchSaturday.setEnabled(true);
+            startDinerSaturday.setEnabled(true);
+            endDinerSaturday.setEnabled(true);
+            startLunchSunday.setEnabled(true);
+            endLunchSunday.setEnabled(true);
+            startDinerSunday.setEnabled(true);
+            endDinerSunday.setEnabled(true);
         } else {
             monday.setChecked(false);
             tuesday.setChecked(false);
@@ -93,9 +157,49 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             friday.setChecked(false);
             saturday.setChecked(false);
             sunday.setChecked(false);
+            mondayLunch.setChecked(false);
+            tuesdayLunch.setChecked(false);
+            wednesdayLunch.setChecked(false);
+            thursdayLunch.setChecked(false);
+            fridayLunch.setChecked(false);
+            saturdayLunch.setChecked(false);
+            sundayLunch.setChecked(false);
+            mondayDiner.setChecked(false);
+            tuesdayDiner.setChecked(false);
+            wednesdayDiner.setChecked(false);
+            thursdayDiner.setChecked(false);
+            fridayDiner.setChecked(false);
+            saturdayDiner.setChecked(false);
+            sundayDiner.setChecked(false);
+            startLunchMonday.setEnabled(false);
+            endLunchMonday.setEnabled(false);
+            startDinerMonday.setEnabled(false);
+            endDinerMonday.setEnabled(false);
+            startLunchTuesday.setEnabled(false);
+            endLunchTuesday.setEnabled(false);
+            startDinerTuesday.setEnabled(false);
+            endDinerTuesday.setEnabled(false);
+            startLunchWednesday.setEnabled(false);
+            endLunchWednesday.setEnabled(false);
+            startDinerWednesday.setEnabled(false);
+            endDinerWednesday.setEnabled(false);
+            startLunchThursday.setEnabled(false);
+            endLunchThursday.setEnabled(false);
+            startDinerThursday.setEnabled(false);
+            endDinerThursday.setEnabled(false);
+            startLunchFriday.setEnabled(false);
+            endLunchFriday.setEnabled(false);
+            startDinerFriday.setEnabled(false);
+            endDinerFriday.setEnabled(false);
+            startLunchSaturday.setEnabled(false);
+            endLunchSaturday.setEnabled(false);
+            startDinerSaturday.setEnabled(false);
+            endDinerSaturday.setEnabled(false);
+            startLunchSunday.setEnabled(false);
+            endLunchSunday.setEnabled(false);
+            startDinerSunday.setEnabled(false);
+            endDinerSunday.setEnabled(false);
         }
-
-
     }
 
     public void continuous(View view) {
@@ -227,69 +331,37 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         if (monday.isChecked()) {
             mondayLunch.setChecked(true);
             mondayDiner.setChecked(true);
-            startLunchMonday.setFocusable(true);
-            endLunchMonday.setFocusable(true);
-            startDinerMonday.setFocusable(true);
-            endDinerMonday.setFocusable(true);
-            startLunchMonday.setFocusableInTouchMode(true);
-            endLunchMonday.setFocusableInTouchMode(true);
-            startDinerMonday.setFocusableInTouchMode(true);
-            endDinerMonday.setFocusableInTouchMode(true);
+            startLunchMonday.setEnabled(true);
+            endLunchMonday.setEnabled(true);
+            startDinerMonday.setEnabled(true);
+            endDinerMonday.setEnabled(true);
         } else {
             mondayLunch.setChecked(false);
             mondayDiner.setChecked(false);
-            startLunchMonday.setFocusable(false);
-            endLunchMonday.setFocusable(false);
-            startDinerMonday.setFocusable(false);
-            endDinerMonday.setFocusable(false);
-            startLunchMonday.setFocusableInTouchMode(false);
-            endLunchMonday.setFocusableInTouchMode(false);
-            startDinerMonday.setFocusableInTouchMode(false);
-            endDinerMonday.setFocusableInTouchMode(false);
+            startLunchMonday.setEnabled(false);
+            endLunchMonday.setEnabled(false);
+            startDinerMonday.setEnabled(false);
+            endDinerMonday.setEnabled(false);
         }
     }
 
     public void mondayLunch(View view) {
         if (mondayLunch.isChecked()) {
-            startLunchMonday.setFocusable(true);
-            endLunchMonday.setFocusable(true);
-            startDinerMonday.setFocusable(true);
-            endDinerMonday.setFocusable(true);
-            startLunchMonday.setFocusableInTouchMode(true);
-            endLunchMonday.setFocusableInTouchMode(true);
-            startDinerMonday.setFocusableInTouchMode(true);
-            endDinerMonday.setFocusableInTouchMode(true);
+            startLunchMonday.setEnabled(true);
+            endLunchMonday.setEnabled(true);
         } else {
-            startLunchMonday.setFocusable(false);
-            endLunchMonday.setFocusable(false);
-            startDinerMonday.setFocusable(false);
-            endDinerMonday.setFocusable(false);
-            startLunchMonday.setFocusableInTouchMode(false);
-            endLunchMonday.setFocusableInTouchMode(false);
-            startDinerMonday.setFocusableInTouchMode(false);
-            endDinerMonday.setFocusableInTouchMode(false);
+            startLunchMonday.setEnabled(false);
+            endLunchMonday.setEnabled(false);
         }
     }
 
     public void mondayDiner(View view) {
         if (mondayDiner.isChecked()) {
-            startLunchMonday.setFocusable(true);
-            endLunchMonday.setFocusable(true);
-            startDinerMonday.setFocusable(true);
-            endDinerMonday.setFocusable(true);
-            startLunchMonday.setFocusableInTouchMode(true);
-            endLunchMonday.setFocusableInTouchMode(true);
-            startDinerMonday.setFocusableInTouchMode(true);
-            endDinerMonday.setFocusableInTouchMode(true);
+            startDinerMonday.setEnabled(false);
+            endDinerMonday.setEnabled(false);
         } else {
-            startLunchMonday.setFocusable(false);
-            endLunchMonday.setFocusable(false);
-            startDinerMonday.setFocusable(false);
-            endDinerMonday.setFocusable(false);
-            startLunchMonday.setFocusableInTouchMode(false);
-            endLunchMonday.setFocusableInTouchMode(false);
-            startDinerMonday.setFocusableInTouchMode(false);
-            endDinerMonday.setFocusableInTouchMode(false);
+            startDinerMonday.setEnabled(false);
+            endDinerMonday.setEnabled(false);
         }
     }
 
@@ -297,69 +369,37 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         if (tuesday.isChecked()) {
             tuesdayLunch.setChecked(true);
             tuesdayDiner.setChecked(true);
-            startLunchTuesday.setFocusable(true);
-            endLunchTuesday.setFocusable(true);
-            startDinerTuesday.setFocusable(true);
-            endDinerTuesday.setFocusable(true);
-            startLunchTuesday.setFocusableInTouchMode(true);
-            endLunchTuesday.setFocusableInTouchMode(true);
-            startDinerTuesday.setFocusableInTouchMode(true);
-            endDinerTuesday.setFocusableInTouchMode(true);
+            startLunchTuesday.setEnabled(true);
+            endLunchTuesday.setEnabled(true);
+            startDinerTuesday.setEnabled(true);
+            endDinerTuesday.setEnabled(true);
         } else {
             tuesdayLunch.setChecked(false);
             tuesdayDiner.setChecked(false);
-            startLunchTuesday.setFocusable(false);
-            endLunchTuesday.setFocusable(false);
-            startDinerTuesday.setFocusable(false);
-            endDinerTuesday.setFocusable(false);
-            startLunchTuesday.setFocusableInTouchMode(false);
-            endLunchTuesday.setFocusableInTouchMode(false);
-            startDinerTuesday.setFocusableInTouchMode(false);
-            endDinerTuesday.setFocusableInTouchMode(false);
+            startLunchTuesday.setEnabled(false);
+            endLunchTuesday.setEnabled(false);
+            startDinerTuesday.setEnabled(false);
+            endDinerTuesday.setEnabled(false);
         }
     }
 
     public void tuesdayLunch(View view) {
         if (tuesdayLunch.isChecked()) {
-            startLunchTuesday.setFocusable(true);
-            endLunchTuesday.setFocusable(true);
-            startDinerTuesday.setFocusable(true);
-            endDinerTuesday.setFocusable(true);
-            startLunchTuesday.setFocusableInTouchMode(true);
-            endLunchTuesday.setFocusableInTouchMode(true);
-            startDinerTuesday.setFocusableInTouchMode(true);
-            endDinerTuesday.setFocusableInTouchMode(true);
+            startLunchTuesday.setEnabled(true);
+            endLunchTuesday.setEnabled(true);
         } else {
-            startLunchTuesday.setFocusable(false);
-            endLunchTuesday.setFocusable(false);
-            startDinerTuesday.setFocusable(false);
-            endDinerTuesday.setFocusable(false);
-            startLunchTuesday.setFocusableInTouchMode(false);
-            endLunchTuesday.setFocusableInTouchMode(false);
-            startDinerTuesday.setFocusableInTouchMode(false);
-            endDinerTuesday.setFocusableInTouchMode(false);
+            startLunchTuesday.setEnabled(false);
+            endLunchTuesday.setEnabled(false);
         }
     }
 
     public void tuesdayDiner(View view) {
         if (tuesdayDiner.isChecked()) {
-            startLunchTuesday.setFocusable(true);
-            endLunchTuesday.setFocusable(true);
-            startDinerTuesday.setFocusable(true);
-            endDinerTuesday.setFocusable(true);
-            startLunchTuesday.setFocusableInTouchMode(true);
-            endLunchTuesday.setFocusableInTouchMode(true);
-            startDinerTuesday.setFocusableInTouchMode(true);
-            endDinerTuesday.setFocusableInTouchMode(true);
+            startDinerTuesday.setEnabled(true);
+            endDinerTuesday.setEnabled(true);
         } else {
-            startLunchTuesday.setFocusable(false);
-            endLunchTuesday.setFocusable(false);
-            startDinerTuesday.setFocusable(false);
-            endDinerTuesday.setFocusable(false);
-            startLunchTuesday.setFocusableInTouchMode(false);
-            endLunchTuesday.setFocusableInTouchMode(false);
-            startDinerTuesday.setFocusableInTouchMode(false);
-            endDinerTuesday.setFocusableInTouchMode(false);
+            startDinerTuesday.setEnabled(false);
+            endDinerTuesday.setEnabled(false);
         }
     }
 
@@ -367,69 +407,37 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         if (wednesday.isChecked()) {
             wednesdayLunch.setChecked(true);
             wednesdayDiner.setChecked(true);
-            startLunchWednesday.setFocusable(true);
-            endLunchWednesday.setFocusable(true);
-            startDinerWednesday.setFocusable(true);
-            endDinerWednesday.setFocusable(true);
-            startLunchWednesday.setFocusableInTouchMode(true);
-            endLunchWednesday.setFocusableInTouchMode(true);
-            startDinerWednesday.setFocusableInTouchMode(true);
-            endDinerWednesday.setFocusableInTouchMode(true);
+            startLunchWednesday.setEnabled(true);
+            endLunchWednesday.setEnabled(true);
+            startDinerWednesday.setEnabled(true);
+            endDinerWednesday.setEnabled(true);
         } else {
             wednesdayLunch.setChecked(false);
             wednesdayDiner.setChecked(false);
-            startLunchWednesday.setFocusable(false);
-            endLunchWednesday.setFocusable(false);
-            startDinerWednesday.setFocusable(false);
-            endDinerWednesday.setFocusable(false);
-            startLunchWednesday.setFocusableInTouchMode(false);
-            endLunchWednesday.setFocusableInTouchMode(false);
-            startDinerWednesday.setFocusableInTouchMode(false);
-            endDinerWednesday.setFocusableInTouchMode(false);
+            startLunchWednesday.setEnabled(false);
+            endLunchWednesday.setEnabled(false);
+            startDinerWednesday.setEnabled(false);
+            endDinerWednesday.setEnabled(false);
         }
     }
 
     public void wednesdayLunch(View view) {
         if (wednesdayLunch.isChecked()) {
-            startLunchWednesday.setFocusable(true);
-            endLunchWednesday.setFocusable(true);
-            startDinerWednesday.setFocusable(true);
-            endDinerWednesday.setFocusable(true);
-            startLunchWednesday.setFocusableInTouchMode(true);
-            endLunchWednesday.setFocusableInTouchMode(true);
-            startDinerWednesday.setFocusableInTouchMode(true);
-            endDinerWednesday.setFocusableInTouchMode(true);
+            startLunchWednesday.setEnabled(true);
+            endLunchWednesday.setEnabled(true);
         } else {
-            startLunchWednesday.setFocusable(false);
-            endLunchWednesday.setFocusable(false);
-            startDinerWednesday.setFocusable(false);
-            endDinerWednesday.setFocusable(false);
-            startLunchWednesday.setFocusableInTouchMode(false);
-            endLunchWednesday.setFocusableInTouchMode(false);
-            startDinerWednesday.setFocusableInTouchMode(false);
-            endDinerWednesday.setFocusableInTouchMode(false);
+            startLunchWednesday.setEnabled(false);
+            endLunchWednesday.setEnabled(false);
         }
     }
 
     public void wednesdayDiner(View view) {
         if (wednesdayDiner.isChecked()) {
-            startLunchWednesday.setFocusable(true);
-            endLunchWednesday.setFocusable(true);
-            startDinerWednesday.setFocusable(true);
-            endDinerWednesday.setFocusable(true);
-            startLunchWednesday.setFocusableInTouchMode(true);
-            endLunchWednesday.setFocusableInTouchMode(true);
-            startDinerWednesday.setFocusableInTouchMode(true);
-            endDinerWednesday.setFocusableInTouchMode(true);
+            startDinerWednesday.setEnabled(true);
+            endDinerWednesday.setEnabled(true);
         } else {
-            startLunchWednesday.setFocusable(false);
-            endLunchWednesday.setFocusable(false);
-            startDinerWednesday.setFocusable(false);
-            endDinerWednesday.setFocusable(false);
-            startLunchWednesday.setFocusableInTouchMode(false);
-            endLunchWednesday.setFocusableInTouchMode(false);
-            startDinerWednesday.setFocusableInTouchMode(false);
-            endDinerWednesday.setFocusableInTouchMode(false);
+            startDinerWednesday.setEnabled(false);
+            endDinerWednesday.setEnabled(false);
         }
     }
 
@@ -437,69 +445,37 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         if (thursday.isChecked()) {
             thursdayLunch.setChecked(true);
             thursdayDiner.setChecked(true);
-            startLunchThursday.setFocusable(true);
-            endLunchThursday.setFocusable(true);
-            startDinerThursday.setFocusable(true);
-            endDinerThursday.setFocusable(true);
-            startLunchThursday.setFocusableInTouchMode(true);
-            endLunchThursday.setFocusableInTouchMode(true);
-            startDinerThursday.setFocusableInTouchMode(true);
-            endDinerThursday.setFocusableInTouchMode(true);
+            startLunchThursday.setEnabled(true);
+            endLunchThursday.setEnabled(true);
+            startDinerThursday.setEnabled(true);
+            endDinerThursday.setEnabled(true);
         } else {
             thursdayLunch.setChecked(false);
             thursdayDiner.setChecked(false);
-            startLunchThursday.setFocusable(false);
-            endLunchThursday.setFocusable(false);
-            startDinerThursday.setFocusable(false);
-            endDinerThursday.setFocusable(false);
-            startLunchThursday.setFocusableInTouchMode(false);
-            endLunchThursday.setFocusableInTouchMode(false);
-            startDinerThursday.setFocusableInTouchMode(false);
-            endDinerThursday.setFocusableInTouchMode(false);
+            startLunchThursday.setEnabled(false);
+            endLunchThursday.setEnabled(false);
+            startDinerThursday.setEnabled(false);
+            endDinerThursday.setEnabled(false);
         }
     }
 
     public void thursdayLunch(View view) {
         if (thursdayLunch.isChecked()) {
-            startLunchThursday.setFocusable(true);
-            endLunchThursday.setFocusable(true);
-            startDinerThursday.setFocusable(true);
-            endDinerThursday.setFocusable(true);
-            startLunchThursday.setFocusableInTouchMode(true);
-            endLunchThursday.setFocusableInTouchMode(true);
-            startDinerThursday.setFocusableInTouchMode(true);
-            endDinerThursday.setFocusableInTouchMode(true);
+            startLunchThursday.setEnabled(true);
+            endLunchThursday.setEnabled(true);
         } else {
-            startLunchThursday.setFocusable(false);
-            endLunchThursday.setFocusable(false);
-            startDinerThursday.setFocusable(false);
-            endDinerThursday.setFocusable(false);
-            startLunchThursday.setFocusableInTouchMode(false);
-            endLunchThursday.setFocusableInTouchMode(false);
-            startDinerThursday.setFocusableInTouchMode(false);
-            endDinerThursday.setFocusableInTouchMode(false);
+            startLunchThursday.setEnabled(false);
+            endLunchThursday.setEnabled(false);
         }
     }
 
     public void thursdayDiner(View view) {
         if (thursdayDiner.isChecked()) {
-            startLunchThursday.setFocusable(true);
-            endLunchThursday.setFocusable(true);
-            startDinerThursday.setFocusable(true);
-            endDinerThursday.setFocusable(true);
-            startLunchThursday.setFocusableInTouchMode(true);
-            endLunchThursday.setFocusableInTouchMode(true);
-            startDinerThursday.setFocusableInTouchMode(true);
-            endDinerThursday.setFocusableInTouchMode(true);
+            startDinerThursday.setEnabled(true);
+            endDinerThursday.setEnabled(true);
         } else {
-            startLunchThursday.setFocusable(false);
-            endLunchThursday.setFocusable(false);
-            startDinerThursday.setFocusable(false);
-            endDinerThursday.setFocusable(false);
-            startLunchThursday.setFocusableInTouchMode(false);
-            endLunchThursday.setFocusableInTouchMode(false);
-            startDinerThursday.setFocusableInTouchMode(false);
-            endDinerThursday.setFocusableInTouchMode(false);
+            startDinerThursday.setEnabled(false);
+            endDinerThursday.setEnabled(false);
         }
     }
 
@@ -507,69 +483,37 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         if (friday.isChecked()) {
             fridayLunch.setChecked(true);
             fridayDiner.setChecked(true);
-            startLunchFriday.setFocusable(true);
-            endLunchFriday.setFocusable(true);
-            startDinerFriday.setFocusable(true);
-            endDinerFriday.setFocusable(true);
-            startLunchFriday.setFocusableInTouchMode(true);
-            endLunchFriday.setFocusableInTouchMode(true);
-            startDinerFriday.setFocusableInTouchMode(true);
-            endDinerFriday.setFocusableInTouchMode(true);
+            startLunchFriday.setEnabled(true);
+            endLunchFriday.setEnabled(true);
+            startDinerFriday.setEnabled(true);
+            endDinerFriday.setEnabled(true);
         } else {
             fridayLunch.setChecked(false);
             fridayDiner.setChecked(false);
-            startLunchFriday.setFocusable(false);
-            endLunchFriday.setFocusable(false);
-            startDinerFriday.setFocusable(false);
-            endDinerFriday.setFocusable(false);
-            startLunchFriday.setFocusableInTouchMode(false);
-            endLunchFriday.setFocusableInTouchMode(false);
-            startDinerFriday.setFocusableInTouchMode(false);
-            endDinerFriday.setFocusableInTouchMode(false);
+            startLunchFriday.setEnabled(false);
+            endLunchFriday.setEnabled(false);
+            startDinerFriday.setEnabled(false);
+            endDinerFriday.setEnabled(false);
         }
     }
 
     public void fridayLunch(View view) {
         if (fridayLunch.isChecked()) {
-            startLunchFriday.setFocusable(true);
-            endLunchFriday.setFocusable(true);
-            startDinerFriday.setFocusable(true);
-            endDinerFriday.setFocusable(true);
-            startLunchFriday.setFocusableInTouchMode(true);
-            endLunchFriday.setFocusableInTouchMode(true);
-            startDinerFriday.setFocusableInTouchMode(true);
-            endDinerFriday.setFocusableInTouchMode(true);
+            startLunchFriday.setEnabled(true);
+            endLunchFriday.setEnabled(true);
         } else {
-            startLunchFriday.setFocusable(false);
-            endLunchFriday.setFocusable(false);
-            startDinerFriday.setFocusable(false);
-            endDinerFriday.setFocusable(false);
-            startLunchFriday.setFocusableInTouchMode(false);
-            endLunchFriday.setFocusableInTouchMode(false);
-            startDinerFriday.setFocusableInTouchMode(false);
-            endDinerFriday.setFocusableInTouchMode(false);
+            startLunchFriday.setEnabled(false);
+            endLunchFriday.setEnabled(false);
         }
     }
 
     public void fridayDiner(View view) {
         if (fridayDiner.isChecked()) {
-            startLunchFriday.setFocusable(true);
-            endLunchFriday.setFocusable(true);
-            startDinerFriday.setFocusable(true);
-            endDinerFriday.setFocusable(true);
-            startLunchFriday.setFocusableInTouchMode(true);
-            endLunchFriday.setFocusableInTouchMode(true);
-            startDinerFriday.setFocusableInTouchMode(true);
-            endDinerFriday.setFocusableInTouchMode(true);
+            startDinerFriday.setEnabled(true);
+            endDinerFriday.setEnabled(true);
         } else {
-            startLunchFriday.setFocusable(false);
-            endLunchFriday.setFocusable(false);
-            startDinerFriday.setFocusable(false);
-            endDinerFriday.setFocusable(false);
-            startLunchFriday.setFocusableInTouchMode(false);
-            endLunchFriday.setFocusableInTouchMode(false);
-            startDinerFriday.setFocusableInTouchMode(false);
-            endDinerFriday.setFocusableInTouchMode(false);
+            startDinerFriday.setEnabled(false);
+            endDinerFriday.setEnabled(false);
         }
     }
 
@@ -577,69 +521,37 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         if (saturday.isChecked()) {
             saturdayLunch.setChecked(true);
             saturdayDiner.setChecked(true);
-            startLunchSaturday.setFocusable(true);
-            endLunchSaturday.setFocusable(true);
-            startDinerSaturday.setFocusable(true);
-            endDinerSaturday.setFocusable(true);
-            startLunchSaturday.setFocusableInTouchMode(true);
-            endLunchSaturday.setFocusableInTouchMode(true);
-            startDinerSaturday.setFocusableInTouchMode(true);
-            endDinerSaturday.setFocusableInTouchMode(true);
+            startLunchSaturday.setEnabled(true);
+            endLunchSaturday.setEnabled(true);
+            startDinerSaturday.setEnabled(true);
+            endDinerSaturday.setEnabled(true);
         } else {
             saturdayLunch.setChecked(false);
             saturdayDiner.setChecked(false);
-            startLunchSaturday.setFocusable(false);
-            endLunchSaturday.setFocusable(false);
-            startDinerSaturday.setFocusable(false);
-            endDinerSaturday.setFocusable(false);
-            startLunchSaturday.setFocusableInTouchMode(false);
-            endLunchSaturday.setFocusableInTouchMode(false);
-            startDinerSaturday.setFocusableInTouchMode(false);
-            endDinerSaturday.setFocusableInTouchMode(false);
+            startLunchSaturday.setEnabled(false);
+            endLunchSaturday.setEnabled(false);
+            startDinerSaturday.setEnabled(false);
+            endDinerSaturday.setEnabled(false);
         }
     }
 
     public void saturdayLunch(View view) {
         if (saturdayLunch.isChecked()) {
-            startLunchSaturday.setFocusable(true);
-            endLunchSaturday.setFocusable(true);
-            startDinerSaturday.setFocusable(true);
-            endDinerSaturday.setFocusable(true);
-            startLunchSaturday.setFocusableInTouchMode(true);
-            endLunchSaturday.setFocusableInTouchMode(true);
-            startDinerSaturday.setFocusableInTouchMode(true);
-            endDinerSaturday.setFocusableInTouchMode(true);
+            startLunchSaturday.setEnabled(true);
+            endLunchSaturday.setEnabled(true);
         } else {
-            startLunchSaturday.setFocusable(false);
-            endLunchSaturday.setFocusable(false);
-            startDinerSaturday.setFocusable(false);
-            endDinerSaturday.setFocusable(false);
-            startLunchSaturday.setFocusableInTouchMode(false);
-            endLunchSaturday.setFocusableInTouchMode(false);
-            startDinerSaturday.setFocusableInTouchMode(false);
-            endDinerSaturday.setFocusableInTouchMode(false);
+            startLunchSaturday.setEnabled(false);
+            endLunchSaturday.setEnabled(false);
         }
     }
 
     public void saturdayDiner(View view) {
         if (saturdayDiner.isChecked()) {
-            startLunchSaturday.setFocusable(true);
-            endLunchSaturday.setFocusable(true);
-            startDinerSaturday.setFocusable(true);
-            endDinerSaturday.setFocusable(true);
-            startLunchSaturday.setFocusableInTouchMode(true);
-            endLunchSaturday.setFocusableInTouchMode(true);
-            startDinerSaturday.setFocusableInTouchMode(true);
-            endDinerSaturday.setFocusableInTouchMode(true);
+            startDinerSaturday.setEnabled(true);
+            endDinerSaturday.setEnabled(true);
         } else {
-            startLunchSaturday.setFocusable(false);
-            endLunchSaturday.setFocusable(false);
-            startDinerSaturday.setFocusable(false);
-            endDinerSaturday.setFocusable(false);
-            startLunchSaturday.setFocusableInTouchMode(false);
-            endLunchSaturday.setFocusableInTouchMode(false);
-            startDinerSaturday.setFocusableInTouchMode(false);
-            endDinerSaturday.setFocusableInTouchMode(false);
+            startDinerSaturday.setEnabled(false);
+            endDinerSaturday.setEnabled(false);
         }
     }
 
@@ -647,81 +559,119 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         if (sunday.isChecked()) {
             sundayLunch.setChecked(true);
             sundayDiner.setChecked(true);
-            startLunchSunday.setFocusable(true);
-            endLunchSunday.setFocusable(true);
-            startDinerSunday.setFocusable(true);
-            endDinerSunday.setFocusable(true);
-            startLunchSunday.setFocusableInTouchMode(true);
-            endLunchSunday.setFocusableInTouchMode(true);
-            startDinerSunday.setFocusableInTouchMode(true);
-            endDinerSunday.setFocusableInTouchMode(true);
+            startLunchSunday.setEnabled(true);
+            endLunchSunday.setEnabled(true);
+            startDinerSunday.setEnabled(true);
+            endDinerSunday.setEnabled(true);
         } else {
             sundayLunch.setChecked(false);
             sundayDiner.setChecked(false);
-            startLunchSunday.setFocusable(false);
-            endLunchSunday.setFocusable(false);
-            startDinerSunday.setFocusable(false);
-            endDinerSunday.setFocusable(false);
-            startLunchSunday.setFocusableInTouchMode(false);
-            endLunchSunday.setFocusableInTouchMode(false);
-            startDinerSunday.setFocusableInTouchMode(false);
-            endDinerSunday.setFocusableInTouchMode(false);
+            startLunchSunday.setEnabled(false);
+            endLunchSunday.setEnabled(false);
+            startDinerSunday.setEnabled(false);
+            endDinerSunday.setEnabled(false);
         }
     }
 
     public void sundayLunch(View view) {
         if (sundayLunch.isChecked()) {
-            startLunchSunday.setFocusable(true);
-            endLunchSunday.setFocusable(true);
-            startDinerSunday.setFocusable(true);
-            endDinerSunday.setFocusable(true);
-            startLunchSunday.setFocusableInTouchMode(true);
-            endLunchSunday.setFocusableInTouchMode(true);
-            startDinerSunday.setFocusableInTouchMode(true);
-            endDinerSunday.setFocusableInTouchMode(true);
+            startLunchSunday.setEnabled(true);
+            endLunchSunday.setEnabled(true);
         } else {
-            startLunchSunday.setFocusable(false);
-            endLunchSunday.setFocusable(false);
-            startDinerSunday.setFocusable(false);
-            endDinerSunday.setFocusable(false);
-            startLunchSunday.setFocusableInTouchMode(false);
-            endLunchSunday.setFocusableInTouchMode(false);
-            startDinerSunday.setFocusableInTouchMode(false);
-            endDinerSunday.setFocusableInTouchMode(false);
+            startLunchSunday.setEnabled(false);
+            endLunchSunday.setEnabled(false);
         }
     }
 
     public void sundayDiner(View view) {
         if (sundayDiner.isChecked()) {
-            startLunchSunday.setFocusable(true);
-            endLunchSunday.setFocusable(true);
-            startDinerSunday.setFocusable(true);
-            endDinerSunday.setFocusable(true);
-            startLunchSunday.setFocusableInTouchMode(true);
-            endLunchSunday.setFocusableInTouchMode(true);
-            startDinerSunday.setFocusableInTouchMode(true);
-            endDinerSunday.setFocusableInTouchMode(true);
+            startDinerSunday.setEnabled(true);
+            endDinerSunday.setEnabled(true);
         } else {
-            startLunchSunday.setFocusable(false);
-            endLunchSunday.setFocusable(false);
-            startDinerSunday.setFocusable(false);
-            endDinerSunday.setFocusable(false);
-            startLunchSunday.setFocusableInTouchMode(false);
-            endLunchSunday.setFocusableInTouchMode(false);
-            startDinerSunday.setFocusableInTouchMode(false);
-            endDinerSunday.setFocusableInTouchMode(false);
+            startDinerSunday.setEnabled(false);
+            endDinerSunday.setEnabled(false);
         }
     }
 
     public void updateHours(View view) {
         OpeningDaysHours openingDaysHours = new OpeningDaysHours();
+        openingDaysHours.setMonday(monday.isChecked());
+        openingDaysHours.setTuesday(tuesday.isChecked());
+        openingDaysHours.setWednesday(wednesday.isChecked());
+        openingDaysHours.setThursday(thursday.isChecked());
+        openingDaysHours.setFriday(friday.isChecked());
+        openingDaysHours.setSaturday(saturday.isChecked());
+        openingDaysHours.setSunday(sunday.isChecked());
 
+        openingDaysHours.setMondayMorning(mondayLunch.isChecked());
+        openingDaysHours.setTuesdayMorning(tuesdayLunch.isChecked());
+        openingDaysHours.setWednesdayMorning(wednesdayLunch.isChecked());
+        openingDaysHours.setThursdayMorning(thursdayLunch.isChecked());
+        openingDaysHours.setFridayMorning(fridayLunch.isChecked());
+        openingDaysHours.setSaturdayMorning(saturdayLunch.isChecked());
+        openingDaysHours.setSundayMorning(sundayLunch.isChecked());
+        openingDaysHours.setMondayEvening(mondayDiner.isChecked());
+        openingDaysHours.setTuesdayEvening(tuesdayDiner.isChecked());
+        openingDaysHours.setWednesdayEvening(wednesdayDiner.isChecked());
+        openingDaysHours.setThursdayEvening(thursdayDiner.isChecked());
+        openingDaysHours.setFridayEvening(fridayDiner.isChecked());
+        openingDaysHours.setSaturdayEvening(saturdayDiner.isChecked());
+        openingDaysHours.setSundayEvening(sundayDiner.isChecked());
+
+        openingDaysHours.setMondayLunchStart(startLunchMonday.getText().toString());
+        openingDaysHours.setMondayLunchEnd(endLunchMonday.getText().toString());
+        openingDaysHours.setTuesdayLunchStart(startLunchTuesday.getText().toString());
+        openingDaysHours.setTuesdayLunchEnd(endLunchTuesday.getText().toString());
+        openingDaysHours.setWednesdayLunchStart(startLunchWednesday.getText().toString());
+        openingDaysHours.setWednesdayLunchEnd(endLunchWednesday.getText().toString());
+        openingDaysHours.setThursdayLunchStart(startLunchThursday.getText().toString());
+        openingDaysHours.setThursdayLunchEnd(endLunchThursday.getText().toString());
+        openingDaysHours.setFridayLunchStart(startLunchFriday.getText().toString());
+        openingDaysHours.setFridayLunchEnd(endLunchFriday.getText().toString());
+        openingDaysHours.setSaturdayLunchStart(startLunchSaturday.getText().toString());
+        openingDaysHours.setSaturdayLunchEnd(endLunchSaturday.getText().toString());
+        openingDaysHours.setSundayLunchStart(startLunchSunday.getText().toString());
+        openingDaysHours.setSundayLunchEnd(endLunchSunday.getText().toString());
+
+        openingDaysHours.setMondayDinerStart(startDinerMonday.getText().toString());
+        openingDaysHours.setMondayDinerEnd(endDinerMonday.getText().toString());
+        openingDaysHours.setTuesdayDinerStart(startDinerTuesday.getText().toString());
+        openingDaysHours.setTuesdayDinerEnd(endDinerTuesday.getText().toString());
+        openingDaysHours.setWednesdayDinerStart(startDinerWednesday.getText().toString());
+        openingDaysHours.setWednesdayDinerEnd(endDinerWednesday.getText().toString());
+        openingDaysHours.setThursdayDinerStart(startDinerThursday.getText().toString());
+        openingDaysHours.setThursdayDinerEnd(endDinerThursday.getText().toString());
+        openingDaysHours.setFridayDinerStart(startDinerFriday.getText().toString());
+        openingDaysHours.setFridayDinerEnd(endDinerFriday.getText().toString());
+        openingDaysHours.setSaturdayDinerStart(startDinerSaturday.getText().toString());
+        openingDaysHours.setSaturdayDinerEnd(endDinerSaturday.getText().toString());
+        openingDaysHours.setSundayDinerStart(startDinerSunday.getText().toString());
+        openingDaysHours.setSundayDinerEnd(endDinerSunday.getText().toString());
+
+        openingDaysHours.setMondayAllDayStart(startHourMonday.getText().toString());
+        openingDaysHours.setMondayAllDayEnd(endHourMonday.getText().toString());
+        openingDaysHours.setTuesdayAllDayStart(startHourTuesday.getText().toString());
+        openingDaysHours.setTuesdayAllDayEnd(endHourTuesday.getText().toString());
+        openingDaysHours.setWednesdayAllDayStart(startHourWednesday.getText().toString());
+        openingDaysHours.setWednesdayAllDayEnd(endHourWednesday.getText().toString());
+        openingDaysHours.setThursdayAllDayStart(startHourThursday.getText().toString());
+        openingDaysHours.setThursdayAllDayEnd(endHourThursday.getText().toString());
+        openingDaysHours.setFridayAllDayStart(startHourFriday.getText().toString());
+        openingDaysHours.setFridayAllDayEnd(endHourFriday.getText().toString());
+        openingDaysHours.setSaturdayAllDayStart(startHourSaturday.getText().toString());
+        openingDaysHours.setSaturdayAllDayEnd(endHourSaturday.getText().toString());
+        openingDaysHours.setSundayAllDayStart(startHourSunday.getText().toString());
+        openingDaysHours.setSundayAllDayEnd(endHourSunday.getText().toString());
+
+        Intent intent = new Intent(this, OwnerActivityMain.class);
+        startActivity(intent);
     }
 
     private void initAllID() {
         selectAll = (CheckBox) findViewById(R.id.select_all_radioButton);
         continuous = (CheckBox) findViewById(R.id.continuous_radioButton);
         same = (CheckBox) findViewById(R.id.same_radioButton);
+
         monday = (CheckBox) findViewById(R.id.monday_radioButton);
         tuesday = (CheckBox) findViewById(R.id.tuesday_radioButton);
         wednesday = (CheckBox) findViewById(R.id.wednesday_radioButton);
@@ -729,6 +679,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         friday = (CheckBox) findViewById(R.id.friday_radioButton);
         saturday = (CheckBox) findViewById(R.id.saturday_radioButton);
         sunday = (CheckBox) findViewById(R.id.sunday_radioButton);
+
         mondayLunch = (CheckBox) findViewById(R.id.lunch_monday_radioButton);
         tuesdayLunch = (CheckBox) findViewById(R.id.lunch_tuesday_radioButton);
         wednesdayLunch = (CheckBox) findViewById(R.id.lunch_wednesday_radioButton);
@@ -743,6 +694,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         fridayDiner = (CheckBox) findViewById(R.id.diner_friday_radioButton);
         saturdayDiner = (CheckBox) findViewById(R.id.diner_saturday_radioButton);
         sundayDiner = (CheckBox) findViewById(R.id.diner_sunday_radioButton);
+
         startLunchMonday = (EditText) findViewById(R.id.start_hour_lunch_monday);
         endLunchMonday = (EditText) findViewById(R.id.end_hour_lunch_monday);
         startDinerMonday = (EditText) findViewById(R.id.start_hour_diner_monday);
@@ -771,5 +723,35 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         endLunchSunday = (EditText) findViewById(R.id.end_hour_lunch_sunday);
         startDinerSunday = (EditText) findViewById(R.id.start_hour_diner_sunday);
         endDinerSunday = (EditText) findViewById(R.id.end_hour_diner_sunday);
+
+        startHourMonday = (EditText) findViewById(R.id.start_hour_monday);
+        endHourMonday = (EditText) findViewById(R.id.end_hour_monday);
+        startHourTuesday = (EditText) findViewById(R.id.start_hour_tuesday);
+        endHourTuesday = (EditText) findViewById(R.id.end_hour_tuesday);
+        startHourWednesday = (EditText) findViewById(R.id.start_hour_wednesday);
+        endHourWednesday = (EditText) findViewById(R.id.end_hour_wednesday);
+        startHourThursday = (EditText) findViewById(R.id.start_hour_thursday);
+        endHourThursday = (EditText) findViewById(R.id.end_hour_thursday);
+        startHourFriday = (EditText) findViewById(R.id.start_hour_friday);
+        endHourFriday = (EditText) findViewById(R.id.end_hour_friday);
+        startHourSaturday = (EditText) findViewById(R.id.start_hour_saturday);
+        endHourSaturday = (EditText) findViewById(R.id.end_hour_saturday);
+        startHourSunday = (EditText) findViewById(R.id.start_hour_sunday);
+        endHourSunday = (EditText) findViewById(R.id.end_hour_sunday);
+    }
+
+    public void setHour(final View view) {
+        Calendar mCurrentTime = Calendar.getInstance();
+        int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mCurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(OwnerChoosingOpeningHours.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                ((EditText) view).setText(selectedHour + ":" + selectedMinute);
+            }
+        }, hour, minute, true);
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
     }
 }
