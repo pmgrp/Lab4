@@ -185,6 +185,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OwnerActivityShowOffers" />
         </activity>
+<<<<<<< HEAD
         <activity android:name=".OwnerChoosingOpeningHours"></activity>
         <meta-data
             android:name="com.google.android.gms.version"
@@ -194,7 +195,19 @@
             android:value="AIzaSyBWRtUFgbhys7aX2hRw4kgOuPxotTRlJok"/>
 
 
+=======
+        <activity android:name=".OwnerChoosingOpeningHours"
+            android:label="Opening Hours"
+            android:parentActivityName=".OwnerActivityMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OwnerActivityMain" />
+        </activity>
+>>>>>>> origin/master
     </application>
+
 
 
 </manifest>

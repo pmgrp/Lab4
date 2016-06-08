@@ -2,24 +2,23 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UserActivityShowUserProfile"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".UserActivityShowUserProfile">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_offer_details"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            app:theme="@style/ToolbarTheme"
-            app:popupTheme="@style/Theme.AppCompat">
-        </android.support.v7.widget.Toolbar>
+            app:popupTheme="@style/Theme.AppCompat"
+            app:theme="@style/ToolbarTheme"></android.support.v7.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,75 +30,82 @@
             android:orientation="vertical">
 
 
-                <ImageView
-                    android:id="@+id/user_photo"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/firebase_auth_120dp"
-                    android:onClick="modifyPhoto"/>
+            <ImageView
+                android:id="@+id/user_photo"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:onClick="modifyPhoto"
+                android:src="@drawable/firebase_auth_120dp" />
 
-                <EditText
-                    android:id="@+id/user_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Name"
-                    android:inputType="textPersonName"
-                    style="@style/Widget.AppCompat.EditText" />
-                <EditText
-                    android:id="@+id/user_surname"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Surname"
-                    android:inputType="textPersonName"
-                    style="@style/Widget.AppCompat.EditText"/>
-                <EditText
-                    android:id="@+id/user_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/Widget.AppCompat.EditText"
-                    android:hint="Phone"
-                    android:inputType="phone"/>
-                <EditText
-                    android:id="@+id/user_birthday"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/Widget.AppCompat.EditText"
-                    android:hint="Birthday"
-                    android:inputType="date"/>
-                <EditText
-                    android:id="@+id/user_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Modify your email address"
-                    android:textColor="@color/button_color"
-                    android:editable="false"
-                    android:onClick="popupChangeEmail"/>
-                <EditText
-                    android:id="@+id/user_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Modify your password"
-                    android:textColor="@color/button_color"
-                    android:editable="false"
-                    android:onClick="popupChangePassword"/>
+            <EditText
+                android:id="@+id/user_name"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/user_surname"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Surname"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/user_phone"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Phone"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/user_birthday"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Birthday"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/user_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:onClick="popupChangeEmail"
+                android:text="Modify your email address"
+                android:textColor="@color/button_color" />
+
+            <EditText
+                android:id="@+id/user_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:onClick="popupChangePassword"
+                android:text="Modify your password"
+                android:textColor="@color/button_color" />
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <Button
                     android:id="@+id/update_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
+                    android:onClick="editProfileClicked"
                     android:text="Update Profile"
-                    android:textColor="@android:color/white"
-                    android:onClick="editProfileClicked" />
+                    android:textColor="@android:color/white" />
 
                 <Button
                     android:id="@+id/log_out"
@@ -108,12 +114,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
-                    android:text="@string/log_out"
+                    android:layout_weight="0.40"
                     android:onClick="signOutClicked"
-                    android:layout_weight="0.40" />
+                    android:text="@string/log_out" />
 
 
+            </LinearLayout>
         </LinearLayout>
-</LinearLayout>
-        </LinearLayout>
-        </ScrollView>
+    </LinearLayout>
+</ScrollView>

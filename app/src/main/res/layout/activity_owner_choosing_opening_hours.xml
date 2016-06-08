@@ -12,7 +12,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:popupTheme="@style/Theme.AppCompat"
-        app:theme="@style/ToolbarTheme"></android.support.v7.widget.Toolbar>
+        app:theme="@style/ToolbarTheme">
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -42,9 +43,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:onClick="selectAllDays"
-                    android:text="Select All"
-                    android:checked="true"/>
+                    android:text="Select All" />
 
 
                 <CheckBox
@@ -79,9 +80,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Monday"
                     android:checked="true"
-                    android:onClick="monday"/>
+                    android:onClick="monday"
+                    android:text="Monday" />
 
                 <RelativeLayout
                     android:id="@+id/RL_lunch_monday"
@@ -97,8 +98,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch"
-                        android:onClick="mondayLunch"/>
+                        android:onClick="mondayLunch"
+                        android:text="Lunch" />
 
 
                     <LinearLayout
@@ -114,7 +115,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -129,7 +133,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -151,8 +158,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner"
-                        android:onClick="mondayDiner"/>
+                        android:onClick="mondayDiner"
+                        android:text="Diner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -167,7 +174,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="19:00"
                             android:textAlignment="center" />
 
@@ -182,7 +192,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="23:00"
                             android:textAlignment="center" />
 
@@ -212,7 +225,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -227,7 +243,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -248,9 +267,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Tuesday"
                     android:checked="true"
-                    android:onClick="tuesday"/>
+                    android:onClick="tuesday"
+                    android:text="Tuesday" />
 
                 <RelativeLayout
                     android:id="@+id/RL_lunch_tuesday"
@@ -266,8 +285,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch"
-                        android:onClick="tuesdayLunch"/>
+                        android:onClick="tuesdayLunch"
+                        android:text="Lunch" />
 
 
                     <LinearLayout
@@ -283,7 +302,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -298,7 +320,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -320,8 +345,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner"
-                        android:onClick="tuesdayDiner"/>
+                        android:onClick="tuesdayDiner"
+                        android:text="Diner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -336,7 +361,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="19:00"
                             android:textAlignment="center" />
 
@@ -351,7 +379,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="23:00"
                             android:textAlignment="center" />
 
@@ -381,7 +412,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -396,7 +430,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -418,9 +455,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:text="Wednesday"
                     android:checked="true"
-                    android:onClick="wednesday"/>
+                    android:onClick="wednesday"
+                    android:text="Wednesday" />
 
                 <RelativeLayout
                     android:id="@+id/RL_lunch_wednesday"
@@ -436,8 +473,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch"
-                        android:onClick="wednesdayLunch"/>
+                        android:onClick="wednesdayLunch"
+                        android:text="Lunch" />
 
 
                     <LinearLayout
@@ -453,7 +490,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -468,7 +508,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -490,8 +533,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner"
-                        android:onClick="wednesdayDiner"/>
+                        android:onClick="wednesdayDiner"
+                        android:text="Diner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -506,7 +549,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="19:00"
                             android:textAlignment="center" />
 
@@ -521,7 +567,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="23:00"
                             android:textAlignment="center" />
 
@@ -551,7 +600,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -566,7 +618,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -587,9 +642,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Thursday"
                     android:checked="true"
-                    android:onClick="thursday"/>
+                    android:onClick="thursday"
+                    android:text="Thursday" />
 
                 <RelativeLayout
                     android:id="@+id/RL_lunch_thursday"
@@ -605,8 +660,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch"
-                        android:onClick="thursdayLunch"/>
+                        android:onClick="thursdayLunch"
+                        android:text="Lunch" />
 
 
                     <LinearLayout
@@ -622,7 +677,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -637,7 +695,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -659,8 +720,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner"
-                        android:onClick="thursdayDiner"/>
+                        android:onClick="thursdayDiner"
+                        android:text="Diner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -675,7 +736,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="19:00"
                             android:textAlignment="center" />
 
@@ -690,7 +754,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="23:00"
                             android:textAlignment="center" />
 
@@ -720,7 +787,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -735,7 +805,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -756,9 +829,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Friday"
                     android:checked="true"
-                    android:onClick="friday"/>
+                    android:onClick="friday"
+                    android:text="Friday" />
 
                 <RelativeLayout
                     android:id="@+id/RL_lunch_friday"
@@ -774,8 +847,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch"
-                        android:onClick="fridayLunch"/>
+                        android:onClick="fridayLunch"
+                        android:text="Lunch" />
 
 
                     <LinearLayout
@@ -791,7 +864,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -806,7 +882,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -828,8 +907,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner"
-                        android:onClick="fridayDiner"/>
+                        android:onClick="fridayDiner"
+                        android:text="Diner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -844,7 +923,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="19:00"
                             android:textAlignment="center" />
 
@@ -859,7 +941,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="23:00"
                             android:textAlignment="center" />
 
@@ -889,7 +974,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -904,7 +992,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -925,9 +1016,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Saturday"
                     android:checked="true"
-                    android:onClick="saturday"/>
+                    android:onClick="saturday"
+                    android:text="Saturday" />
 
                 <RelativeLayout
                     android:id="@+id/RL_lunch_saturday"
@@ -943,8 +1034,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch"
-                        android:onClick="saturdayLunch"/>
+                        android:onClick="saturdayLunch"
+                        android:text="Lunch" />
 
 
                     <LinearLayout
@@ -960,7 +1051,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -975,7 +1069,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -997,8 +1094,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner"
-                        android:onClick="saturdayDiner"/>
+                        android:onClick="saturdayDiner"
+                        android:text="Diner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1013,7 +1110,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="19:00"
                             android:textAlignment="center" />
 
@@ -1028,7 +1128,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="23:00"
                             android:textAlignment="center" />
 
@@ -1058,7 +1161,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -1073,7 +1179,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -1094,9 +1203,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Sunday"
                     android:checked="true"
-                    android:onClick="sunday"/>
+                    android:onClick="sunday"
+                    android:text="Sunday" />
 
                 <RelativeLayout
                     android:id="@+id/RL_lunch_sunday"
@@ -1112,8 +1221,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Lunch"
-                        android:onClick="sundayLunch"/>
+                        android:onClick="sundayLunch"
+                        android:text="Lunch" />
 
 
                     <LinearLayout
@@ -1129,7 +1238,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -1144,7 +1256,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -1166,8 +1281,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:checked="true"
-                        android:text="Diner"
-                        android:onClick="sundayDiner"/>
+                        android:onClick="sundayDiner"
+                        android:text="Diner" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1182,7 +1297,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="19:00"
                             android:textAlignment="center" />
 
@@ -1197,7 +1315,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="23:00"
                             android:textAlignment="center" />
 
@@ -1227,7 +1348,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="11:00"
                             android:textAlignment="center" />
 
@@ -1242,7 +1366,10 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_weight="1"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="time"
+                            android:onClick="setHour"
                             android:text="15:00"
                             android:textAlignment="center" />
 
@@ -1255,13 +1382,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="20dp"
                 android:background="@color/button_color"
                 android:onClick="updateHours"
                 android:text="Update"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/button_text_color" />
 
         </LinearLayout>
 
