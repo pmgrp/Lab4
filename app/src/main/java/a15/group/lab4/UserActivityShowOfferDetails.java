@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class UserActivityShowOfferDetails extends AppCompatActivity
-        implements UserFragmentTimePicker.FragmentListener{
+        implements UserFragmentTimePicker.FragmentListener {
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference mRefOffer;
@@ -77,11 +77,10 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         context = this;
 
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth == null){
+        if (mAuth == null) {
             Intent in = new Intent(context, ActivityMain.class);
             startActivity(in);
-        }
-        else{
+        } else {
             userId = mAuth.getCurrentUser().getUid();
         }
 
@@ -104,7 +103,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         mRefRestaurant.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     restaurant = dataSnapshot.getValue(Restaurant.class);
                     getUser(mRefUser);
                     getOffer(mRefOffer);
@@ -123,11 +122,10 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //if owner has set the opening hours
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     OpeningDaysHours openingDaysHours = dataSnapshot.getValue(OpeningDaysHours.class);
                     //TODO display opening hours in view
-                }
-                else{
+                } else {
                     //here if opening hours are not set by owner
                     //TODO if there aren't opnening hours display other things
                 }
@@ -143,11 +141,11 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         mRefOpenHours.addValueEventListener(openingHoursListener);
     }
 
-    private void getUser(DatabaseReference mRefUser){
+    private void getUser(DatabaseReference mRefUser) {
         mRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     user = dataSnapshot.getValue(User.class);
                 }
             }
@@ -160,11 +158,11 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         });
     }
 
-    private void getOffer(DatabaseReference mRefOffer){
+    private void getOffer(DatabaseReference mRefOffer) {
         mRefOffer.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     offer = dataSnapshot.getValue(DailyOffer.class);
                     toolbar.setTitle(offer.getName());
                     ImageView offerDetailsImage = (ImageView) findViewById(R.id.offer_details_image);
@@ -207,19 +205,18 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void onTimeFragmentOkListener(){
+    public void onTimeFragmentOkListener() {
         Log.d("DAY", Integer.toString(xday));
         Log.d("MONTH", Integer.toString(xmonth));
         Log.d("YEAR", Integer.toString(xyear));
         Log.d("HOUR", Integer.toString(xhour));
         Log.d("MINUTE", Integer.toString(xminute));
-        if(xhour != -1 && xminute != -1 && xday != -1 && xmonth != -1 && xyear != -1){
+        if (xhour != -1 && xminute != -1 && xday != -1 && xmonth != -1 && xyear != -1) {
 
             bookReservation();
 
-        }
-        else{
-            Toast t = Toast.makeText(this, "Reservation Not Completed", Toast.LENGTH_SHORT );
+        } else {
+            Toast t = Toast.makeText(this, "Reservation Not Completed", Toast.LENGTH_SHORT);
             t.show();
             xyear = -1;
             xmonth = -1;
@@ -230,10 +227,10 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         }
     }
 
-    private void bookReservation(){
+    private void bookReservation() {
         String tempMin = Integer.toString(xminute);
         String tempMin2;
-        if(xminute < 10)
+        if (xminute < 10)
             tempMin2 = "0" + tempMin;
         else
             tempMin2 = tempMin;
@@ -248,24 +245,22 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         mRefUserReservation.child(reservationId).setValue(reservation).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     mRefOwnerReservation.child(reservationId).setValue(reservation).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 Toast.makeText(context, "Reservation Booked",
                                         Toast.LENGTH_LONG).show();
                                 Intent in = new Intent(context, UserActivityShowReservations.class);
                                 startActivity(in);
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(context, "Connection Error",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-                }
-                else{
+                } else {
                     Toast.makeText(context, "Connection Error",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -274,26 +269,26 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     }
 
 
-    public void setTime(int hour, int minutes){
+    public void setTime(int hour, int minutes) {
         this.xhour = hour;
         this.xminute = minutes;
     }
 
-    public void setDate(int xyear, int xmonth, int xday){
+    public void setDate(int xyear, int xmonth, int xday) {
         this.xyear = xyear;
         this.xmonth = xmonth;
         this.xday = xday;
     }
 
-    public void backToMenu(View view){
+    public void backToMenu(View view) {
         Intent in = new Intent(this, ActivityMain.class);
         startActivity(in);
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
-        if(openingHoursListener != null){
+        if (openingHoursListener != null) {
             mRefOpenHours.removeEventListener(openingHoursListener);
         }
     }

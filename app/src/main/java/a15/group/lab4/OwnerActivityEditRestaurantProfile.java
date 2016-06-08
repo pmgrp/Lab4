@@ -111,7 +111,6 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                     if (!restaurant.getRestaurantPhoto().isEmpty() && currentPhoto == null) {
                         Glide.with(OwnerActivityEditRestaurantProfile.this)
                                 .load(restaurant.getRestaurantPhoto())
-                                .centerCrop()
                                 .into(restaurantPhoto);
 
                     }

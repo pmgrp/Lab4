@@ -81,7 +81,6 @@ public class OwnerActivityRestaurantProfile extends AppCompatActivity {
                     if(!restaurant.getRestaurantPhoto().isEmpty()) {
                         Glide.with(OwnerActivityRestaurantProfile.this)
                                 .load(restaurant.getRestaurantPhoto())
-                                .centerCrop()
                                 .into(restaurantPhoto);
                     }
                     // ...

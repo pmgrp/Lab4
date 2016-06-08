@@ -108,10 +108,9 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
 
         //if not authenticated go to login page
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth == null){
+        if (mAuth == null) {
             startActivity(new Intent(context, ActivityMain.class));
-        }
-        else{
+        } else {
             restaurantId = mAuth.getCurrentUser().getUid();
         }
 
@@ -204,6 +203,8 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
                 endHourSaturday.setText(openingDaysHours.getSaturdayAllDayEnd());
                 startHourSunday.setText(openingDaysHours.getSundayAllDayStart());
                 endHourSunday.setText(openingDaysHours.getSundayAllDayEnd());
+
+                initAllCheckBox(openingDaysHours);
             }
 
             @Override
@@ -212,7 +213,6 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             }
         });
 
-        initAllCheckBox();
 
     }
 
@@ -289,11 +289,11 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         endHourSunday = (EditText) findViewById(R.id.end_hour_sunday);
     }
 
-    private void initAllCheckBox() {
+    private void initAllCheckBox(OpeningDaysHours openingDaysHours) {
         selectAll.setChecked(false);
 
         RelativeLayout rl;
-        if (continuous.isChecked()) {
+        if (openingDaysHours.isContinuous()) {
             rl = (RelativeLayout) findViewById(R.id.RL_lunch_monday);
             rl.setVisibility(View.GONE);
             rl = (RelativeLayout) findViewById(R.id.RL_diner_monday);
@@ -381,7 +381,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             rl.setVisibility(View.GONE);
         }
 
-        if (monday.isChecked()) {
+        if (openingDaysHours.isMonday()) {
             startLunchMonday.setEnabled(true);
             endLunchMonday.setEnabled(true);
             startDinerMonday.setEnabled(true);
@@ -397,7 +397,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endHourMonday.setEnabled(false);
         }
 
-        if (mondayLunch.isChecked()) {
+        if (openingDaysHours.isMondayMorning()) {
             startLunchMonday.setEnabled(true);
             endLunchMonday.setEnabled(true);
         } else {
@@ -405,7 +405,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endLunchMonday.setEnabled(false);
         }
 
-        if (mondayDiner.isChecked()) {
+        if (openingDaysHours.isMondayEvening()) {
             startDinerMonday.setEnabled(true);
             endDinerMonday.setEnabled(true);
         } else {
@@ -413,7 +413,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endDinerMonday.setEnabled(false);
         }
 
-        if (tuesday.isChecked()) {
+        if (openingDaysHours.isTuesday()) {
             startLunchTuesday.setEnabled(true);
             endLunchTuesday.setEnabled(true);
             startDinerTuesday.setEnabled(true);
@@ -429,7 +429,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endHourTuesday.setEnabled(false);
         }
 
-        if (tuesdayLunch.isChecked()) {
+        if (openingDaysHours.isTuesdayMorning()) {
             startLunchTuesday.setEnabled(true);
             endLunchTuesday.setEnabled(true);
         } else {
@@ -437,7 +437,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endLunchTuesday.setEnabled(false);
         }
 
-        if (tuesdayDiner.isChecked()) {
+        if (openingDaysHours.isTuesdayEvening()) {
             startDinerTuesday.setEnabled(true);
             endDinerTuesday.setEnabled(true);
         } else {
@@ -445,7 +445,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endDinerTuesday.setEnabled(false);
         }
 
-        if (wednesday.isChecked()) {
+        if (openingDaysHours.isWednesday()) {
             startLunchWednesday.setEnabled(true);
             endLunchWednesday.setEnabled(true);
             startDinerWednesday.setEnabled(true);
@@ -461,7 +461,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endHourWednesday.setEnabled(false);
         }
 
-        if (wednesdayLunch.isChecked()) {
+        if (openingDaysHours.isWednesdayMorning()) {
             startLunchWednesday.setEnabled(true);
             endLunchWednesday.setEnabled(true);
         } else {
@@ -469,7 +469,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endLunchWednesday.setEnabled(false);
         }
 
-        if (wednesdayDiner.isChecked()) {
+        if (openingDaysHours.isWednesdayEvening()) {
             startDinerWednesday.setEnabled(true);
             endDinerWednesday.setEnabled(true);
         } else {
@@ -477,7 +477,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endDinerWednesday.setEnabled(false);
         }
 
-        if (thursday.isChecked()) {
+        if (openingDaysHours.isThursday()) {
             startLunchThursday.setEnabled(true);
             endLunchThursday.setEnabled(true);
             startDinerThursday.setEnabled(true);
@@ -493,7 +493,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endHourThursday.setEnabled(false);
         }
 
-        if (thursdayLunch.isChecked()) {
+        if (openingDaysHours.isThursdayMorning()) {
             startLunchThursday.setEnabled(true);
             endLunchThursday.setEnabled(true);
         } else {
@@ -501,7 +501,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endLunchThursday.setEnabled(false);
         }
 
-        if (thursdayDiner.isChecked()) {
+        if (openingDaysHours.isThursdayEvening()) {
             startDinerThursday.setEnabled(true);
             endDinerThursday.setEnabled(true);
         } else {
@@ -509,7 +509,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endDinerThursday.setEnabled(false);
         }
 
-        if (friday.isChecked()) {
+        if (openingDaysHours.isFriday()) {
             startLunchFriday.setEnabled(true);
             endLunchFriday.setEnabled(true);
             startDinerFriday.setEnabled(true);
@@ -527,7 +527,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endHourFriday.setEnabled(false);
         }
 
-        if (fridayLunch.isChecked()) {
+        if (openingDaysHours.isFridayMorning()) {
             startLunchFriday.setEnabled(true);
             endLunchFriday.setEnabled(true);
         } else {
@@ -535,7 +535,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endLunchFriday.setEnabled(false);
         }
 
-        if (fridayDiner.isChecked()) {
+        if (openingDaysHours.isFridayEvening()) {
             startDinerFriday.setEnabled(true);
             endDinerFriday.setEnabled(true);
         } else {
@@ -543,7 +543,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endDinerFriday.setEnabled(false);
         }
 
-        if (saturday.isChecked()) {
+        if (openingDaysHours.isSaturday()) {
             startLunchSaturday.setEnabled(true);
             endLunchSaturday.setEnabled(true);
             startDinerSaturday.setEnabled(true);
@@ -559,7 +559,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endHourSaturday.setEnabled(false);
         }
 
-        if (saturdayLunch.isChecked()) {
+        if (openingDaysHours.isSaturdayMorning()) {
             startLunchSaturday.setEnabled(true);
             endLunchSaturday.setEnabled(true);
         } else {
@@ -567,7 +567,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endLunchSaturday.setEnabled(false);
         }
 
-        if (saturdayDiner.isChecked()) {
+        if (openingDaysHours.isSaturdayEvening()) {
             startDinerSaturday.setEnabled(true);
             endDinerSaturday.setEnabled(true);
         } else {
@@ -575,7 +575,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endDinerSaturday.setEnabled(false);
         }
 
-        if (sunday.isChecked()) {
+        if (openingDaysHours.isSunday()) {
             startLunchSunday.setEnabled(true);
             endLunchSunday.setEnabled(true);
             startDinerSunday.setEnabled(true);
@@ -591,7 +591,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endHourSunday.setEnabled(false);
         }
 
-        if (sundayLunch.isChecked()) {
+        if (openingDaysHours.isSundayMorning()) {
             startLunchSunday.setEnabled(true);
             endLunchSunday.setEnabled(true);
         } else {
@@ -599,7 +599,7 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             endLunchSunday.setEnabled(false);
         }
 
-        if (sundayDiner.isChecked()) {
+        if (openingDaysHours.isSundayEvening()) {
             startDinerSunday.setEnabled(true);
             endDinerSunday.setEnabled(true);
         } else {
@@ -1238,14 +1238,13 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         mRefOpenHour.setValue(openingDaysHours).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Toast.makeText(context, "Changes Saved",
                             Toast.LENGTH_SHORT).show();
                     //if data has been saved successfully go to main page
                     Intent intent = new Intent(context, OwnerActivityMain.class);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     Toast.makeText(context, "Can't save changes, try again",
                             Toast.LENGTH_SHORT).show();
                 }

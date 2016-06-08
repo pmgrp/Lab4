@@ -52,11 +52,10 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         context = this;
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        if(mAuth == null){
+        if (mAuth == null) {
             Intent in = new Intent(context, ActivityMain.class);
             startActivity(in);
-        }
-        else{
+        } else {
             userId = mAuth.getCurrentUser().getUid();
         }
 
@@ -75,30 +74,17 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         DatabaseReference mRefUserReservation = database.getReference().child("user-reservations").child(userId).child(reservationId);
         DatabaseReference mRefUser = database.getReference().child("users").child(userId);
 
-
-
         getReservation(mRefUserReservation);
         getOffer(mRefOffer);
         getRestaurant(mRefRestaurant);
         getUser(mRefUser);
-
-
-
-
-
-
-
-
-
-
-
     }
 
     private void getOffer(DatabaseReference mRefOffer) {
         mRefOffer.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     offer = dataSnapshot.getValue(DailyOffer.class);
                     toolbar.setTitle(offer.getName());
                     TextView textView = (TextView) findViewById(R.id.reservation_details_price);
@@ -119,11 +105,11 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         });
     }
 
-    private void getRestaurant(DatabaseReference mRefRestaurant){
+    private void getRestaurant(DatabaseReference mRefRestaurant) {
         mRefRestaurant.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     Restaurant restaurant = dataSnapshot.getValue(Restaurant.class);
                     TextView textView = (TextView) findViewById(R.id.reservation_details_button_restaurant);
                     textView.setText(restaurant.getRestaurantName());
@@ -144,11 +130,11 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
 
     }
 
-    private void getUser(DatabaseReference mRefUser){
+    private void getUser(DatabaseReference mRefUser) {
         mRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     User user = dataSnapshot.getValue(User.class);
                     TextView textView = (TextView) findViewById(R.id.reservation_details_customer_name);
                     textView.setText(user.getName() + " " + user.getSurname());
@@ -163,14 +149,13 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         });
 
 
-
     }
 
-    private void getReservation(DatabaseReference mRefUserReservation){
+    private void getReservation(DatabaseReference mRefUserReservation) {
         mRefUserReservation.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     Reservation reservation = dataSnapshot.getValue(Reservation.class);
                     TextView textView = (TextView) findViewById(R.id.reservation_details_date_time);
                     textView.setText(reservation.getDate() + " at " + reservation.getTime());
@@ -190,8 +175,8 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityShowReservationDetails.this);
 
-        builder.setTitle(offer.getName()+" : ");
-        LinearLayout layout= new LinearLayout(this);
+        builder.setTitle(offer.getName() + " : ");
+        LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
         final TextView description = new TextView(this);
@@ -199,25 +184,12 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         description.setTextColor(Color.GRAY);
         description.setGravity(Gravity.CENTER);
         description.setTextSize(18);
-        description.setPadding(0,15,0,0);
+        description.setPadding(0, 15, 0, 0);
         layout.addView(description);
         builder.setView(layout);
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
         builder.show();
-        /*
-        Intent in = new Intent(this, UserActivityShowOfferDetails.class);
-        in.putExtra("offerID", offerId);
-        in.putExtra("restaurantID", restaurantId);
-        startActivity(in);
-        */
     }
-
 
 
     public void goToRestaurantDescription(View view) {
@@ -226,7 +198,7 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         startActivity(in);
     }
 
-    public void backToMenu(View view){
+    public void backToMenu(View view) {
         Intent in = new Intent(this, ActivityMain.class);
         startActivity(in);
     }

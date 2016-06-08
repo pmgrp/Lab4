@@ -241,7 +241,6 @@ public class UserActivityShowUserProfile extends BaseActivity {
             }
         });
 
-
         builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
