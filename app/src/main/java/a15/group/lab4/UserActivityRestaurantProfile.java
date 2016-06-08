@@ -9,13 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-<<<<<<< HEAD
 import android.support.v7.app.AlertDialog;
-=======
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
->>>>>>> origin/master
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -65,7 +62,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
     //lock for like count
     private final Object lock = new Object();
 
-<<<<<<< HEAD
     private boolean continuous;
 
     private boolean monday;
@@ -135,9 +131,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
     private String sundayAllDayStart;
     private String sundayAllDayEnd;
 
-
-=======
-
     @Override
     public void onMapReady(GoogleMap map) {
 
@@ -158,7 +151,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
 
     }
 
->>>>>>> origin/master
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
