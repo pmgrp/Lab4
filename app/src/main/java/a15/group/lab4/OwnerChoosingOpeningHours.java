@@ -134,77 +134,84 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 OpeningDaysHours openingDaysHours = dataSnapshot.getValue(OpeningDaysHours.class);
 
-                continuous.setChecked(openingDaysHours.isContinuous());
+                //if data is already present in databse
+                if(openingDaysHours != null) {
 
-                monday.setChecked(openingDaysHours.isMonday());
-                tuesday.setChecked(openingDaysHours.isTuesday());
-                wednesday.setChecked(openingDaysHours.isWednesday());
-                thursday.setChecked(openingDaysHours.isThursday());
-                friday.setChecked(openingDaysHours.isFriday());
-                saturday.setChecked(openingDaysHours.isSaturday());
-                sunday.setChecked(openingDaysHours.isSunday());
+                    continuous.setChecked(openingDaysHours.isContinuous());
 
-                mondayLunch.setChecked(openingDaysHours.isMondayMorning());
-                tuesdayLunch.setChecked(openingDaysHours.isTuesdayMorning());
-                wednesdayLunch.setChecked(openingDaysHours.isWednesdayMorning());
-                thursdayLunch.setChecked(openingDaysHours.isThursdayMorning());
-                fridayLunch.setChecked(openingDaysHours.isFridayMorning());
-                saturdayLunch.setChecked(openingDaysHours.isSaturdayMorning());
-                sundayLunch.setChecked(openingDaysHours.isSundayMorning());
-                mondayDiner.setChecked(openingDaysHours.isMondayEvening());
-                tuesdayDiner.setChecked(openingDaysHours.isTuesdayEvening());
-                wednesdayDiner.setChecked(openingDaysHours.isWednesdayEvening());
-                thursdayDiner.setChecked(openingDaysHours.isThursdayEvening());
-                fridayDiner.setChecked(openingDaysHours.isFridayEvening());
-                saturdayDiner.setChecked(openingDaysHours.isSaturdayEvening());
-                sundayDiner.setChecked(openingDaysHours.isSundayEvening());
+                    monday.setChecked(openingDaysHours.isMonday());
+                    tuesday.setChecked(openingDaysHours.isTuesday());
+                    wednesday.setChecked(openingDaysHours.isWednesday());
+                    thursday.setChecked(openingDaysHours.isThursday());
+                    friday.setChecked(openingDaysHours.isFriday());
+                    saturday.setChecked(openingDaysHours.isSaturday());
+                    sunday.setChecked(openingDaysHours.isSunday());
 
-                startLunchMonday.setText(openingDaysHours.getMondayLunchStart());
-                endLunchMonday.setText(openingDaysHours.getMondayLunchEnd());
-                startLunchTuesday.setText(openingDaysHours.getTuesdayLunchStart());
-                endLunchTuesday.setText(openingDaysHours.getTuesdayLunchEnd());
-                startLunchWednesday.setText(openingDaysHours.getWednesdayLunchStart());
-                endLunchWednesday.setText(openingDaysHours.getWednesdayLunchEnd());
-                startLunchThursday.setText(openingDaysHours.getThursdayLunchStart());
-                endLunchThursday.setText(openingDaysHours.getThursdayLunchEnd());
-                startLunchFriday.setText(openingDaysHours.getFridayLunchStart());
-                endLunchFriday.setText(openingDaysHours.getFridayLunchEnd());
-                startLunchSaturday.setText(openingDaysHours.getSaturdayLunchStart());
-                endLunchSaturday.setText(openingDaysHours.getSaturdayLunchEnd());
-                startLunchSunday.setText(openingDaysHours.getSundayLunchStart());
-                endLunchSunday.setText(openingDaysHours.getSundayLunchEnd());
+                    mondayLunch.setChecked(openingDaysHours.isMondayMorning());
+                    tuesdayLunch.setChecked(openingDaysHours.isTuesdayMorning());
+                    wednesdayLunch.setChecked(openingDaysHours.isWednesdayMorning());
+                    thursdayLunch.setChecked(openingDaysHours.isThursdayMorning());
+                    fridayLunch.setChecked(openingDaysHours.isFridayMorning());
+                    saturdayLunch.setChecked(openingDaysHours.isSaturdayMorning());
+                    sundayLunch.setChecked(openingDaysHours.isSundayMorning());
+                    mondayDiner.setChecked(openingDaysHours.isMondayEvening());
+                    tuesdayDiner.setChecked(openingDaysHours.isTuesdayEvening());
+                    wednesdayDiner.setChecked(openingDaysHours.isWednesdayEvening());
+                    thursdayDiner.setChecked(openingDaysHours.isThursdayEvening());
+                    fridayDiner.setChecked(openingDaysHours.isFridayEvening());
+                    saturdayDiner.setChecked(openingDaysHours.isSaturdayEvening());
+                    sundayDiner.setChecked(openingDaysHours.isSundayEvening());
 
-                startDinerMonday.setText(openingDaysHours.getMondayDinerStart());
-                endDinerMonday.setText(openingDaysHours.getMondayDinerEnd());
-                startDinerTuesday.setText(openingDaysHours.getTuesdayDinerStart());
-                endDinerTuesday.setText(openingDaysHours.getTuesdayDinerEnd());
-                startDinerWednesday.setText(openingDaysHours.getWednesdayDinerStart());
-                endDinerWednesday.setText(openingDaysHours.getWednesdayDinerEnd());
-                startDinerThursday.setText(openingDaysHours.getThursdayDinerStart());
-                endDinerThursday.setText(openingDaysHours.getThursdayDinerEnd());
-                startDinerFriday.setText(openingDaysHours.getFridayDinerStart());
-                endDinerFriday.setText(openingDaysHours.getFridayDinerEnd());
-                startDinerSaturday.setText(openingDaysHours.getSaturdayDinerStart());
-                endDinerSaturday.setText(openingDaysHours.getSaturdayDinerEnd());
-                startDinerSunday.setText(openingDaysHours.getSundayDinerStart());
-                endDinerSunday.setText(openingDaysHours.getSundayDinerEnd());
+                    startLunchMonday.setText(openingDaysHours.getMondayLunchStart());
+                    endLunchMonday.setText(openingDaysHours.getMondayLunchEnd());
+                    startLunchTuesday.setText(openingDaysHours.getTuesdayLunchStart());
+                    endLunchTuesday.setText(openingDaysHours.getTuesdayLunchEnd());
+                    startLunchWednesday.setText(openingDaysHours.getWednesdayLunchStart());
+                    endLunchWednesday.setText(openingDaysHours.getWednesdayLunchEnd());
+                    startLunchThursday.setText(openingDaysHours.getThursdayLunchStart());
+                    endLunchThursday.setText(openingDaysHours.getThursdayLunchEnd());
+                    startLunchFriday.setText(openingDaysHours.getFridayLunchStart());
+                    endLunchFriday.setText(openingDaysHours.getFridayLunchEnd());
+                    startLunchSaturday.setText(openingDaysHours.getSaturdayLunchStart());
+                    endLunchSaturday.setText(openingDaysHours.getSaturdayLunchEnd());
+                    startLunchSunday.setText(openingDaysHours.getSundayLunchStart());
+                    endLunchSunday.setText(openingDaysHours.getSundayLunchEnd());
 
-                startHourMonday.setText(openingDaysHours.getMondayAllDayStart());
-                endHourMonday.setText(openingDaysHours.getMondayAllDayEnd());
-                startHourTuesday.setText(openingDaysHours.getTuesdayAllDayStart());
-                endHourTuesday.setText(openingDaysHours.getTuesdayAllDayEnd());
-                startHourWednesday.setText(openingDaysHours.getWednesdayAllDayStart());
-                endHourWednesday.setText(openingDaysHours.getWednesdayAllDayEnd());
-                startHourThursday.setText(openingDaysHours.getThursdayAllDayStart());
-                endHourThursday.setText(openingDaysHours.getThursdayAllDayEnd());
-                startHourFriday.setText(openingDaysHours.getFridayAllDayStart());
-                endHourFriday.setText(openingDaysHours.getFridayAllDayEnd());
-                startHourSaturday.setText(openingDaysHours.getSaturdayAllDayStart());
-                endHourSaturday.setText(openingDaysHours.getSaturdayAllDayEnd());
-                startHourSunday.setText(openingDaysHours.getSundayAllDayStart());
-                endHourSunday.setText(openingDaysHours.getSundayAllDayEnd());
+                    startDinerMonday.setText(openingDaysHours.getMondayDinerStart());
+                    endDinerMonday.setText(openingDaysHours.getMondayDinerEnd());
+                    startDinerTuesday.setText(openingDaysHours.getTuesdayDinerStart());
+                    endDinerTuesday.setText(openingDaysHours.getTuesdayDinerEnd());
+                    startDinerWednesday.setText(openingDaysHours.getWednesdayDinerStart());
+                    endDinerWednesday.setText(openingDaysHours.getWednesdayDinerEnd());
+                    startDinerThursday.setText(openingDaysHours.getThursdayDinerStart());
+                    endDinerThursday.setText(openingDaysHours.getThursdayDinerEnd());
+                    startDinerFriday.setText(openingDaysHours.getFridayDinerStart());
+                    endDinerFriday.setText(openingDaysHours.getFridayDinerEnd());
+                    startDinerSaturday.setText(openingDaysHours.getSaturdayDinerStart());
+                    endDinerSaturday.setText(openingDaysHours.getSaturdayDinerEnd());
+                    startDinerSunday.setText(openingDaysHours.getSundayDinerStart());
+                    endDinerSunday.setText(openingDaysHours.getSundayDinerEnd());
 
-                initAllCheckBox(openingDaysHours);
+                    startHourMonday.setText(openingDaysHours.getMondayAllDayStart());
+                    endHourMonday.setText(openingDaysHours.getMondayAllDayEnd());
+                    startHourTuesday.setText(openingDaysHours.getTuesdayAllDayStart());
+                    endHourTuesday.setText(openingDaysHours.getTuesdayAllDayEnd());
+                    startHourWednesday.setText(openingDaysHours.getWednesdayAllDayStart());
+                    endHourWednesday.setText(openingDaysHours.getWednesdayAllDayEnd());
+                    startHourThursday.setText(openingDaysHours.getThursdayAllDayStart());
+                    endHourThursday.setText(openingDaysHours.getThursdayAllDayEnd());
+                    startHourFriday.setText(openingDaysHours.getFridayAllDayStart());
+                    endHourFriday.setText(openingDaysHours.getFridayAllDayEnd());
+                    startHourSaturday.setText(openingDaysHours.getSaturdayAllDayStart());
+                    endHourSaturday.setText(openingDaysHours.getSaturdayAllDayEnd());
+                    startHourSunday.setText(openingDaysHours.getSundayAllDayStart());
+                    endHourSunday.setText(openingDaysHours.getSundayAllDayEnd());
+
+                    initAllCheckBox(openingDaysHours);
+                }
+                else{
+                    //TODO manage here the case when opening hours are not still set
+                }
             }
 
             @Override
