@@ -1,7 +1,9 @@
 package a15.group.lab4;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,16 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Time;
 import java.util.Calendar;
@@ -84,17 +96,57 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
     private EditText startHourSunday;
     private EditText endHourSunday;
 
+    //firebase variables
+    private FirebaseAuth mAuth;
+    private DatabaseReference mRefOpenHour;
+    private String restaurantId;
+    private Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
+
+        //if not authenticated go to login page
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth == null){
+            startActivity(new Intent(context, ActivityMain.class));
+        }
+        else{
+            restaurantId = mAuth.getCurrentUser().getUid();
+        }
+
+        //opening hours path of this restaurant in DB
+        mRefOpenHour = FirebaseDatabase.getInstance().getReference().child("opening-hours").child(restaurantId);
+
         setContentView(R.layout.activity_owner_choosing_opening_hours);
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initAllID();
+
+        /**
+         * Here firebase part to retrieve data from database
+         */
+
+        mRefOpenHour.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                OpeningDaysHours openingDaysHours = dataSnapshot.getValue(OpeningDaysHours.class);
+                //TODO For Fabien here you have "openingDayHours" that contains all data from db,
+                //TODO need to populate the view
+                //monday.setChecked(openingDaysHours.getMonday());
+                //etc...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -663,8 +715,25 @@ public class OwnerChoosingOpeningHours extends AppCompatActivity {
         openingDaysHours.setSundayAllDayStart(startHourSunday.getText().toString());
         openingDaysHours.setSundayAllDayEnd(endHourSunday.getText().toString());
 
-        Intent intent = new Intent(this, OwnerActivityMain.class);
-        startActivity(intent);
+        /* here firebase part */
+        mRefOpenHour.setValue(openingDaysHours).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(context, "Changes Saved",
+                            Toast.LENGTH_SHORT).show();
+                    //if data has been saved successfully go to main page
+                    Intent intent = new Intent(context, OwnerActivityMain.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(context, "Can't save changes, try again",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
     }
 
     private void initAllID() {

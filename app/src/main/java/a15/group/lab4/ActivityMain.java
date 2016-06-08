@@ -73,9 +73,9 @@ public class ActivityMain extends AppCompatActivity {
 
 
     //function related to signin button
-    public void signIn(View view) {
-        final String email = mEmail.getText().toString();
-        final String password = mPassword.getText().toString();
+    public void register(View view) {
+        String email = mEmail.getText().toString();
+        String password = mPassword.getText().toString();
 
         if (!email.isEmpty() && !password.isEmpty()) {
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -88,7 +88,9 @@ public class ActivityMain extends AppCompatActivity {
                             // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
                                 //user may already exist try login
-                                tryLogIn(email,password);
+                                //tryLogIn(email,password);
+                                Toast.makeText(ActivityMain.this, "Authentication failed. Maybe you are already registered",
+                                        Toast.LENGTH_SHORT).show();
 
                             }
                             else{
@@ -103,7 +105,9 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    public void tryLogIn(String email,String password){
+    public void logIn(View view){
+        String email = mEmail.getText().toString();
+        String password = mPassword.getText().toString();
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
