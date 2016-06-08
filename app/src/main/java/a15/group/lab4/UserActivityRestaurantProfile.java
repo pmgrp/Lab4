@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,7 +20,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import android.support.v4.app.Fragment;
-public class UserActivityRestaurantProfile extends AppCompatActivity {
+public class UserActivityRestaurantProfile extends AppCompatActivity implements OnMapReadyCallback {
 
     private Restaurant restaurant;
     private ImageView imageView;
@@ -49,6 +56,27 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
     private DatabaseReference mRefOpenHours;
     //lock for like count
     private final Object lock = new Object();
+
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+        /*map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4219999, -122.0862462))
+                .title("Googleplex")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4629101,-122.2449094))
+                .title("Facebook")
+                .snippet("Facebook HQ: Menlo Park"));
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.3092293,-122.1136845))
+                .title("Apple"));*/
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,14 +220,9 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
         mRefLike.addValueEventListener(likeListener);
         mRefOpenHours.addValueEventListener(openingHoursListener);
 
-        FragmentManager FM = getFragmentManager();
-        FragmentTransaction FT = FM.beginTransaction();
-        MapFragmentClass MF = new MapFragmentClass();
-        FT.add(R.id.mapLayout, MF);
-        //LatLng latlo = new LatLng(9.2442422, 53.35353);
-        //MF.setCoords(latlo);
-        FT.commit();
 
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
     }
 

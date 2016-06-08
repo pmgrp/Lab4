@@ -165,6 +165,8 @@
             android:id="@+id/mapLayout"
             android:layout_below="@id/restaurantTextInfoLayout">
 
+
+
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -175,6 +177,14 @@
                 android:src="@mipmap/like_button_thumb"
                 android:id="@+id/likeButton"
                 android:clickable="true"/>
+
+
+            <fragment
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:id="@+id/map"
+                android:layout_above="@id/likeButton"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
