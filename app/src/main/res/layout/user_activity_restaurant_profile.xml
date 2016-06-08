@@ -159,6 +159,13 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/restaurantTextInfoLayout">
+
+
+
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -170,15 +177,24 @@
                 android:id="@+id/likeButton"
                 android:clickable="true"/>
 
+            <fragment
+                android:id="@+id/map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/likeButton"
+                class="com.google.android.gms.maps.MapFragment" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_toRightOf="@id/likeButton"
                 android:gravity="center_vertical"
                 android:layout_alignParentBottom="true"
-                android:text="+ 420"
+                android:text="+ 363"
                 android:textColor="@color/cardview_dark_background"
                 android:id="@+id/likeStatText" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
