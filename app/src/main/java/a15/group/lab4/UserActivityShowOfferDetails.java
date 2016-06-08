@@ -50,6 +50,8 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     private DatabaseReference mRefUserReservation;
     private DatabaseReference mRefOwnerReservation;
     private DatabaseReference mRefUser;
+    private DatabaseReference mRefOpenHours;
+    private ValueEventListener openingHoursListener;
 
     private String offerId;
     private String restaurantId;
@@ -84,6 +86,9 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         }
 
         setContentView(R.layout.user_activity_show_offer_details);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_offer_details);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         offerId = getIntent().getStringExtra("offerID");
         restaurantId = getIntent().getStringExtra("restaurantID");
@@ -94,6 +99,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         mRefUserReservation = database.getReference().child("user-reservations").child(userId);
         mRefOwnerReservation = database.getReference().child("owner-reservations").child(restaurantId);
         mRefUser = database.getReference().child("users").child(userId);
+        mRefOpenHours = FirebaseDatabase.getInstance().getReference().child("opening-hours").child(restaurantId);
 
         mRefRestaurant.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -112,10 +118,29 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
             }
         });
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_offer_details);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //listener for opening hours
+        openingHoursListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //if owner has set the opening hours
+                if(dataSnapshot.exists()){
+                    OpeningDaysHours openingDaysHours = dataSnapshot.getValue(OpeningDaysHours.class);
+                    //TODO display opening hours in view
+                }
+                else{
+                    //here if opening hours are not set by owner
+                    //TODO if there aren't opnening hours display other things
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        //here set the listener
+        mRefOpenHours.addValueEventListener(openingHoursListener);
     }
 
     private void getUser(DatabaseReference mRefUser){
@@ -265,6 +290,13 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         startActivity(in);
     }
 
+    @Override
+    public void onStop(){
+        super.onStop();
+        if(openingHoursListener != null){
+            mRefOpenHours.removeEventListener(openingHoursListener);
+        }
+    }
 
 
 }

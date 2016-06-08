@@ -38,9 +38,11 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
     private Toolbar toolbar;
     private ValueEventListener likeListener;
     private ValueEventListener restaurantListener;
+    private ValueEventListener openingHoursListener;
     private boolean liked;
     private int likeCount = 0;
     private DatabaseReference mRefRestaurant;
+    private DatabaseReference mRefOpenHours;
     //lock for like count
     private final Object lock = new Object();
 
@@ -67,6 +69,7 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mRefRestaurant = database.getReference().child("restaurants").child(restaurantId);
         mRefLike = FirebaseDatabase.getInstance().getReference().child("restaurants-likes").child(restaurantId).child(userId);
+        mRefOpenHours = FirebaseDatabase.getInstance().getReference().child("opening-hours").child(restaurantId);
 
 
         //listener for likes
@@ -155,11 +158,34 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
                 // Getting Post failed, log a message
                 Log.d("ERR", "loadPost:onCancelled", databaseError.toException());
             }
+
+        };
+
+        //listener for opening hours
+        openingHoursListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //if owner has set the opening hours
+                if(dataSnapshot.exists()){
+                    OpeningDaysHours openingDaysHours = dataSnapshot.getValue(OpeningDaysHours.class);
+                    //TODO display opening hours in view
+                }
+                else{
+                    //here if opening hours are not set by owner
+                    //TODO if there aren't opnening hours display other things
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         };
 
         //set listeners
         mRefRestaurant.addValueEventListener(restaurantListener);
         mRefLike.addValueEventListener(likeListener);
+        mRefOpenHours.addValueEventListener(openingHoursListener);
 
     }
 
@@ -176,19 +202,7 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
         }
     }
 
-    /*
-    public void likeTheRestaurant(View view) {
-        if (restaurant.getLiked()) {
-            likeButton.setImageResource(R.mipmap.like_button_thumb);
-            restaurant.setLiked(false);
-            //saveInGson();
-        } else {
-            likeButton.setImageResource(R.mipmap.like_blue_thumb);
-            restaurant.setLiked(true);
-            //saveInGson();
-        }
-    }
-    */
+
     @Override
     public void onStop(){
         super.onStop();
@@ -197,6 +211,9 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
         }
         if(restaurantListener != null){
             mRefRestaurant.removeEventListener(restaurantListener);
+        }
+        if(openingHoursListener != null){
+            mRefOpenHours.removeEventListener(openingHoursListener);
         }
     }
 
