@@ -134,21 +134,15 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
     @Override
     public void onMapReady(GoogleMap map) {
 
-        /*map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4219999, -122.0862462))
-                .title("Googleplex")
+
+        double lat = restaurant.getLatitude();
+        double lon = restaurant.getLongitude();
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(lat, lon))
+                .title(restaurant.getRestaurantName().toString())
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
-
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4629101,-122.2449094))
-                .title("Facebook")
-                .snippet("Facebook HQ: Menlo Park"));
-
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.3092293,-122.1136845))
-                .title("Apple"));*/
-
-
+        
     }
 
     @Override
