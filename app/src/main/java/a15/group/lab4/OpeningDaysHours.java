@@ -4,6 +4,8 @@ package a15.group.lab4;
  * Created by ISEN on 07/06/2016.
  */
 public class OpeningDaysHours {
+    private boolean continuous;
+
     private boolean monday;
     private boolean mondayMorning;
     private boolean mondayEvening;
@@ -74,6 +76,13 @@ public class OpeningDaysHours {
     private String sundayAllDayStart;
     private String sundayAllDayEnd;
 
+    public boolean isContinuous() {
+        return continuous;
+    }
+
+    public void setContinuous(boolean continuous) {
+        this.continuous = continuous;
+    }
 
     public boolean isMonday() {
         return monday;
