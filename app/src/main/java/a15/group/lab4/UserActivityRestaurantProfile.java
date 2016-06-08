@@ -123,7 +123,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
 
     @Override
     public void onMapReady(GoogleMap map) {
-
         LatLng currentLocation = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
 
         map.addMarker(new MarkerOptions()
@@ -139,7 +138,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
         map.animateCamera(CameraUpdateFactory.zoomIn());
         // Zoom out to zoom level 10, animating with a duration of 2 seconds.
         map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-
 
     }
 
