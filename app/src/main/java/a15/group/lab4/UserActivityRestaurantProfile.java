@@ -9,7 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+<<<<<<< HEAD
 import android.support.v7.app.AlertDialog;
+=======
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+>>>>>>> origin/master
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,6 +28,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,8 +43,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-
-public class UserActivityRestaurantProfile extends AppCompatActivity {
+import android.support.v4.app.Fragment;
+public class UserActivityRestaurantProfile extends AppCompatActivity implements OnMapReadyCallback {
 
     private Restaurant restaurant;
     private ImageView imageView;
@@ -51,6 +65,7 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
     //lock for like count
     private final Object lock = new Object();
 
+<<<<<<< HEAD
     private boolean continuous;
 
     private boolean monday;
@@ -121,8 +136,32 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
     private String sundayAllDayEnd;
 
 
+=======
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+        /*map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4219999, -122.0862462))
+                .title("Googleplex")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4629101,-122.2449094))
+                .title("Facebook")
+                .snippet("Facebook HQ: Menlo Park"));
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.3092293,-122.1136845))
+                .title("Apple"));*/
+
+
+    }
+
+>>>>>>> origin/master
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         context = this;
 
@@ -323,6 +362,10 @@ public class UserActivityRestaurantProfile extends AppCompatActivity {
         mRefRestaurant.addValueEventListener(restaurantListener);
         mRefLike.addValueEventListener(likeListener);
         mRefOpenHours.addValueEventListener(openingHoursListener);
+
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
     }
 
