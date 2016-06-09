@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -92,7 +94,6 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
                     ImageView imageView = (ImageView) findViewById(R.id.offer_photo);
                     Glide.with(context)
                             .load(offer.getPhoto())
-                            .centerCrop()
                             .into(imageView);
                     textView = (TextView) findViewById(R.id.offer_availability);
                     textView.setText(Integer.toString(offer.getAvailability()));
@@ -224,6 +225,23 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
                 startActivity(in);
             }
         });
+    }
+
+    public void widenImage(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(OwnerActivityReservationDetails.this);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final ImageView image = new ImageView(this);
+        Glide.with(context)
+                .load(offer.getPhoto())
+                .into(image);
+
+        layout.addView(image);
+        builder.setView(layout);
+
+        builder.show();
     }
 
 }

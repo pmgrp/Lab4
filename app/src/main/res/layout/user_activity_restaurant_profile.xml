@@ -48,7 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/restaurant_rome" />
+                android:src="@drawable/restaurant_rome"
+                android:onClick="widenImage"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

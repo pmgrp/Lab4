@@ -12,12 +12,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -168,7 +170,6 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
                     ImageView offerDetailsImage = (ImageView) findViewById(R.id.offer_details_image);
                     Glide.with(context)
                             .load(offer.getPhoto())
-                            .centerCrop()
                             .into(offerDetailsImage);
                     TextView textView = (TextView) findViewById(R.id.button_buy);
                     textView.setText(String.format(Locale.getDefault(), "%d", offer.getPrice()) + " €");
@@ -283,6 +284,23 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     public void backToMenu(View view) {
         Intent in = new Intent(this, ActivityMain.class);
         startActivity(in);
+    }
+
+    public void widenImage(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityShowOfferDetails.this);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final ImageView image = new ImageView(this);
+        Glide.with(context)
+                .load(offer.getPhoto())
+                .into(image);
+
+        layout.addView(image);
+        builder.setView(layout);
+
+        builder.show();
     }
 
     @Override

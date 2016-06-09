@@ -40,7 +40,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+
 import android.support.v4.app.Fragment;
+
 public class UserActivityRestaurantProfile extends AppCompatActivity implements OnMapReadyCallback {
 
     private Restaurant restaurant;
@@ -227,7 +229,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
                     imageView = (ImageView) findViewById(R.id.restaurant_profile_image);
                     Glide.with(context)
                             .load(restaurant.getRestaurantPhoto())
-                            .centerCrop()
                             .into(imageView);
 
                     textView = (TextView) findViewById(R.id.restaurant_profile_restaurant);
@@ -617,6 +618,23 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
         }
 
         builder.setView(dialogLayout);
+
+        builder.show();
+    }
+
+    public void widenImage(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityRestaurantProfile.this);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final ImageView image = new ImageView(this);
+        Glide.with(context)
+                .load(restaurant.getRestaurantPhoto())
+                .into(image);
+
+        layout.addView(image);
+        builder.setView(layout);
 
         builder.show();
     }

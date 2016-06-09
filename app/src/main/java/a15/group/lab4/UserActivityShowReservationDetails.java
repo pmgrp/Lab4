@@ -170,7 +170,6 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         });
     }
 
-
     public void goToOfferDescription(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityShowReservationDetails.this);
@@ -191,7 +190,6 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         builder.show();
     }
 
-
     public void goToRestaurantDescription(View view) {
         Intent in = new Intent(this, UserActivityRestaurantProfile.class);
         in.putExtra("restaurantID", restaurantId);
@@ -203,5 +201,21 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         startActivity(in);
     }
 
+    public void widenImage(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivityShowReservationDetails.this);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final ImageView image = new ImageView(this);
+        Glide.with(context)
+                .load(offer.getPhoto())
+                .into(image);
+
+        layout.addView(image);
+        builder.setView(layout);
+
+        builder.show();
+    }
 
 }

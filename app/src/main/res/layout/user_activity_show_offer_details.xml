@@ -25,8 +25,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/logo_app_coyote"
                 android:onClick="backToMenu"
-                android:id="@+id/coyote"
-                />
+                android:id="@+id/coyote" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -49,7 +48,8 @@
                 android:layout_below="@id/toolbar_offer_details"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitXY"
-                android:src="@drawable/chicken" />
+                android:src="@drawable/chicken"
+                android:onClick="widenImage"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

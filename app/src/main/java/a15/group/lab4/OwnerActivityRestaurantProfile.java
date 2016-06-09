@@ -5,13 +5,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,7 +80,7 @@ public class OwnerActivityRestaurantProfile extends AppCompatActivity {
                     restaurantEmail.setText(restaurant.getRestaurantEmail());
                     restaurantWebsite.setText(restaurant.getRestaurantWebsite());
                     restaurantPiva.setText(restaurant.getRestaurantPiva());
-                    //set the foto
+
                     if(!restaurant.getRestaurantPhoto().isEmpty()) {
                         Glide.with(OwnerActivityRestaurantProfile.this)
                                 .load(restaurant.getRestaurantPhoto())
@@ -146,6 +149,23 @@ public class OwnerActivityRestaurantProfile extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void widenImage(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(OwnerActivityRestaurantProfile.this);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final ImageView image = new ImageView(this);
+        Glide.with(this)
+                .load(restaurant.getRestaurantPhoto())
+                .into(image);
+
+        layout.addView(image);
+        builder.setView(layout);
+
+        builder.show();
     }
 
     @Override
