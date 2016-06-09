@@ -4,6 +4,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -235,13 +237,21 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
     }
 
     private void createNotification(String text, int mId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo_app_coyote);
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.logo_app_coyote)
+                .setLargeIcon(bitmap)
+                .setAutoCancel(true)
+                .setColor(getResources().getColor(R.color.colorPrimary))
                 .setContentTitle(getResources().getString(R.string.app_name))
-                .setContentText(text);
+                .setContentText(text)
+                .setVibrate(new long[] {100, 300, 100, 300});
+
+        //mBuilder.addPerson();
 
 // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, UserActivityShowOfferDetails.class);
+        Intent resultIntent = new Intent(this, UserActivityMain.class);
 
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
@@ -250,7 +260,7 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 
 // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(UserActivityShowOfferDetails.class);
+        stackBuilder.addParentStack(UserActivityMain.class);
 
 // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
