@@ -74,12 +74,26 @@ public class UserActivityShowReservations extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Reservation reservation = dataSnapshot.getValue(Reservation.class);
+                for(int i=0; i< reservations.size(); i++){
+                    if(reservations.get(i).getReservationId().equals(dataSnapshot.getKey())){
+                        reservations.remove(i);
+                        reservations.add(reservation);
+                        cardAdapter.notifyItemChanged(i);
+                        break;
+                    }
+                }
 
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                for(int i=0; i< reservations.size(); i++) {
+                    if (reservations.get(i).getReservationId().equals(dataSnapshot.getKey())) {
+                        reservations.remove(i);
+                        cardAdapter.notifyItemRemoved(i);
+                    }
+                }
             }
 
             @Override
@@ -116,6 +130,7 @@ public class UserActivityShowReservations extends AppCompatActivity {
         if(childEventListener != null){
             mRef.removeEventListener(childEventListener);
         }
+        reservations.clear();
         super.onStop();
     }
 

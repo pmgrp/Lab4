@@ -45,6 +45,7 @@ public class UserActivityShowOffers extends AppCompatActivity implements
     private ChildEventListener childEventListener;
 
     private Spinner spinner;
+    private int spinnerPosition = 0;
 
     private UserAdapterShowOffers cardAdapter;
     private RecyclerView rv;
@@ -96,10 +97,12 @@ public class UserActivityShowOffers extends AppCompatActivity implements
                     switch (position) {
                         case 0:
                             //offers ordered by distance
+                            spinnerPosition = position;
                             sortByDistance();
                             break;
                         case 1:
                             //offers ordered by price
+                            spinnerPosition = position;
                             sortByPrice();
                             break;
                     }
@@ -125,11 +128,36 @@ public class UserActivityShowOffers extends AppCompatActivity implements
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                DailyOffer offer = dataSnapshot.getValue(DailyOffer.class);
+                for(int i=0 ; i < offers.size(); i++ ) {
+                    if (offers.get(i).getID().equals(dataSnapshot.getKey())) {
+                        offers.remove(i);
+                        updateDistance(offer);
+                        offers.add(offer);
+                        switch (spinnerPosition) {
+                            case 0:
+                                sortByDistance();
+                                break;
+                            case 1:
+                                sortByPrice();
+                                break;
+                        }
+                        break;
+                    }
+                }
 
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                for(int i=0 ; i < offers.size(); i++ ){
+                    if(offers.get(i).getID().equals(dataSnapshot.getKey())) {
+                        offers.remove(i);
+                        cardAdapter.notifyItemRemoved(i);
+                        break;
+                    }
+                }
 
             }
 
@@ -246,6 +274,7 @@ public class UserActivityShowOffers extends AppCompatActivity implements
         if(childEventListener != null){
             mRef.child("offers").removeEventListener(childEventListener);
         }
+        offers.clear();
         super.onStop();
     }
 

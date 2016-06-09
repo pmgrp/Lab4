@@ -48,7 +48,18 @@ public class ActivityMain extends AppCompatActivity {
                 if (fUser != null) {
                     // User is signed in
                     Log.d("TAG", "onAuthStateChanged:signed_in:" + fUser.getUid());
-                    addUserInfo();
+                    Task task = fUser.getToken(false);
+                    task.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if(task.isSuccessful()){
+                                addUserInfo();
+                            }
+                            else{
+                                mAuth.signOut();
+                            }
+                        }
+                    });
                 } else {
                     // User is signed out
                     Log.d("TAG", "onAuthStateChanged:signed_out");

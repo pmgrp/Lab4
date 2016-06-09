@@ -82,10 +82,29 @@ public class UserActivityShowRestaurants extends AppCompatActivity implements
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
+                Restaurant restaurant = dataSnapshot.getValue(Restaurant.class);
+                for(int i=0 ; i < restaurants.size(); i++ ) {
+                    if (restaurants.get(i).getID().equals(dataSnapshot.getKey())) {
+                        restaurants.remove(i);
+                        updateDistance(restaurant);
+                        restaurants.add(restaurant);
+                        sortByDistance();
+                        break;
+                    }
+                }
+
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                for(int i=0 ; i < restaurants.size(); i++ ) {
+                    if (restaurants.get(i).getID().equals(dataSnapshot.getKey())) {
+                        restaurants.remove(i);
+                        cardAdapter.notifyItemRemoved(i);
+                        break;
+                    }
+                }
 
             }
 
