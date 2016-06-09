@@ -246,6 +246,11 @@ public class OwnerActivityAddOffer extends BaseActivity {
                 }
             });
         }
+        else{
+            hideProgressDialog();
+            Toast.makeText(OwnerActivityAddOffer.this, "Please select an image",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onImageViewClick(View view){
