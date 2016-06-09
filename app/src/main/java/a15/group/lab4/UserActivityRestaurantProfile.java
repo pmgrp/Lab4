@@ -1,17 +1,9 @@
 package a15.group.lab4;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,12 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,9 +31,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+<<<<<<< HEAD
 
 import android.support.v4.app.Fragment;
 
+=======
+>>>>>>> origin/master
 public class UserActivityRestaurantProfile extends AppCompatActivity implements OnMapReadyCallback {
 
     private Restaurant restaurant;
@@ -135,21 +129,21 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
 
     @Override
     public void onMapReady(GoogleMap map) {
-
-        /*map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4219999, -122.0862462))
-                .title("Googleplex")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+        LatLng currentLocation = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
 
         map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4629101,-122.2449094))
-                .title("Facebook")
-                .snippet("Facebook HQ: Menlo Park"));
+                .position(currentLocation)
+                .title(restaurant.getRestaurantName()));
+        moveToCurrentLocation(map, currentLocation);
+    }
 
-        map.addMarker(new MarkerOptions()
-                .position(new LatLng(37.3092293,-122.1136845))
-                .title("Apple"));*/
-
+    private void moveToCurrentLocation(GoogleMap map, LatLng currentLocation)
+    {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,15));
+        // Zoom in, animating the camera.
+        map.animateCamera(CameraUpdateFactory.zoomIn());
+        // Zoom out to zoom level 10, animating with a duration of 2 seconds.
+        map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
     }
 
@@ -254,6 +248,13 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
 
                     likeButton = (ImageView) findViewById(R.id.likeButton);
 
+                    SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
+                    FragmentTransaction fragmentTransaction =
+                            getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.add(R.id.map, mMapFragment);
+                    fragmentTransaction.commit();
+                    mMapFragment.getMapAsync(UserActivityRestaurantProfile.this);
+
                 }
             }
 
@@ -355,10 +356,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
         mRefRestaurant.addValueEventListener(restaurantListener);
         mRefLike.addValueEventListener(likeListener);
         mRefOpenHours.addValueEventListener(openingHoursListener);
-
-
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
     }
 
