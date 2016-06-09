@@ -21,17 +21,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -228,6 +231,7 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 //hideProgressDialog();
                 if(task.isSuccessful()){
+                    sendNotifications();
                     Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Restaurant info have been changed",
                             Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(OwnerActivityEditRestaurantProfile.this, OwnerActivityRestaurantProfile.class);
@@ -246,6 +250,29 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
     public void onImageViewClick(View view){
         Intent chooseImageIntent = imagePicker.getPickImageIntent(this);
         startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+    }
+
+    private void sendNotifications(){
+        final ArrayList<TokenData> tokens = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("user-tokens").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot child : dataSnapshot.getChildren()){
+                        TokenData tokenData = child.getValue(TokenData.class);
+                        tokens.add(tokenData);
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override

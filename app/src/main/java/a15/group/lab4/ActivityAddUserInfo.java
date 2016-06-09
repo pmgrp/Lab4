@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class ActivityAddUserInfo extends BaseActivity {
 
@@ -146,18 +148,40 @@ public class ActivityAddUserInfo extends BaseActivity {
 
     private void goToMainActivity(String userType) {
         Intent in;
+        String token = FirebaseInstanceId.getInstance().getToken();
+        String uId = fUser.getUid();
+        TokenData tokenData = new TokenData(uId, token);
         switch (userType){
             case CUSTOMER:
-                in = new Intent(this, UserActivityMain.class);
-                startActivity(in);
+                FirebaseMessaging.getInstance().subscribeToTopic("user");
+                Log.d("TAG", "subscribed to user topic");
+                FirebaseDatabase.getInstance().getReference().child("user-tokens")
+                        .child(fUser.getUid())
+                        .setValue(tokenData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent in = new Intent(ActivityAddUserInfo.this, UserActivityMain.class);
+                        startActivity(in);
+                    }
+                });
+
                 break;
             case NOUSER:
                 in = new Intent(this, ActivityMain.class);
                 startActivity(in);
                 break;
             case OWNER:
-                in = new Intent(this, OwnerActivityMain.class);
-                startActivity(in);
+                FirebaseMessaging.getInstance().subscribeToTopic("owner");
+                Log.d("TAG", "subscribed to owner topic");
+                FirebaseDatabase.getInstance().getReference().child("owner-tokens")
+                        .child(fUser.getUid())
+                        .setValue(tokenData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent in = new Intent(ActivityAddUserInfo.this, OwnerActivityMain.class);
+                        startActivity(in);
+                    }
+                });
                 break;
         }
     }
