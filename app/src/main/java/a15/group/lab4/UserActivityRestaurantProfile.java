@@ -30,13 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-<<<<<<< HEAD
 
-import android.support.v4.app.Fragment;
 
-=======
->>>>>>> origin/master
 public class UserActivityRestaurantProfile extends AppCompatActivity implements OnMapReadyCallback {
 
     private Restaurant restaurant;
