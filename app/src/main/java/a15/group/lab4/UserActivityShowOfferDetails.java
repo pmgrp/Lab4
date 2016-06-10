@@ -9,6 +9,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -123,28 +125,6 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
             }
         });
 
-        //listener for opening hours
-        openingHoursListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //if owner has set the opening hours
-                if (dataSnapshot.exists()) {
-                    OpeningDaysHours openingDaysHours = dataSnapshot.getValue(OpeningDaysHours.class);
-                    //TODO display opening hours in view
-                } else {
-                    //here if opening hours are not set by owner
-                    //TODO if there aren't opnening hours display other things
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-
-        //here set the listener
-        mRefOpenHours.addValueEventListener(openingHoursListener);
     }
 
     private void getUser(DatabaseReference mRefUser) {
@@ -208,6 +188,8 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         newFragment.show(getSupportFragmentManager(), "timePicker");
         newFragment = new UserFragmentDatePicker();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+        String contentText = "New reservation Made";
+        createNotification(contentText, 3);
     }
 
     public void newNotif(View view) {
@@ -216,13 +198,21 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     }
 
     private void createNotification(String text, int mId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo_app_coyote);
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.logo_app_coyote)
+                .setLargeIcon(bitmap)
+                .setAutoCancel(true)
+                .setColor(getResources().getColor(R.color.colorPrimary))
                 .setContentTitle(getResources().getString(R.string.app_name))
-                .setContentText(text);
+                .setContentText(text)
+                .setVibrate(new long[] {100, 300, 100, 300});
+
+        //mBuilder.addPerson();
 
 // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, UserActivityShowOfferDetails.class);
+        Intent resultIntent = new Intent(this, UserActivityMain.class);
 
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
@@ -231,7 +221,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 
 // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(UserActivityShowOfferDetails.class);
+        stackBuilder.addParentStack(UserActivityMain.class);
 
 // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
