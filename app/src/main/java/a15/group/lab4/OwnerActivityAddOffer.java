@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -225,9 +228,7 @@ public class OwnerActivityAddOffer extends BaseActivity {
                                         hideProgressDialog();
                                         Toast.makeText(OwnerActivityAddOffer.this, "Offer has been saved",
                                                 Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityShowOffers.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
+                                        sendNotifications();
                                     }
                                     else{
                                         Toast.makeText(OwnerActivityAddOffer.this, "Some error occurred please try again",
@@ -251,6 +252,51 @@ public class OwnerActivityAddOffer extends BaseActivity {
             Toast.makeText(OwnerActivityAddOffer.this, "Please select an image",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void sendNotifications() {
+
+        final ArrayList<TokenData> tokens = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("subscribers-token").child(fUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        TokenData tokenData = child.getValue(TokenData.class);
+                        tokens.add(tokenData);
+                    }
+                    RequestQueue queue = Volley.newRequestQueue(OwnerActivityAddOffer.this);
+                    for (int i = 0; i < tokens.size(); i++) {
+                        final String to = tokens.get(i).token;
+                        Log.d("TOKEN", to);
+                        JsonObjectRequest js = NotificationGenerator.notificationRequest("A New Offer from " + restaurant.getRestaurantName() + " is Available", to);
+                        queue.add(js);
+                    }
+
+                    Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityRestaurantProfile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+
+
+                }
+                else{
+                    Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityRestaurantProfile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        Intent intent = new Intent(OwnerActivityAddOffer.this, OwnerActivityShowOffers.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     public void onImageViewClick(View view){
