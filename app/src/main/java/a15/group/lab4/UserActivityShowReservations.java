@@ -68,7 +68,7 @@ public class UserActivityShowReservations extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     Reservation reservation = dataSnapshot.getValue(Reservation.class);
                     reservations.add(reservation);
-                    cardAdapter.notifyItemInserted(cardAdapter.getItemCount() - 1);
+                    cardAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -125,12 +125,13 @@ public class UserActivityShowReservations extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onStop() {
         if(childEventListener != null){
             mRef.removeEventListener(childEventListener);
         }
-        reservations.clear();
+        //reservations.clear();
         super.onStop();
     }
 

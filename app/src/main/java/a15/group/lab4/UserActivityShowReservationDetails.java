@@ -43,6 +43,8 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
     private String offerId;
     private String restaurantId;
     private DailyOffer offer;
+    private String reservationId;
+    FirebaseDatabase database;
 
 
     @Override
@@ -66,9 +68,9 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
 
         offerId = getIntent().getStringExtra("offerID");
         restaurantId = getIntent().getStringExtra("restaurantID");
-        String reservationId = getIntent().getStringExtra("reservationID");
+        reservationId = getIntent().getStringExtra("reservationID");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
         DatabaseReference mRefOffer = database.getReference().child("offers").child(offerId);
         DatabaseReference mRefRestaurant = database.getReference().child("restaurants").child(restaurantId);
         DatabaseReference mRefUserReservation = database.getReference().child("user-reservations").child(userId).child(reservationId);
@@ -159,6 +161,11 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
                     Reservation reservation = dataSnapshot.getValue(Reservation.class);
                     TextView textView = (TextView) findViewById(R.id.reservation_details_date_time);
                     textView.setText(reservation.getDate() + " at " + reservation.getTime());
+                    int status = reservation.getStatus();
+                    if(status == Reservation.COMPLETED || status == Reservation.REJECTED){
+                        Button buttonDelete = (Button)findViewById(R.id.delete_reservation_button);
+                        buttonDelete.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
@@ -216,6 +223,12 @@ public class UserActivityShowReservationDetails extends AppCompatActivity {
         builder.setView(layout);
 
         builder.show();
+    }
+
+    public void OnClickDeleteReservation(View view){
+        DatabaseReference mRefUserReservation = database.getReference().child("user-reservations").child(userId).child(reservationId);
+        mRefUserReservation.removeValue();
+        startActivity(new Intent(view.getContext(), UserActivityShowReservations.class));
     }
 
 }

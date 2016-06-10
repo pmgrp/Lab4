@@ -116,23 +116,28 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    public void logIn(View view){
+    public void logIn(View view) {
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d("TAG", "user logged in succesfully" + task.isSuccessful());
-                if(!task.isSuccessful()){
-                    Toast.makeText(ActivityMain.this, "Authentication failed. Maybe you are already registered with a different password",
-                            Toast.LENGTH_SHORT).show();
+        if (!email.isEmpty() && !password.isEmpty()) {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    Log.d("TAG", "user logged in succesfully" + task.isSuccessful());
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(ActivityMain.this, "Authentication failed. Maybe you are already registered with a different password",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ActivityMain.this, "User logged in.",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
-                    Toast.makeText(ActivityMain.this, "User logged in.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+            });
+        }
+        else{
+            Toast.makeText(ActivityMain.this, "Mail and password are required",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 

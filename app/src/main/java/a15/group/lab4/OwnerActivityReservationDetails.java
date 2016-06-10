@@ -19,7 +19,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class OwnerActivityReservationDetails extends AppCompatActivity {
@@ -198,7 +203,7 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
         });
     }
 
-    private void setReservationStatus(int status){
+    private void setReservationStatus(final int status){
 
         DatabaseReference mRef2 = database.getReference().child("user-reservations").child(reservation.getCustomerId()).child(reservationId);
         mRef2.child("status").setValue(status);
@@ -207,13 +212,59 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Intent in = new Intent(context, OwnerActivityShowReservations.class);
-                    startActivity(in);
+                    sendNotifications(status);
                 }
             }
         });
 
     }
+
+    private void sendNotifications(final int status){
+        final ArrayList<TokenData> tokens = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("user-tokens").child(reservation.getCustomerId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    RequestQueue queue = Volley.newRequestQueue(OwnerActivityReservationDetails.this);
+                    TokenData tokenData = dataSnapshot.getValue(TokenData.class);
+
+                    String message = null;
+                    switch (status){
+                        case Reservation.CONFIRMED:
+                            message = "Your Reservation: " + reservation.getOfferName() + " has been confirmed";
+                            break;
+                        case Reservation.COMPLETED:
+                            message = "Your Reservation: " + reservation.getOfferName() + " is completed";
+                            break;
+                        case Reservation.REJECTED:
+                            message = "Reservation not accepeted by " + reservation.getRestaurantName();
+                            break;
+                    }
+
+                    if(message != null) {
+                        JsonObjectRequest js = NotificationGenerator.notificationRequest(message, tokenData.token);
+                        queue.add(js);
+                    }
+
+                    Toast.makeText(OwnerActivityReservationDetails.this, "Notification sent to user",
+                            Toast.LENGTH_SHORT).show();
+
+                    Intent in = new Intent(context, OwnerActivityShowReservations.class);
+                    startActivity(in);
+
+                } else {
+                    Intent in = new Intent(context, OwnerActivityShowReservations.class);
+                    startActivity(in);
+                }
+            }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+    }
+
 
     private void deleteReservation(){
         DatabaseReference mRef = database.getReference().child("owner-reservations").child(userId).child(reservationId);

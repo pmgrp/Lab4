@@ -212,6 +212,8 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
 
         //save image
         if(currentPhoto != null) {
+            showProgressDialog();
+
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             currentPhoto.compress(Bitmap.CompressFormat.JPEG, 90, baos);
             byte[] data = baos.toByteArray();
@@ -279,6 +281,7 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                         JsonObjectRequest js = NotificationGenerator.notificationRequest("A New Restaurant is Available", to);
                         queue.add(js);
                     }
+                    hideProgressDialog();
                     Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Restaurant info have been changed",
                             Toast.LENGTH_SHORT).show();
 
