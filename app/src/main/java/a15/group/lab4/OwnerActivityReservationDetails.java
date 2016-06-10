@@ -136,14 +136,14 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         setReservationStatus(Reservation.CONFIRMED);
-                                        notificationConfirmReservation();
+                                        //notificationConfirmReservation();
                                     }
                                 });
                                 reservationRejected.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         setReservationStatus(Reservation.REJECTED);
-                                        notificationRejectReservation();
+                                        //notificationRejectReservation();
                                     }
                                 });
                                 break;
@@ -156,7 +156,7 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         setReservationStatus(Reservation.COMPLETED);
-                                        notificationRejectReservation();
+                                        //notificationRejectReservation();
                                     }
                                 });
 
@@ -168,7 +168,7 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         deleteReservation();
-                                        notificationRejectReservation();
+                                        //notificationRejectReservation();
                                     }
                                 });
                                 break;
@@ -177,7 +177,7 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         setReservationStatus(Reservation.CONFIRMED);
-                                        notificationConfirmReservation();
+                                        //notificationConfirmReservation();
                                     }
                                 });
                                 reservationRejected.setText("Delete");
@@ -185,7 +185,7 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         deleteReservation();
-                                        notificationRejectReservation();
+                                       //notificationRejectReservation();
                                     }
                                 });
                                 break;
@@ -220,7 +220,6 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
     }
 
     private void sendNotifications(final int status){
-        final ArrayList<TokenData> tokens = new ArrayList<>();
         FirebaseDatabase.getInstance().getReference().child("user-tokens").child(reservation.getCustomerId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -276,6 +275,8 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
             }
         });
     }
+
+    /*
 
     private void notificationRejectReservation() {
         String contentText = "Reservation Rejected";
@@ -339,5 +340,7 @@ public class OwnerActivityReservationDetails extends AppCompatActivity {
 
         builder.show();
     }
+
+    */
 
 }

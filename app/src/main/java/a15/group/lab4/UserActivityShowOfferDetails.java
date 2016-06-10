@@ -58,8 +58,6 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
     private DatabaseReference mRefUserReservation;
     private DatabaseReference mRefOwnerReservation;
     private DatabaseReference mRefUser;
-    private DatabaseReference mRefOpenHours;
-    private ValueEventListener openingHoursListener;
 
     private String offerId;
     private String restaurantId;
@@ -106,7 +104,6 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         mRefUserReservation = database.getReference().child("user-reservations").child(userId);
         mRefOwnerReservation = database.getReference().child("owner-reservations").child(restaurantId);
         mRefUser = database.getReference().child("users").child(userId);
-        mRefOpenHours = FirebaseDatabase.getInstance().getReference().child("opening-hours").child(restaurantId);
 
         mRefRestaurant.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -188,9 +185,11 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         newFragment.show(getSupportFragmentManager(), "timePicker");
         newFragment = new UserFragmentDatePicker();
         newFragment.show(getSupportFragmentManager(), "datePicker");
-        String contentText = "New reservation Made";
-        createNotification(contentText, 3);
+        //String contentText = "New reservation Made";
+        //createNotification(contentText, 3);
     }
+
+    /*
 
     public void newNotif(View view) {
         String contentText = "New reservation Made";
@@ -232,6 +231,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
 // mId allows you to update the notification later on.
         mNotificationManager.notify(mId, mBuilder.build());
     }
+    */
 
     public void onTimeFragmentOkListener() {
         Log.d("DAY", Integer.toString(xday));
@@ -327,14 +327,6 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         builder.setView(layout);
 
         builder.show();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (openingHoursListener != null) {
-            mRefOpenHours.removeEventListener(openingHoursListener);
-        }
     }
 
 
