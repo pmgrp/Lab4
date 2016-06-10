@@ -107,6 +107,8 @@ public class OwnerActivityAddOffer extends BaseActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         //if restaurant profile is not present go to main activity
                         if (!dataSnapshot.exists()) {
+                            Toast.makeText(OwnerActivityAddOffer.this, "Please complete Restaurant Profile before",
+                                    Toast.LENGTH_LONG).show();
                             Intent in = new Intent(OwnerActivityAddOffer.this, OwnerActivityMain.class);
                             startActivity(in);
                         }

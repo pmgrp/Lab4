@@ -71,6 +71,8 @@ public class OwnerActivityShowOffers extends AppCompatActivity {
 
         populateView();
 
+
+
     }
 
     private void populateView(){
