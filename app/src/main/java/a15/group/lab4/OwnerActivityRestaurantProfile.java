@@ -152,20 +152,23 @@ public class OwnerActivityRestaurantProfile extends AppCompatActivity {
     }
 
     public void widenImage(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(OwnerActivityRestaurantProfile.this);
 
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
+        if(restaurant != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(OwnerActivityRestaurantProfile.this);
 
-        final ImageView image = new ImageView(this);
-        Glide.with(this)
-                .load(restaurant.getRestaurantPhoto())
-                .into(image);
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
 
-        layout.addView(image);
-        builder.setView(layout);
+            final ImageView image = new ImageView(this);
+            Glide.with(this)
+                    .load(restaurant.getRestaurantPhoto())
+                    .into(image);
 
-        builder.show();
+            layout.addView(image);
+            builder.setView(layout);
+
+            builder.show();
+        }
     }
 
     @Override
