@@ -112,6 +112,16 @@
                 android:value=".UserActivityMain" />
         </activity>
         <activity
+            android:name=".UserActivityRestaurantMap"
+            android:label="Restaurant Map"
+            android:parentActivityName=".UserActivityRestaurantMap"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserActivityRestaurantProfile" />
+        </activity>
+        <activity
             android:name=".OwnerActivityMain"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Base">

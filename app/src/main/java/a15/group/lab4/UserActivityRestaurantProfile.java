@@ -251,12 +251,14 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
 
                     likeButton = (ImageView) findViewById(R.id.likeButton);
 
+                    /*
                     SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
                     FragmentTransaction fragmentTransaction =
                             getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.add(R.id.map, mMapFragment);
                     fragmentTransaction.commit();
                     mMapFragment.getMapAsync(UserActivityRestaurantProfile.this);
+                    */
 
                 }
             }
@@ -637,6 +639,15 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
         builder.setView(layout);
 
         builder.show();
+    }
+
+    public void OnClickShowMap(View view){
+        Intent in = new Intent(this, UserActivityRestaurantMap.class);
+        in.putExtra("restaurantName", restaurant.getRestaurantName());
+        in.putExtra("latitude", restaurant.getLatitude());
+        in.putExtra("longitude", restaurant.getLongitude());
+
+        startActivity(in);
     }
 
 }
