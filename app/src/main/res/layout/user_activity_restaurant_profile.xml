@@ -35,14 +35,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <ImageView
             android:id="@+id/restaurant_profile_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:onClick="widenImage"
             android:scaleType="fitXY"
-            android:src="@drawable/restaurant_rome" />
+            android:src="@mipmap/loading" />
         </LinearLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"

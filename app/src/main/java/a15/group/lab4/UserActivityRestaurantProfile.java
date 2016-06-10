@@ -251,15 +251,6 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
 
                     likeButton = (ImageView) findViewById(R.id.likeButton);
 
-                    /*
-                    SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
-                    FragmentTransaction fragmentTransaction =
-                            getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.add(R.id.map, mMapFragment);
-                    fragmentTransaction.commit();
-                    mMapFragment.getMapAsync(UserActivityRestaurantProfile.this);
-                    */
-
                 }
             }
 

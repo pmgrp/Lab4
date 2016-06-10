@@ -48,7 +48,7 @@
                 android:layout_below="@id/toolbar_offer_details"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitXY"
-                android:src="@drawable/chicken"
+                android:src="@mipmap/loading"
                 android:onClick="widenImage"/>
 
             <RelativeLayout
