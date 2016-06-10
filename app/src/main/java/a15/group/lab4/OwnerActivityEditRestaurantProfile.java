@@ -286,8 +286,11 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
-
-
+                }
+                else{
+                    Intent intent = new Intent(OwnerActivityEditRestaurantProfile.this, OwnerActivityRestaurantProfile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
 

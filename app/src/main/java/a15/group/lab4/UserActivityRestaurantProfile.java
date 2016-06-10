@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 
 public class UserActivityRestaurantProfile extends AppCompatActivity implements OnMapReadyCallback {
@@ -184,15 +185,22 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
                 likeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatabaseReference mRef = FirebaseDatabase.getInstance()
+                        DatabaseReference likeRef = FirebaseDatabase.getInstance()
                                 .getReference().child("restaurants-likes").child(restaurantId);
+                        DatabaseReference subscribeRef = FirebaseDatabase.getInstance()
+                                .getReference().child("subscribers-token").child(restaurantId).child(userId);
+                        //retrieve token
+                        TokenData tokenData = new TokenData(userId, FirebaseInstanceId.getInstance().getToken());
+
                         int nLikes = getLikeCount();
                         if (!liked) {
                             mRefRestaurant.child("likeCount").setValue(nLikes + 1);
-                            mRef.child(userId).setValue(userId);
+                            likeRef.child(userId).setValue(userId);
+                            subscribeRef.setValue(tokenData);
                         } else {
                             mRefRestaurant.child("likeCount").setValue(nLikes - 1);
-                            mRef.child(userId).removeValue();
+                            likeRef.child(userId).removeValue();
+                            subscribeRef.removeValue();
                         }
                     }
                 });
