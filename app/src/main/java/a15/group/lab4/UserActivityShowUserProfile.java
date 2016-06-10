@@ -109,7 +109,7 @@ public class UserActivityShowUserProfile extends BaseActivity {
                 //userEmail.setText(user.getEmail());
 
 
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.firebase_auth_120dp);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo_app_coyote);
                 userPhoto.setImageBitmap(getCircleBitmap(bitmap));
 /*
                 imagePath = user.getPhoto();
@@ -205,7 +205,7 @@ public class UserActivityShowUserProfile extends BaseActivity {
                     userPhoto.setImageBitmap(image);
                 }
                 else{
-                    userPhoto.setImageResource(R.drawable.firebase_auth_120dp);
+                    userPhoto.setImageResource(R.mipmap.logo_app_coyote);
                 }
                 break;
             default:

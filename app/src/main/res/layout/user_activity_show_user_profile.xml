@@ -36,7 +36,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
                 android:onClick="modifyPhoto"
-                android:src="@drawable/firebase_auth_120dp" />
+                android:src="@mipmap/logo_app_coyote" />
 
             <EditText
                 android:id="@+id/user_name"

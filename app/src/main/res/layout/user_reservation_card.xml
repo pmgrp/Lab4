@@ -113,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="fitXY"
-                    android:src="@drawable/restaurant_paris" />
+                    android:src="@mipmap/loading" />
 
             </LinearLayout>
 

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -197,10 +198,14 @@ public class UserActivityRestaurantProfile extends AppCompatActivity implements 
                             mRefRestaurant.child("likeCount").setValue(nLikes + 1);
                             likeRef.child(userId).setValue(userId);
                             subscribeRef.setValue(tokenData);
+                            Toast.makeText(context, "You are subscribed to offer notifications from " + restaurant.getRestaurantName(),
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             mRefRestaurant.child("likeCount").setValue(nLikes - 1);
                             likeRef.child(userId).removeValue();
                             subscribeRef.removeValue();
+                            Toast.makeText(context, "You are unsubscribed from offer notifications from " + restaurant.getRestaurantName(),
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
