@@ -166,12 +166,13 @@
                 android:text="Website text"
                 android:textColor="@color/dark_text_color"
                 android:textSize="16sp" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_below="@id/restaurant_profile_restaurant_phone"
                     android:layout_marginTop="4dp"
                     android:text="Show Map"
+                    android:src="@mipmap/gmaps"
                     android:layout_alignParentRight="true"
                     android:onClick="OnClickShowMap"/>
 
