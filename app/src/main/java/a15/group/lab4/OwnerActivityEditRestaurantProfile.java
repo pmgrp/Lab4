@@ -14,6 +14,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,18 +37,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class OwnerActivityEditRestaurantProfile extends BaseActivity {
@@ -232,11 +247,6 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
                 //hideProgressDialog();
                 if(task.isSuccessful()){
                     sendNotifications();
-                    Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Restaurant info have been changed",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(OwnerActivityEditRestaurantProfile.this, OwnerActivityRestaurantProfile.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                 }
                 else{
                     Toast.makeText(OwnerActivityEditRestaurantProfile.this, "An error occurred please try again",
@@ -257,11 +267,25 @@ public class OwnerActivityEditRestaurantProfile extends BaseActivity {
         FirebaseDatabase.getInstance().getReference().child("user-tokens").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot child : dataSnapshot.getChildren()){
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
                         TokenData tokenData = child.getValue(TokenData.class);
                         tokens.add(tokenData);
                     }
+                    RequestQueue queue = Volley.newRequestQueue(OwnerActivityEditRestaurantProfile.this);
+                    for (int i = 0; i < tokens.size(); i++) {
+                        final String to = tokens.get(i).token;
+                        Log.d("TOKEN", to);
+                        JsonObjectRequest js = NotificationGenerator.notificationRequest("A New Restaurant is Available", to);
+                        queue.add(js);
+                    }
+                    Toast.makeText(OwnerActivityEditRestaurantProfile.this, "Restaurant info have been changed",
+                            Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(OwnerActivityEditRestaurantProfile.this, OwnerActivityRestaurantProfile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
 
 
                 }
