@@ -189,49 +189,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         //createNotification(contentText, 3);
     }
 
-    /*
 
-    public void newNotif(View view) {
-        String contentText = "New reservation Made";
-        createNotification(contentText, 3);
-    }
-
-    private void createNotification(String text, int mId) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo_app_coyote);
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.logo_app_coyote)
-                .setLargeIcon(bitmap)
-                .setAutoCancel(true)
-                .setColor(getResources().getColor(R.color.colorPrimary))
-                .setContentTitle(getResources().getString(R.string.app_name))
-                .setContentText(text)
-                .setVibrate(new long[] {100, 300, 100, 300});
-
-        //mBuilder.addPerson();
-
-// Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, UserActivityMain.class);
-
-// The stack builder object will contain an artificial back stack for the
-// started Activity.
-// This ensures that navigating backward from the Activity leads out of
-// your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-
-// Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(UserActivityMain.class);
-
-// Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-// mId allows you to update the notification later on.
-        mNotificationManager.notify(mId, mBuilder.build());
-    }
-    */
 
     public void onTimeFragmentOkListener() {
         Log.d("DAY", Integer.toString(xday));
@@ -263,7 +221,7 @@ public class UserActivityShowOfferDetails extends AppCompatActivity
         else
             tempMin2 = tempMin;
 
-        String date = Integer.toString(xday) + "/" + Integer.toString(xmonth) + "/" + Integer.toString(xyear);
+        String date = Integer.toString(xday) + "/" + Integer.toString(xmonth + 1) + "/" + Integer.toString(xyear);
         String time = Integer.toString(xhour) + ":" + tempMin2;
 
         reservationId = mRefUserReservation.push().getKey();
