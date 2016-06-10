@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:drawableTop="@drawable/firebase_auth_120dp"
+            android:drawableTop="@mipmap/logo_app_coyote"
             android:text="Complete Your Profile" />
         <RadioGroup
             android:layout_width="wrap_content"
